@@ -39,6 +39,8 @@ struct UPOINT
 {
 	size_t width,
 		   height;
+
+	UPOINT& operator=(RECT);
 };
 
 //Константы
@@ -66,7 +68,7 @@ CONST DistanceBetweenWallAndTable DISTANCE_BETWEEN_WALL_AND_TABLE = { CUE_LENGTH
 //Константы
 
 CONST UPOINT WINDOWSIZE = { static_cast<SIZE_T>(floor((DistanceBWAT.left + TABLE_SIZE.width  + DistanceBWAT.right ) * SCALE)),
-	                        static_cast<SIZE_T>(floor((DistanceBWAT.up   + TABLE_SIZE.height + DistanceBWAT.bottom) * SCALE) - 300) };
+	                        static_cast<SIZE_T>(floor((DistanceBWAT.up   + TABLE_SIZE.height + DistanceBWAT.bottom) * SCALE) - 300) }; // Сделать не CONST
 
 ///На всякий случай: http://www.billiard-klondayk.ru/razmer-bilyardnoy.htm
 //=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=

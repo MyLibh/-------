@@ -8,8 +8,6 @@ using namespace Gdiplus;
 class ProgramManager 
 {
 private:
-	
-
 	VOID drawTable();
 	VOID drawBalls() { balls_.draw(graphics_, pen_, font_, brush_); }
 	VOID dump() { cout << hWnd_ << " " << hDC_ << " " << memDC_ << " " << memHbm_ << " " << oldHbm_ << endl; }
@@ -25,6 +23,7 @@ public:
 	Font *font_;
 	SolidBrush *brush_;
 	Balls balls_;
+
 	ProgramManager(HWND);
 	~ProgramManager();
 

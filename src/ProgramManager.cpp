@@ -11,9 +11,10 @@ ProgramManager::ProgramManager(HWND hWnd) :
 	memHbm_(NULL),
 	oldHbm_(NULL),
 	graphics_(new Graphics(memDC_)),
+	pen_(new Pen(Color::Yellow, 10)),
 	font_(new Font(L"Times New Roman", 25, 0, Unit::UnitPoint)),
 	brush_(new SolidBrush(Color::Black))
-{ pen_ = new Pen(Color::Yellow, 10); }
+{}
 
 ProgramManager::~ProgramManager()
 {

@@ -192,6 +192,7 @@ VOID Balls::draw(Graphics *graphics, Pen *pen, Font *font, SolidBrush *brush) co
 		//cout << image_;
 		//graphics->DrawImage(new Image(L"../src/Images/8.jpg"), static_cast<INT>(t[i].x - RShari / 2), static_cast<INT>(t[i].y - RShari / 2), RShari, RShari);
 
+		//TransparentBlt 
 		char text[3] = "";
 		sprintf_s(text, "%d", i);
 		//const size_t length = strlen(text);
