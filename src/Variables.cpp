@@ -2,6 +2,21 @@
 
 BOOL SetConsoleColor(unsigned color) { return !!SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (WORD)color); }
 
+//====================================================================================================================
+
+UPOINT::UPOINT() :
+	width(0),
+	height(0)
+{}
+
+UPOINT::UPOINT(SIZE_T width, SIZE_T height) :
+	width(width),
+	height(height)
+{}
+
+UPOINT::~UPOINT()
+{}
+
 UPOINT & UPOINT::operator=(RECT rect)
 {
 	width  = abs(rect.left - rect.right);

@@ -14,6 +14,7 @@ private:
 	HBITMAP     memHbm_;
 	HBITMAP     oldHbm_;
 	HINSTANCE   hInstance_;
+	LPARAM      lParam_;
 
 	Graphics   *graphics_;
 	Pen        *pen_;
@@ -23,7 +24,7 @@ private:
 	Balls       balls_;
 	Cue         cue_;
 
-	UPOINT      window_; // Улучшить название
+	UPOINT      window_; // Улучшить название(размеры memDC)
 
 	//Так можно делать???
 	VOID reInitGraphics() { delete(graphics_); graphics_ = new Graphics(memDC_); }
@@ -57,20 +58,21 @@ public:
 	VOID setHWND(HWND hWnd)                { hWnd_      = hWnd; }
 	VOID setHINSTANCE(HINSTANCE hInstance) { hInstance_ = hInstance; }
 	VOID setMemDCWindow(RECT rect)         { window_ = rect; }
-	VOID setCuePosition(LPARAM lParam)          { cue_.setPosition(lParam); }          
+	VOID setLParam(LPARAM lParam)          { lParam_ = lParam; }          
 	//VOID setPenColor(Color color) { pen_->SetColor(color); }
 	//VOID setPenWidth(REAL width) { pen_->SetWidth(width); }
 
-	VOID loadTitle(WCHAR *title_)               { LoadStringW(hInstance_, IDS_APP_TITLE, title_, MAX_LOADSTRING); }
-	VOID loadWndClassName(WCHAR *wndClassName_) { LoadStringW(hInstance_, IDC_BILLIARDS, wndClassName_, MAX_LOADSTRING);}
-	VOID loadBufferIntoCanvas(HDC canvas)       { BitBlt(canvas, 0, 0, window_.width, window_.height, memDC_, 0, 0, SRCCOPY); }
+	VOID loadTitle(WCHAR *title_)                           { LoadStringW(hInstance_, IDS_APP_TITLE, title_, MAX_LOADSTRING); }
+	VOID loadWndClassName(WCHAR *wndClassName_)             { LoadStringW(hInstance_, IDC_BILLIARDS, wndClassName_, MAX_LOADSTRING);}
+	VOID loadBackgroundIntoCanvas(HDC canvas, Image *image) { graphics_->DrawImage(image, RectF(0, 0, window_.width, window_.height)); }
+	VOID loadBufferIntoCanvas(HDC canvas)                   { BitBlt(canvas, 0, 0, window_.width, window_.height, memDC_, 0, 0, SRCCOPY); }
 
-	VOID initDubbleBuffering(HDC hDC);
+	VOID initDubbleBuffering(HDC);
 	VOID clearDubbleBuffering();
 
 	VOID drawTable();
 	VOID drawCue() { cue_.draw(graphics_); }
-	VOID moveCue() { cue_.rotate(); }
+	VOID moveCue() { cue_.rotate(balls_.getBitokCoords(), lParam_); }
 	VOID drawBalls() { balls_.draw(graphics_, pen_, font_, brush_); }
 	VOID moveBalls() { balls_.move(); }
 

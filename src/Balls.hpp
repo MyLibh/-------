@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Variables.hpp"
-#include "vec.hpp"
+#include "Vector.hpp"
 
 INT Whatshar(int);
 
@@ -37,6 +37,8 @@ public:
 	~Balls() { /*for (size_t i = 0; i < NUMBER_OF_BALLS; i++) delete(image_[i]);*/delete image_; }
 
 	BOOL stopped() const;	
+
+	POINT getBitokCoords() const { POINT point = { static_cast<LONG>(t[0].x), static_cast<LONG>(t[0].y) }; return point; }
 
 	VOID draw(Gdiplus::Graphics*, Gdiplus::Pen*, Gdiplus::Font*, Gdiplus::SolidBrush*) const;
 	VOID move();

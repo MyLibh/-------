@@ -4,12 +4,15 @@
 
 using namespace Gdiplus;
 
+//=============================================================================================================================
+
 ProgramManager::ProgramManager() : 
 	hWnd_(nullptr),
 	memDC_(nullptr), 
 	memHbm_(nullptr), 
 	oldHbm_(nullptr),
 	hInstance_(nullptr),
+	lParam_(0),
 	graphics_(nullptr),
 	pen_(nullptr),
 	font_(nullptr),

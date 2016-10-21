@@ -44,6 +44,10 @@ struct UPOINT
 	size_t width,
 		   height;
 
+	UPOINT();
+	UPOINT(SIZE_T, SIZE_T);
+	~UPOINT();
+
 	UPOINT &operator=(RECT);
 	UPOINT &operator=(UPOINT);
 
@@ -64,8 +68,8 @@ CONST float BALL_RADIUS   = BALL_DIAMETER / 2.0f;
 
 //Сантиметры
 
-CONST UPOINT TABLE_SIZE = { 384, 206 };
-CONST UPOINT FIELD_SIZE = { 355, 177 };
+CONST UPOINT TABLE_SIZE(384, 206);
+CONST UPOINT FIELD_SIZE(355, 177);
 
 CONST SIZE_T CUE_LENGTH = 145;
 CONST SIZE_T EXTRA_CUE_LENGTH = 30;
@@ -75,6 +79,8 @@ CONST DistanceBetweenWallAndTable DISTANCE_BETWEEN_WALL_AND_TABLE = { CUE_LENGTH
 #define DistanceBWAT DISTANCE_BETWEEN_WALL_AND_TABLE
 
 ///На всякий случай: http://www.billiard-klondayk.ru/razmer-bilyardnoy.htm
+//Викепедия: https://ru.wikipedia.org/wiki/Пул_(бильярд)
+
 //=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=
 
 CONST double sizeX = 1200;

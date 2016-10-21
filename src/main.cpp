@@ -1,16 +1,15 @@
-#include "Variables.hpp"
-#include "vec.hpp"
 #include "ProgramManager.hpp"
 
 #define __DEBUG
 
 #pragma comment (lib, "gdiplus.lib")
-        
+
+using namespace Gdiplus;      
+
 WCHAR     title_[MAX_LOADSTRING];         //        
 WCHAR     wndClassName_[MAX_LOADSTRING];  // ¬нести в ProgramManager
 ProgramManager programManager;
-
-using namespace Gdiplus;
+Image *background = new Image(L"../src/Images/Background.jpg");
 
 enum EXITS
 {
@@ -135,7 +134,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         break;
 	case WM_MOUSEMOVE:      
-		programManager.setCuePosition(lParam); 
+		programManager.setLParam(lParam); 
 		break;
 	case WM_SIZE:
 		{
@@ -150,12 +149,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		break;
     case WM_PAINT:
 		{
-			programManager.dump();
+			//programManager.dump();
 
             PAINTSTRUCT ps;
             HDC hDC = BeginPaint(hWnd, &ps);
 
-			programManager.initDubbleBuffering(hDC);
+			programManager.initDubbleBuffering(hDC); 
+			//programManager.loadBackgroundIntoCanvas(hDC, background);
 			PatBlt(programManager.getMemDC(), 0, 0, programManager.getMemDCWindow().width, programManager.getMemDCWindow().height, WHITENESS);
 			
 			programManager.moveBalls();
@@ -169,6 +169,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
  	
 			programManager.loadBufferIntoCanvas(hDC);
 			programManager.clearDubbleBuffering();
+
+			//Graphics *tmp = new Graphics(hDC);
+			//tmp->DrawImage(new Image(L"../src/Images/Cue.jpg"), RectF(0, 0, (1100 / 5) * SCALE, (360  / 5) * SCALE));
+			//tmp->DrawImage(new Image(L"../src/Images/Background.jpg"), RectF(0, 0, 800, 457));
+			//delete(tmp);
 			
 			EndPaint(hWnd, &ps);
         }
