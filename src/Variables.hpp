@@ -15,6 +15,10 @@
 
 using std::cout;
 using std::endl;
+//===========================================================================================================
+
+#define MAX_LOADSTRING 100
+#define PAUSE system("pause");
 
 //===========================================================================================================
 
@@ -40,7 +44,12 @@ struct UPOINT
 	size_t width,
 		   height;
 
-	UPOINT& operator=(RECT);
+	UPOINT &operator=(RECT);
+	UPOINT &operator=(UPOINT);
+
+	//template<typename T>
+	//UPOINT& operator*=(T);
+	UPOINT &operator*=(float);
 };
 
 //Константы
@@ -64,11 +73,6 @@ CONST SIZE_T EXTRA_CUE_LENGTH_2 = static_cast<SIZE_T>(floor(EXTRA_CUE_LENGTH / 2
 
 CONST DistanceBetweenWallAndTable DISTANCE_BETWEEN_WALL_AND_TABLE = { CUE_LENGTH + EXTRA_CUE_LENGTH_2, CUE_LENGTH + EXTRA_CUE_LENGTH_2, CUE_LENGTH + EXTRA_CUE_LENGTH_2, CUE_LENGTH + EXTRA_CUE_LENGTH_2 };
 #define DistanceBWAT DISTANCE_BETWEEN_WALL_AND_TABLE
-
-//Константы
-
-CONST UPOINT WINDOWSIZE = { static_cast<SIZE_T>(floor((DistanceBWAT.left + TABLE_SIZE.width  + DistanceBWAT.right ) * SCALE)),
-	                        static_cast<SIZE_T>(floor((DistanceBWAT.up   + TABLE_SIZE.height + DistanceBWAT.bottom) * SCALE) - 300) }; // Сделать не CONST
 
 ///На всякий случай: http://www.billiard-klondayk.ru/razmer-bilyardnoy.htm
 //=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=

@@ -4,42 +4,45 @@
 
 using namespace Gdiplus;
 
-ProgramManager::ProgramManager(HWND hWnd) :
-	hWnd_(hWnd),
-	hDC_(GetDC(hWnd_)),
-	memDC_(NULL),
-	memHbm_(NULL),
-	oldHbm_(NULL),
-	graphics_(new Graphics(memDC_)),
-	pen_(new Pen(Color::Yellow, 10)),
-	font_(new Font(L"Times New Roman", 25, 0, Unit::UnitPoint)),
-	brush_(new SolidBrush(Color::Black))
-{}
+ProgramManager::ProgramManager() : 
+	hWnd_(nullptr),
+	memDC_(nullptr), 
+	memHbm_(nullptr), 
+	oldHbm_(nullptr),
+	hInstance_(nullptr),
+	graphics_(nullptr),
+	pen_(nullptr),
+	font_(nullptr),
+	brush_(nullptr),
+	window_()
+{
+	window_.width  =  static_cast<SIZE_T>(floor((DistanceBWAT.left + TABLE_SIZE.width  + DistanceBWAT.right ) * SCALE));
+	window_.height =  static_cast<SIZE_T>(floor((DistanceBWAT.up   + TABLE_SIZE.height + DistanceBWAT.bottom) * SCALE) - 300);
+
+	//HDC hDC = GetDC(hWnd_);
+	//ReleaseDC(hWnd_, hDC);
+}
 
 ProgramManager::~ProgramManager()
 {
-	delete(graphics_);
-	delete(pen_);
-	delete(font_);
-	delete(brush_);
-	
-	//HBITMAPÛ
+	//delete(graphics_); //Èñêëþ÷åíèå, êîãäà åñòü
+	//delete(pen_);
+	//delete(font_);
+	//delete(brush_);
+
 	DeleteObject(memHbm_);
 	DeleteObject(oldHbm_);
 
-	DeleteDC(hDC_);
 	DeleteDC(memDC_);
 	
-	hWnd_  = NULL;
-	hDC_   = NULL;
-	memDC_ = NULL;
+	hWnd_   = nullptr;
+	memDC_  = nullptr;
+	memHbm_ = nullptr;
+	oldHbm_ = nullptr;
 }
 
 VOID ProgramManager::drawTable()
 {
-	pen_->SetColor(Color::Yellow);
-	pen_->SetWidth(10);
-
 	graphics_->DrawLine(pen_, Point(static_cast<INT>(sizeX - sizestenaRIGHT), static_cast<INT>(sizestenaUP + Ru + RDugLuz)), Point(static_cast<INT>(sizeX - sizestenaRIGHT), static_cast<INT>(sizestenaUP + sizeYpol - Ru - RDugLuz)));
 	graphics_->DrawLine(pen_, Point(static_cast<INT>(        sizestenaLEFT ), static_cast<INT>(sizestenaUP + Ru + RDugLuz)), Point(static_cast<INT>(        sizestenaLEFT ), static_cast<INT>(sizestenaUP + sizeYpol - Ru - RDugLuz)));
 
@@ -61,37 +64,21 @@ VOID ProgramManager::drawTable()
 	for (int i = 0; i < ColvoCenterDugLuz; i++) graphics_->DrawEllipse(pen_, static_cast<INT>(CenterDugLuz[i].x - RDugLuz  / 2), static_cast<INT>(CenterDugLuz[i].y - RDugLuz / 2), RDugLuz, RDugLuz);
 }
 
-BOOL ProgramManager::drawAll()
+VOID ProgramManager::clearDubbleBuffering()
 {
-	//PAINTSTRUCT pc;
-	//HDC hDC = BeginPaint(hWnd_, &pc);
+	SelectObject(getMemDC(), getOldHbm());
+	DeleteObject(getMemHbm());
+	DeleteDC(getMemDC());
+}
 
-	//dump();
+VOID ProgramManager::initDubbleBuffering(HDC hDC)
+{
+	setMemDC(CreateCompatibleDC(hDC));
+	setMemHbm(CreateCompatibleBitmap(GetDC(hWnd_), window_.width, window_.height));
+	setOldHbm((HBITMAP)SelectObject(getMemDC(), getMemHbm()));	
 
-	//memDC_ = CreateCompatibleDC(hDC_);
-	//memHbm_ = CreateCompatibleBitmap(hDC_, WINDOWSIZE.width, WINDOWSIZE.height);
-	//oldHbm_ = static_cast<HBITMAP>(SelectObject(memDC_, memHbm_));
-
-	//PatBlt(memDC_, 0, 0, WINDOWSIZE.width, WINDOWSIZE.height, WHITENESS);
-
-	//balls_.move();                               
-	//drawTable(); 
-	//drawBalls();
-		
-	//BitBlt(hDC_, 0, 0, WINDOWSIZE.width, WINDOWSIZE.height, memDC_, 0, 0, SRCCOPY);
-
-	//SelectObject(memDC_, oldHbm_);
-	//DeleteObject(memHbm_);
-	//DeleteDC(memDC_);
-	
-	//EndPaint(hWnd_, &pc);
-
-	if (balls_.stopped()) 
-	{
-		graphics_->DrawString(L"EZ WIN", strlen("EZ WIN"), font_, PointF(10, 10), brush_);	
-		Sleep(500);
-
-		return FALSE;
-	}
-	else return TRUE;
+	reInitGraphics();
+	reInitPen();
+	reInitFont();
+	reInitBrush();
 }
