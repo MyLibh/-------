@@ -5,10 +5,12 @@
 using namespace Gdiplus;
 
 Cue::Cue() :
-	texture_(nullptr),
+	texture_(),
 	textureSize_(),
-	mouseCoords_(),
-	angle_(0)
+	mouse_(),
+	ball_(),
+	cue_(),
+	auxiliaryLine_()
 {
 	textureSize_.width  = 1100 / 5; // Загнать в константы
 	textureSize_.height = 360  / 5; //
@@ -21,25 +23,36 @@ Cue::~Cue()
 	//delete(texture_);
 }
 
-VOID Cue::draw(Graphics *graphics)
+VOID Cue::draw(Graphics *graphics, Pen *pen)
 {
-	$r dump(); 
-
 	//reInitImage();
-	graphics->RotateTransform(angle_);
+	
+	cue_.draw((ball_ - cue_).getX(), (ball_ - cue_).getY(), graphics, pen);
+	auxiliaryLine_.draw((ball_ - auxiliaryLine_).getX(), (ball_ - auxiliaryLine_).getY(), graphics, pen, Color::Gray);
 
-	graphics->DrawImage(texture_, RectF(centerOfSymmetry_.x - textureSize_.width, centerOfSymmetry_.y - textureSize_.height, centerOfSymmetry_.x, centerOfSymmetry_.y));
-	graphics->DrawLine(new Pen(Color::Green, 15), Point(centerOfSymmetry_.x - textureSize_.width, centerOfSymmetry_.y - textureSize_.height), Point(centerOfSymmetry_.x, centerOfSymmetry_.y));
+	pen->SetColor(Color::Gray);
+	pen->SetWidth(3);
+	graphics->DrawEllipse(pen, static_cast<INT>(mouse_.getX() - RShari / 2), static_cast<INT>(mouse_.getY() - RShari / 2), RShari, RShari);
 
-	graphics->RotateTransform(-angle_);
+	//graphics->ResetTransform();
+    //graphics->TranslateTransform(ball_.getX(), ball_.getY());
+    //graphics->RotateTransform((mouse_ - ball_).getK());
 
-	graphics->DrawEllipse(new Pen(Color::Green, 15), static_cast<INT>(centerOfSymmetry_.x - 5), static_cast<INT>(centerOfSymmetry_.y - 5), 5, 5);
+	//graphics->DrawImage(texture_, RectF(cue_.getX(), cue_.getY(), ball_.getX(), ball_.getY()));
 }
 
 VOID Cue::rotate(POINT point, LPARAM lParam)
 {
-	setCenter(point);
-	setPosition(lParam);
+	mouse_.setX(LOWORD(lParam));
+	mouse_.setY(HIWORD(lParam));
 
-	angle_ = static_cast<REAL>(atan_(centerOfSymmetry_.x - mouseCoords_.x, centerOfSymmetry_.y - mouseCoords_.y));
+	ball_.setX(point.x);
+	ball_.setY(point.y);
+
+	cue_ = mouse_ - ball_;
+	auxiliaryLine_ = ball_ - mouse_;
+
+	cue_.setL(CUE_LENGTH);
+	cue_.setXY();
+	auxiliaryLine_.setXY();
 }

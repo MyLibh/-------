@@ -29,6 +29,18 @@ BOOL SetConsoleColor(unsigned);
 #define $b SetConsoleColor(0x09);
 #define $y SetConsoleColor(0x0e);
 
+enum EXITS
+{
+	WNDCLASS_FAILED      = -15001,
+	WNDCREATE_FAILED     = -15002,
+	CONSOLECREATE_FAILED = -15003,
+
+	ESCAPE           = 27,
+
+	BALLS_STOPPED    =  15001
+};
+
+
 //===========================================================================================================
 
 struct DistanceBetweenWallAndTable
@@ -58,7 +70,7 @@ struct UPOINT
 
 //Константы
 
-CONST double SCALE = 2.13;
+CONST double SCALE = 2;
 CONST WORD NUMBER_OF_BALLS = 16;
 
 //Миллиметры
@@ -71,7 +83,9 @@ CONST float BALL_RADIUS   = BALL_DIAMETER / 2.0f;
 CONST UPOINT TABLE_SIZE(384, 206);
 CONST UPOINT FIELD_SIZE(355, 177);
 
-CONST SIZE_T CUE_LENGTH = 145;
+CONST SIZE_T tagCUE_LENGTH = 145;
+CONST SIZE_T CUE_LENGTH = tagCUE_LENGTH * static_cast<SIZE_T>(SCALE);
+
 CONST SIZE_T EXTRA_CUE_LENGTH = 30;
 CONST SIZE_T EXTRA_CUE_LENGTH_2 = static_cast<SIZE_T>(floor(EXTRA_CUE_LENGTH / 2));
 
@@ -94,7 +108,7 @@ CONST double sizeYpol = sizeY - sizestenaUP - sizestenaDOWN;
 
 CONST double cor3 = sqrt(static_cast<double>(3));
 
-CONST INT RShari = 15;
+CONST INT RShari = 16;
 
 CONST INT RLuz = 20;
 CONST double Ru = M_SQRT2 * RLuz;

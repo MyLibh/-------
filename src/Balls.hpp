@@ -3,8 +3,6 @@
 #include "Variables.hpp"
 #include "Vector.hpp"
 
-INT Whatshar(int);
-
 CONST vec CenterDugLuz[ColvoCenterDugLuz] =
     { 
     vec(sizeX - sizestenaRIGHT + RDugLuz,            sizestenaUP + Ru + RDugLuz),
@@ -27,21 +25,20 @@ private:
 	vec t[NUMBER_OF_BALLS];
 	vec v[NUMBER_OF_BALLS];
 	int golled;
-	Gdiplus::Image *image_;
 
 	VOID repulsion();
 	VOID repulsionFrom();
 
 public:	
 	Balls();
-	~Balls() { /*for (size_t i = 0; i < NUMBER_OF_BALLS; i++) delete(image_[i]);*/delete image_; }
+	~Balls();
 
 	BOOL stopped() const;	
 
-	POINT getBitokCoords() const { POINT point = { static_cast<LONG>(t[0].x), static_cast<LONG>(t[0].y) }; return point; }
+	POINT getBitokCoords() const { POINT point = { static_cast<LONG>(t[0].getX()), static_cast<LONG>(t[0].getY()) }; return point; }
 
-	VOID draw(Gdiplus::Graphics*, Gdiplus::Pen*, Gdiplus::Font*, Gdiplus::SolidBrush*) const;
-	VOID move();
+	VOID draw(Gdiplus::Graphics *graphics, Gdiplus::Image *image, size_t index) { graphics->DrawImage(image, static_cast<INT>(t[index].getX()) - RShari, static_cast<INT>(t[index].getY()) - RShari, 2 * RShari, 2 * RShari); }
+	VOID move(); 
 };
 
 

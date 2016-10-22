@@ -20,10 +20,14 @@ ProgramManager::ProgramManager() :
 	window_()
 {
 	window_.width  =  static_cast<SIZE_T>(floor((DistanceBWAT.left + TABLE_SIZE.width  + DistanceBWAT.right ) * SCALE));
-	window_.height =  static_cast<SIZE_T>(floor((DistanceBWAT.up   + TABLE_SIZE.height + DistanceBWAT.bottom) * SCALE) - 300);
+	window_.height =  static_cast<SIZE_T>(floor((DistanceBWAT.up   + TABLE_SIZE.height + DistanceBWAT.bottom) * SCALE));
 
 	//HDC hDC = GetDC(hWnd_);
 	//ReleaseDC(hWnd_, hDC);
+}
+
+ProgramManager::ProgramManager(CONST ProgramManager &manager)
+{
 }
 
 ProgramManager::~ProgramManager()
@@ -64,7 +68,7 @@ VOID ProgramManager::drawTable()
 	graphics_->DrawEllipse(pen_, static_cast<INT>(sizestenaLEFT + sizeXpol / 2 - (RLuz + 1) / 2), static_cast<INT>(sizeY - sizestenaDOWN + RDugLuz - (RLuz + 1) / 2), RLuz + 1, RLuz + 1);
 	graphics_->DrawEllipse(pen_, static_cast<INT>(sizestenaLEFT + sizeXpol / 2 - (RLuz + 1) / 2), static_cast<INT>(        sizestenaUP   - RDugLuz - (RLuz + 1) / 2), RLuz + 1, RLuz + 1);
 
-	for (int i = 0; i < ColvoCenterDugLuz; i++) graphics_->DrawEllipse(pen_, static_cast<INT>(CenterDugLuz[i].x - RDugLuz  / 2), static_cast<INT>(CenterDugLuz[i].y - RDugLuz / 2), RDugLuz, RDugLuz);
+	for (int i = 0; i < ColvoCenterDugLuz; i++) graphics_->DrawEllipse(pen_, static_cast<INT>(CenterDugLuz[i].getX() - RDugLuz  / 2), static_cast<INT>(CenterDugLuz[i].getY() - RDugLuz / 2), RDugLuz, RDugLuz);
 }
 
 VOID ProgramManager::clearDubbleBuffering()
@@ -80,6 +84,14 @@ VOID ProgramManager::initDubbleBuffering(HDC hDC)
 	setMemHbm(CreateCompatibleBitmap(GetDC(hWnd_), window_.width, window_.height));
 	setOldHbm((HBITMAP)SelectObject(getMemDC(), getMemHbm()));	
 
+	reInitGraphics();
+	reInitPen();
+	reInitFont();
+	reInitBrush();
+}
+
+VOID ProgramManager::initManager()
+{
 	reInitGraphics();
 	reInitPen();
 	reInitFont();

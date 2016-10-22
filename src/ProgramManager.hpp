@@ -34,11 +34,12 @@ private:
 
 public:
 	ProgramManager();
+	ProgramManager(const ProgramManager&);
 	~ProgramManager();
 	
 	VOID dump() const { cout << "memDC: " << memDC_ << ", memHbm: " << memHbm_ << ", oldHbm: " << oldHbm_ << ", hInst: " << hInstance_ << endl
 							 << "hWnd: " << hWnd_  /*<<", title: " << title_ << ", wndClassName: " << wndClassName_ */<< endl 
-							 << "graphics: " << graphics_ << ", pen: " << pen_ << ", font: " << font_ << ", brush: " << brush_ << endl << endl; }
+							 << "graphics: " << graphics_ << ", pen: " << &pen_ << ", font: " << font_ << ", brush: " << &brush_ << endl << endl; }
 
 	HDC       getMemDC()       const { return memDC_; }
 	HBITMAP   getMemHbm()      const { return memHbm_; }
@@ -58,22 +59,26 @@ public:
 	VOID setHWND(HWND hWnd)                { hWnd_      = hWnd; }
 	VOID setHINSTANCE(HINSTANCE hInstance) { hInstance_ = hInstance; }
 	VOID setMemDCWindow(RECT rect)         { window_ = rect; }
-	VOID setLParam(LPARAM lParam)          { lParam_ = lParam; }          
-	//VOID setPenColor(Color color) { pen_->SetColor(color); }
-	//VOID setPenWidth(REAL width) { pen_->SetWidth(width); }
+	VOID setLParam(LPARAM lParam)          { lParam_ = lParam; }  
+	VOID setPenColor(Color color)          { pen_->SetColor(color); }
+	VOID setPenWidth(REAL width)           { pen_->SetWidth(width); }
+
+	VOID setBrushColor(Color color = Color::Black) { brush_->SetColor(color); }
+	
 
 	VOID loadTitle(WCHAR *title_)                           { LoadStringW(hInstance_, IDS_APP_TITLE, title_, MAX_LOADSTRING); }
 	VOID loadWndClassName(WCHAR *wndClassName_)             { LoadStringW(hInstance_, IDC_BILLIARDS, wndClassName_, MAX_LOADSTRING);}
-	VOID loadBackgroundIntoCanvas(HDC canvas, Image *image) { graphics_->DrawImage(image, RectF(0, 0, window_.width, window_.height)); }
+	VOID loadBackgroundIntoCanvas(HDC canvas, Image *image) { graphics_->DrawImage(image, RectF(0, 0, static_cast<REAL>(window_.width), static_cast<REAL>(window_.height))); }
 	VOID loadBufferIntoCanvas(HDC canvas)                   { BitBlt(canvas, 0, 0, window_.width, window_.height, memDC_, 0, 0, SRCCOPY); }
 
+	VOID initManager();
 	VOID initDubbleBuffering(HDC);
 	VOID clearDubbleBuffering();
 
 	VOID drawTable();
-	VOID drawCue() { cue_.draw(graphics_); }
+	VOID drawCue() { cue_.draw(graphics_, pen_); }
 	VOID moveCue() { cue_.rotate(balls_.getBitokCoords(), lParam_); }
-	VOID drawBalls() { balls_.draw(graphics_, pen_, font_, brush_); }
+	VOID drawBalls(Image *image, size_t index) { balls_.draw(graphics_, image, index); }
 	VOID moveBalls() { balls_.move(); }
 
 	BOOL stopBalls() const { if(balls_.stopped()) graphics_->DrawString(L"EZ WIN", strlen("EZ WIN"), font_, PointF(10, 10), brush_); return balls_.stopped(); }

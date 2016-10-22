@@ -18,68 +18,62 @@ double atan_(double x, double y)
 //======================================   
 
 vec::vec() :        
-    x(0),
-    y(0),
-    k(0),
-    l(0)
+    x_(0),
+    y_(0),
+    k_(0),
+    l_(0)
 {}
 
-vec::vec(double x1, double y1)
+vec::vec(double x, double y) :
+	x_(x),
+    y_(y),
+    k_(sqrt(x_ * x_ + y_ * y_)),
+    l_(atan_(x_, y_))
+{}
+
+VOID vec::draw(double x0, double y0, Graphics *graphics, Pen *pen, Color color /* = Color::Yellow */) 
 {
-    x = x1;
-    y = y1;
-    l = sqrt(x * x + y * y);
-    k = atan_(x, y);
+	pen->SetColor(color);
+	pen->SetWidth(2);
+
+    graphics->DrawLine(pen, Point(static_cast<INT>(x0     ), static_cast<INT>(     y0)), Point(static_cast<INT>(x0 + x_), static_cast<INT>(y_ + y0)));
+    graphics->DrawLine(pen, Point(static_cast<INT>(x0 + x_), static_cast<INT>(y_ + y0)), Point(static_cast<INT>(x0 + x_ - ((l_ < 0)? -1 : 1) * 5 * cos(k_ + M_PI_4)), static_cast<INT>(y_ + y0 - ((l_ < 0)? -1 : 1) * 5 * sin(k_ + M_PI_4))));
+    graphics->DrawLine(pen, Point(static_cast<INT>(x0 + x_), static_cast<INT>(y_ + y0)), Point(static_cast<INT>(x0 + x_ - ((l_ < 0)? -1 : 1) * 5 * cos(k_ - M_PI_4)), static_cast<INT>(y_ + y0 - ((l_ < 0)? -1 : 1) * 5 * sin(k_ - M_PI_4))));
+
+    l_ = sqrt(x_ * x_ + y_ * y_);
+    k_ = atan_(x_, y_);  
 }
 
-void vec::print() const { printf ("{%lf, %lf}:{%lf, %lf}:{%lf, %lf}", x, y, k, l, l * cos(k), l * sin(k)); }
-
-void vec::draw(double x0, double y0, HDC hdc)
+VOID vec::setXY()
 {
-    Graphics *graphics = new Graphics(hdc);
-    Pen      *pen      = new Pen(Gdiplus::Color::Yellow, 2);
-
-    graphics->DrawLine(pen, Point(static_cast<INT>(x0    ), static_cast<INT>(    y0)), Point(static_cast<INT>(x0 + x), static_cast<INT>(y + y0)));
-    graphics->DrawLine(pen, Point(static_cast<INT>(x0 + x), static_cast<INT>(y + y0)), Point(static_cast<INT>(x0 + x - ((l < 0)? -1 : 1) * 5 * cos(k + M_PI_4)), static_cast<INT>(y + y0 - ((l < 0)? -1 : 1) * 5 * sin(k + M_PI_4))));
-    graphics->DrawLine(pen, Point(static_cast<INT>(x0 + x), static_cast<INT>(y + y0)), Point(static_cast<INT>(x0 + x - ((l < 0)? -1 : 1) * 5 * cos(k - M_PI_4)), static_cast<INT>(y + y0 - ((l < 0)? -1 : 1) * 5 * sin(k - M_PI_4))));
-
-    l = sqrt(x * x + y * y);
-    k = atan_(x, y);  
-
-    delete(pen);
-    delete(graphics);
+    x_ = l_ * cos(k_);
+    y_ = l_ * sin(k_);
 }
 
-void vec::setXY()
+VOID vec::setLK()
 {
-    x = l * cos(k);
-    y = l * sin(k);
-}
-
-void vec::setLK()
-{
-    l = sqrt(x * x + y * y);
-    k = atan_(x, y);
+    l_ = sqrt(x_ * x_ + y_ * y_);
+    k_ = atan_(x_, y_);
 }
 
 vec vec::operator=(vec vec1)
 {
 	if (this == &vec1) return *this;
 
-    x = vec1.x;
-    y = vec1.y;
-    l = vec1.l;
-    k = vec1.k;
+    x_ = vec1.getX();
+    y_ = vec1.getY();
+    l_ = vec1.getL();
+    k_ = vec1.getK();
 
     return *this;
 }
 
 vec vec::operator=(POINT xy)
 {
-    x = xy.x;
-    y = xy.y;
-    l = sqrt(x * x + y * y);
-    k = atan_(x, y);
+    x_ = xy.x;
+    y_ = xy.y;
+    l_ = sqrt(x_ * x_ + y_ * y_);
+    k_ = atan_(x_, y_);
 
     return *this;
 }
@@ -87,10 +81,11 @@ vec vec::operator=(POINT xy)
 vec vec::operator+(vec vec1) const
 {
     vec returned;
-    returned.x = x + vec1.x;
-    returned.y = y + vec1.y;
-    returned.l = sqrt(returned.x * returned.x + returned.y * returned.y);
-    returned.k = atan_(returned.x, returned.y);
+
+    returned.setX(x_ + vec1.getX());
+    returned.setY(y_ + vec1.getY());
+    returned.setL(sqrt(returned.getX() * returned.getX() + returned.getY() * returned.getY()));
+    returned.setK(atan_(returned.getX(), returned.getY()));
 
     return returned;
 }
@@ -98,10 +93,11 @@ vec vec::operator+(vec vec1) const
 vec vec::operator+=(vec vec1)
 {
     vec returned;
-    x+= vec1.x;
-    y+= vec1.y;
-    l = sqrt(x * x + y * y);
-    k = atan_(x, y);
+
+    x_ += vec1.getX();
+    y_ += vec1.getY();
+    l_ = sqrt(x_ * x_ + y_ * y_);
+    k_ = atan_(x_, y_);
 
     return *this;
 }
@@ -109,10 +105,11 @@ vec vec::operator+=(vec vec1)
 vec vec::operator-(vec vec1) const
 {
     vec returned;
-    returned.x = x - vec1.x;
-    returned.y = y - vec1.y;
-    returned.l = sqrt(returned.x * returned.x + returned.y * returned.y);
-    returned.k = atan_(returned.x, returned.y);
+
+    returned.setX(x_ - vec1.getX());
+    returned.setY(y_ - vec1.getY());
+    returned.setL(sqrt(returned.getX() * returned.getX() + returned.getY() * returned.getY()));
+    returned.setK(atan_(returned.getX(), returned.getY()));
 
     return returned;
 }
@@ -120,32 +117,33 @@ vec vec::operator-(vec vec1) const
 vec vec::operator-=(vec vec1)
 {
     vec returned;
-    x = x - vec1.x;
-    y = y - vec1.y;
-    l = sqrt(x * x + y * y);
-    k = atan_(x, y);
+
+    x_ = x_ - vec1.getX();
+    y_ = y_ - vec1.getY();
+    l_ = sqrt(x_ * x_ + y_ * y_);
+    k_ = atan_(x_, y_);
 
     return *this;
 }
 
 vec vec::operator-=(double l1)
 {
-    /*if (l >= 0)*/ 
-    //else l+= l1;
-	l -= l1;
-    x = l * cos(k);
-    y = l * sin(k);
+    /*if (l_ >= 0)*/ 
+    //else l_ += l1;
+	l_ -= l1;
+    x_ = l_ * cos(k_);
+    y_ = l_ * sin(k_);
 
     return *this;
 }
 
 vec vec::operator+=(double l1)
 {
-    if (l >= 0) l += l1;
-    else        l -= l1;
+    if (l_ >= 0) l_ += l1;
+    else         l_ -= l1;
 
-    x = l * cos(k);
-    y = l * sin(k);
+    x_ = l_ * cos(k_);
+    y_ = l_ * sin(k_);
 
     return *this;
 }
@@ -153,19 +151,20 @@ vec vec::operator+=(double l1)
 vec vec::operator/(double x1) const
 {
     vec returned;
-    returned.l = l / x1;
-    returned.k = k;
-    returned.x = returned.l * cos(returned.k);
-    returned.y = returned.l * sin(returned.k);
+
+    returned.setL(l_ / x1);
+    returned.setK(k_);
+    returned.setX(returned.getL() * cos(returned.getK()));
+    returned.setY(returned.getL() * sin(returned.getK()));
 
     return returned;
 }
 
 vec vec::operator/=(double x1)
 {
-    l /= x1;
-    x = l * cos(k);
-    y = l * sin(k);
+    l_ /= x1;
+    x_ = l_ * cos(k_);
+    y_ = l_ * sin(k_);
 
     return *this;
 }
@@ -173,19 +172,20 @@ vec vec::operator/=(double x1)
 vec vec::operator*(double x1) const
 {
     vec returned;
-    returned.l = l * x1;
-    returned.k = k;
-    returned.x = returned.l * cos(returned.k);
-    returned.y = returned.l * sin(returned.k);
+
+    returned.setL(l_ * x1);
+    returned.setK(k_);
+    returned.setX(returned.getL() * cos(returned.getK()));
+    returned.setY(returned.getL() * sin(returned.getK()));
 
     return returned;
 }
 
 vec vec::operator*=(double x1)
 {
-    l *= x1;
-    x = l * cos(k);
-    y = l * sin(k);
+    l_ *= x1;
+    x_ = l_ * cos(k_);
+    y_ = l_ * sin(k_);
 
     return *this;
 }
@@ -193,19 +193,20 @@ vec vec::operator*=(double x1)
 vec vec::operator^(double x1) const
 {
     vec returned;
-    returned.l = l;
-    returned.k = k + x1;
-    returned.x = returned.l * cos(returned.k);
-    returned.y = returned.l * sin(returned.k);
+
+    returned.setL(l_);
+    returned.setL(k_ + x1);
+    returned.setX(returned.getL() * cos(returned.getK()));
+    returned.setY(returned.getL() * sin(returned.getK()));
 
     return returned;
 }
 
 vec vec::operator^=(double x1)
 {
-    k += x1;
-    x = l * cos(k);
-    y = l * sin(k);
+    k_ += x1;
+    x_ = l_ * cos(k_);
+    y_ = l_ * sin(k_);
 
     return *this;
 }
@@ -216,10 +217,10 @@ vec xy_vec(double x, double y)
 {
     vec returned;
 
-    returned.x = x;
-    returned.y = y;
-    returned.l = sqrt(returned.x * returned.x + returned.y * returned.y);
-    returned.k = atan_(returned.x, returned.y);
+    returned.setX(x);
+    returned.setY(y);
+    returned.setL(sqrt(returned.getX() * returned.getX() + returned.getY() * returned.getY()));
+    returned.setK(atan_(returned.getX(), returned.getY()));
 
     return returned;
 }
@@ -228,10 +229,10 @@ vec lk_vec(double l, double k)
 {
     vec returned;
 
-    returned.l = l;
-    returned.k = k;
-    returned.x = returned.l * cos(returned.k);
-    returned.y = returned.l * sin(returned.k);
+    returned.setL(l);
+    returned.setK(k);
+    returned.setX(returned.getL() * cos(returned.getK()));
+    returned.setY(returned.getL() * sin(returned.getK()));
 
     return returned;
 }
