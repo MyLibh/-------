@@ -256,5 +256,12 @@ VOID Balls::move()
 	repulsion();
 }
 
+VOID Balls::draw(Gdiplus::Graphics *graphics, Gdiplus::Image *image, size_t index) 
+{ 
+	ImageAttributes imAtr;
+	imAtr.SetColorKey(Color(0, 197, 206, 5), Color(0, 197, 206, 5), ColorAdjustType::ColorAdjustTypeDefault);
+	graphics->DrawImage(image, Rect(static_cast<INT>(t[index].getX()) - RShari, static_cast<INT>(t[index].getY()) - RShari, 2 * RShari, 2 * RShari), 0, 0, 2 * RShari, 2 * RShari, Unit::UnitPixel, &imAtr, 0); 
+}
+
 
 

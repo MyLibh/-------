@@ -36,9 +36,9 @@ public:
 	BOOL stopped() const;	
 
 	POINT getBitokCoords() const { POINT point = { static_cast<LONG>(t[0].getX()), static_cast<LONG>(t[0].getY()) }; return point; }
-
-	VOID draw(Gdiplus::Graphics *graphics, Gdiplus::Image *image, size_t index) { graphics->DrawImage(image, static_cast<INT>(t[index].getX()) - RShari, static_cast<INT>(t[index].getY()) - RShari, 2 * RShari, 2 * RShari); }
-	VOID move(); 
+	
+	VOID move();
+	VOID draw(Gdiplus::Graphics*, Gdiplus::Image*, size_t); 
 };
 
 
