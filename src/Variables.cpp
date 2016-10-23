@@ -14,6 +14,12 @@ UPOINT::UPOINT(SIZE_T width, SIZE_T height) :
 	height(height)
 {}
 
+UPOINT::UPOINT(const UPOINT &upoint)
+{
+	width  = upoint.width;
+	height = upoint.height;
+}
+
 UPOINT::~UPOINT()
 {}
 
@@ -32,6 +38,10 @@ UPOINT & UPOINT::operator=(UPOINT upoint)
 
 	return *this;
 }
+
+UPOINT UPOINT::operator*(float number) const { return UPOINT(width  * static_cast<SIZE_T>(number), height * static_cast<SIZE_T>(number)); }
+
+UPOINT UPOINT::operator*(UPOINT upoint) const { return UPOINT(width * upoint.width, height * upoint.height); }
 
 /*
 template<typename T>

@@ -64,6 +64,8 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
 	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);
 
+	//cout << programManager.getMemDCWindow().width <<  " " << programManager.getMemDCWindow().height; PAUSE
+
 	background = new Image(L"../src/Images/Background.jpg");
 	table = new Image(L"../src/Images/Table.jpg");
 	ball0 = new Image(L"../src/Images/0.png");

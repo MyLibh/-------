@@ -35,9 +35,15 @@ VOID Cue::draw(Graphics *graphics, Pen *pen, Image *image)
     //graphics->TranslateTransform(ball_.getX(), ball_.getY());
     //graphics->RotateTransform((mouse_ - ball_).getK());
 
+	//graphics->TranslateTransform(ball_.getX(), ball_.getY());
+	//graphics->RotateTransform((mouse_ - ball_).getK());
+
 	ImageAttributes imAttr;
 	imAttr.SetColorKey(Color(0, 197, 206, 5), Color(0, 197, 206, 5));
-	graphics->DrawImage(image, Rect(static_cast<INT>(ball_.getX()) - 884, static_cast<INT>(ball_.getY() - 20 / 2), 884, 20), 0, 0, 884, 20, Unit::UnitPixel, &imAttr, 0);
+	//graphics->DrawLine(pen, Point(static_cast<INT>(x0     ), static_cast<INT>(     y0)), Point(static_cast<INT>(x0 + x_), static_cast<INT>(y_ + y0)));//2-end
+	graphics->DrawImage(image, Rect(static_cast<INT>(ball_.getX() - 884), static_cast<INT>(ball_.getY() - 20 / 2), 884, 20), 0, 0, 884, 20, Unit::UnitPixel, &imAttr, 0);
+
+	graphics->ResetTransform();
 }
 
 VOID Cue::rotate(POINT point, LPARAM lParam)

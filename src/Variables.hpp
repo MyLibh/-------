@@ -58,10 +58,13 @@ struct UPOINT
 
 	UPOINT();
 	UPOINT(SIZE_T, SIZE_T);
+	UPOINT(const UPOINT&);
 	~UPOINT();
 
 	UPOINT &operator=(RECT);
 	UPOINT &operator=(UPOINT);
+	UPOINT operator*(float) const;
+	UPOINT operator*(UPOINT) const;
 
 	//template<typename T>
 	//UPOINT& operator*=(T);
@@ -70,19 +73,24 @@ struct UPOINT
 
 //Константы
 
-CONST double SCALE = 2;
+CONST float SCALE = 2.13f;
 CONST WORD NUMBER_OF_BALLS = 16;
 CONST Gdiplus::Color COLOR_KEY(0, 197, 206, 5);
 
 //Миллиметры
 
-CONST float BALL_DIAMETER = 68.25f;                
-CONST float BALL_RADIUS   = BALL_DIAMETER / 2.0f;
+CONST float tagBALL_DIAMETER = 6.825f;    
+CONST float BALL_DIAMETER = tagBALL_DIAMETER * SCALE;   
+
+CONST float tagBALL_RADIUS   = tagBALL_DIAMETER / 2.0f;
+CONST float BALL_RADIUS = tagBALL_RADIUS * SCALE;
 
 //Сантиметры
 
-CONST UPOINT TABLE_SIZE(384, 206);
-CONST UPOINT FIELD_SIZE(355, 177);
+CONST UPOINT tagTABLE_SIZE(384, 206);
+CONST UPOINT TABLE_SIZE = (tagTABLE_SIZE * SCALE);
+
+CONST UPOINT tagFIELD_SIZE(355, 177);
 
 CONST SIZE_T tagCUE_LENGTH = 145;
 CONST SIZE_T CUE_LENGTH = tagCUE_LENGTH * static_cast<SIZE_T>(SCALE);
@@ -90,8 +98,8 @@ CONST SIZE_T CUE_LENGTH = tagCUE_LENGTH * static_cast<SIZE_T>(SCALE);
 CONST SIZE_T EXTRA_CUE_LENGTH = 30;
 CONST SIZE_T EXTRA_CUE_LENGTH_2 = static_cast<SIZE_T>(floor(EXTRA_CUE_LENGTH / 2));
 
-CONST DistanceBetweenWallAndTable DISTANCE_BETWEEN_WALL_AND_TABLE = { CUE_LENGTH + EXTRA_CUE_LENGTH_2, CUE_LENGTH + EXTRA_CUE_LENGTH_2, CUE_LENGTH + EXTRA_CUE_LENGTH_2, CUE_LENGTH + EXTRA_CUE_LENGTH_2 };
-#define DistanceBWAT DISTANCE_BETWEEN_WALL_AND_TABLE
+CONST DistanceBetweenWallAndTable tagDISTANCE_BETWEEN_WALL_AND_TABLE = { CUE_LENGTH + EXTRA_CUE_LENGTH_2, CUE_LENGTH + EXTRA_CUE_LENGTH_2, CUE_LENGTH + EXTRA_CUE_LENGTH_2, CUE_LENGTH + EXTRA_CUE_LENGTH_2 };
+#define DistanceBWAT tagDISTANCE_BETWEEN_WALL_AND_TABLE 
 
 ///На всякий случай: http://www.billiard-klondayk.ru/razmer-bilyardnoy.htm
 //Викепедия: https://ru.wikipedia.org/wiki/Пул_(бильярд)
@@ -99,7 +107,7 @@ CONST DistanceBetweenWallAndTable DISTANCE_BETWEEN_WALL_AND_TABLE = { CUE_LENGTH
 //=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=
 
 CONST double sizeX = 1200;
-CONST double sizeY = 700;
+CONST double sizeY = 800;
 CONST double sizestenaUP = 64;
 CONST double sizestenaDOWN = 40;
 CONST double sizestenaLEFT = 40;

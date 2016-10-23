@@ -1,4 +1,4 @@
-﻿Построение начато 23.10.2016 15:12:26.
+﻿Построение начато 23.10.2016 20:56:16.
      1>Проект "C:\Users\Alex Golden\Documents\GitHub\-------\VS12\Бильярд.vcxproj" в узле 2 (целевые объекты Build).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt ..\src\Cue.cpp
@@ -16,4 +16,4 @@
 
 Построение успешно завершено.
 
-Затраченное время: 00:00:02.00
+Затраченное время: 00:00:01.84
