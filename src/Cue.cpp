@@ -37,7 +37,7 @@ VOID Cue::draw(Graphics *graphics, Pen *pen, Image *image)
 
 	ImageAttributes imAttr;
 	imAttr.SetColorKey(Color(0, 197, 206, 5), Color(0, 197, 206, 5));
-	graphics->DrawImage(image, Rect(ball_.getX() - 884, ball_.getY() - 20 / 2, 884, 20), 0, 0, 884, 20, Unit::UnitPixel, &imAttr, 0);
+	graphics->DrawImage(image, Rect(static_cast<INT>(ball_.getX()) - 884, static_cast<INT>(ball_.getY() - 20 / 2), 884, 20), 0, 0, 884, 20, Unit::UnitPixel, &imAttr, 0);
 }
 
 VOID Cue::rotate(POINT point, LPARAM lParam)
