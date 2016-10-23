@@ -5,7 +5,6 @@
 using namespace Gdiplus;
 
 Cue::Cue() :
-	texture_(),
 	textureSize_(),
 	mouse_(),
 	ball_(),
@@ -23,10 +22,8 @@ Cue::~Cue()
 	//delete(texture_);
 }
 
-VOID Cue::draw(Graphics *graphics, Pen *pen)
-{
-	//reInitImage();
-	
+VOID Cue::draw(Graphics *graphics, Pen *pen, Image *image)
+{	
 	cue_.draw((ball_ - cue_).getX(), (ball_ - cue_).getY(), graphics, pen);
 	auxiliaryLine_.draw((ball_ - auxiliaryLine_).getX(), (ball_ - auxiliaryLine_).getY(), graphics, pen, Color::Gray);
 
@@ -38,7 +35,9 @@ VOID Cue::draw(Graphics *graphics, Pen *pen)
     //graphics->TranslateTransform(ball_.getX(), ball_.getY());
     //graphics->RotateTransform((mouse_ - ball_).getK());
 
-	//graphics->DrawImage(texture_, RectF(cue_.getX(), cue_.getY(), ball_.getX(), ball_.getY()));
+	ImageAttributes imAttr;
+	imAttr.SetColorKey(Color(0, 197, 206, 5), Color(0, 197, 206, 5));
+	graphics->DrawImage(image, Rect(ball_.getX() - 884, ball_.getY() - 20 / 2, 884, 20), 0, 0, 884, 20, Unit::UnitPixel, &imAttr, 0);
 }
 
 VOID Cue::rotate(POINT point, LPARAM lParam)

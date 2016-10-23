@@ -16,15 +16,13 @@ private:
 	vec cue_;
 	vec auxiliaryLine_;
 
-	VOID reInitImage() { delete texture_; texture_ = new Image(L"../src/Images/Cue.jpg"); }
-
 public:
 	Cue();
 	~Cue();
 
-	VOID dump() { cout << "texture: " << texture_ << ", width: " << textureSize_.width << ", height: " << textureSize_.height << endl
+	VOID dump() { cout << "width: " << textureSize_.width << ", height: " << textureSize_.height << endl
 	                   << "mouseX: " << mouse_.getX() << ", mouseY: " << mouse_.getY() << ", angle: " << (mouse_ - ball_).getK() << endl << endl; }
 
-	VOID draw(Graphics*, Pen*);
+	VOID draw(Graphics*, Pen*, Image*);
 	VOID rotate(POINT, LPARAM);
 };

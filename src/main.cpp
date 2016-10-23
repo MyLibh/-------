@@ -27,6 +27,7 @@ Image *ball12;
 Image *ball13;
 Image *ball14;
 Image *ball15;
+Image *cue;
 
 ATOM                MyRegisterClass();
 HWND                InitInstance(INT);
@@ -81,13 +82,12 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
 	ball13 = new Image(L"../src/Images/13.png");
 	ball14 = new Image(L"../src/Images/14.png");
 	ball15 = new Image(L"../src/Images/15.png");
+	cue = new Image(L"../src/Images/Cue.png");
 	
 	//for(size_t i = 0; i < NUMBER_OF_BALLS; i++)
 	//{
 	//	WCHAR wstr[MAX_LOADSTRING] = L"";
 	//	swprintf(wstr, L"../src/Images/%d.jpg", 8);
-		
-
 	//}
 	//programManager.initManager();
 
@@ -124,6 +124,7 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
 	delete ball13;
 	delete ball14;
 	delete ball15;
+	delete cue;
 
 	GdiplusShutdown(token);
 
@@ -232,17 +233,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			programManager.drawBalls(ball13, 13);
 			programManager.drawBalls(ball14, 14);
 			programManager.drawBalls(ball15, 15);			
-			programManager.drawCue();
+			programManager.drawCue(cue);
 			                               
 			if(programManager.stopBalls()) PostQuitMessage(EXITS::BALLS_STOPPED); 
  	
 			programManager.loadBufferIntoCanvas(hDC);
 			programManager.clearDubbleBuffering();
-
-			//Graphics *tmp = new Graphics(hDC);
-			//tmp->DrawImage(new Image(L"../src/Images/Cue.jpg"), RectF(0, 0, (1100 / 5) * SCALE, (360  / 5) * SCALE));
-			//tmp->DrawImage(new Image(L"../src/Images/8.jpg"), RectF(0, 0, 2 * RShari, 2 * RShari));
-			//delete(tmp);
 			
 			EndPaint(hWnd, &ps);
         }

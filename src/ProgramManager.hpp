@@ -76,7 +76,7 @@ public:
 	VOID clearDubbleBuffering();
 
 	VOID drawTable();
-	VOID drawCue() { cue_.draw(graphics_, pen_); }
+	VOID drawCue(Image *image) { cue_.draw(graphics_, pen_, image); }
 	VOID moveCue() { cue_.rotate(balls_.getBitokCoords(), lParam_); }
 	VOID drawBalls(Image *image, size_t index) { balls_.draw(graphics_, image, index); }
 	VOID moveBalls() { balls_.move(); }

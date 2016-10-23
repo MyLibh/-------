@@ -72,6 +72,7 @@ struct UPOINT
 
 CONST double SCALE = 2;
 CONST WORD NUMBER_OF_BALLS = 16;
+CONST Gdiplus::Color COLOR_KEY(0, 197, 206, 5);
 
 //Миллиметры
 
