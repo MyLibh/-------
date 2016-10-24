@@ -11,7 +11,7 @@ Cue::Cue() :
 	cue_(),
 	auxiliaryLine_()
 {
-	textureSize_.width  = 1100 / 5; // Загнать в константы
+	textureSize_.width  = 1100 / 5; // Г‡Г ГЈГ­Г ГІГј Гў ГЄГ®Г­Г±ГІГ Г­ГІГ»
 	textureSize_.height = 360  / 5; //
 
 	textureSize_ *= static_cast<float>(SCALE);
@@ -36,7 +36,7 @@ VOID Cue::draw(Graphics *graphics, Pen *pen, Image *image)
     //graphics->RotateTransform((mouse_ - ball_).getK());
 
 	//graphics->TranslateTransform(ball_.getX(), ball_.getY());
-	//graphics->RotateTransform((mouse_ - ball_).getK());
+	//graphics->RotateTransform((mouse_ - ball_).getK());alf = atan_(mouse_.x-ball_.x,  mouse_.y -ball_.y);
 
 	ImageAttributes imAttr;
 	imAttr.SetColorKey(Color(0, 197, 206, 5), Color(0, 197, 206, 5));
