@@ -71,13 +71,13 @@ struct UPOINT
 	UPOINT &operator*=(float);
 };
 
-//Константы
+//ГЉГ®Г­Г±ГІГ Г­ГІГ»
 
 CONST float SCALE = 2.13f;
 CONST WORD NUMBER_OF_BALLS = 16;
 CONST Gdiplus::Color COLOR_KEY(0, 197, 206, 5);
 
-//Миллиметры
+//ГЊГЁГ«Г«ГЁГ¬ГҐГІГ°Г»
 
 CONST float tagBALL_DIAMETER = 6.825f;    
 CONST float BALL_DIAMETER = tagBALL_DIAMETER * SCALE;   
@@ -85,43 +85,44 @@ CONST float BALL_DIAMETER = tagBALL_DIAMETER * SCALE;
 CONST float tagBALL_RADIUS   = tagBALL_DIAMETER / 2.0f;
 CONST float BALL_RADIUS = tagBALL_RADIUS * SCALE;
 
-//Сантиметры
+//Г‘Г Г­ГІГЁГ¬ГҐГІГ°Г»
 
 CONST UPOINT tagTABLE_SIZE(384, 206);
 CONST UPOINT TABLE_SIZE = (tagTABLE_SIZE * SCALE);
 
 CONST UPOINT tagFIELD_SIZE(355, 177);
 
-CONST SIZE_T tagCUE_LENGTH = 145;
+CONST SIZE_T tagCUE_LENGTH = 145;//1450
 CONST SIZE_T CUE_LENGTH = tagCUE_LENGTH * static_cast<SIZE_T>(SCALE);
 
-CONST SIZE_T EXTRA_CUE_LENGTH = 30;
+CONST SIZE_T EXTRA_CUE_LENGTH = 30;//nax.yu
 CONST SIZE_T EXTRA_CUE_LENGTH_2 = static_cast<SIZE_T>(floor(EXTRA_CUE_LENGTH / 2));
 
 CONST DistanceBetweenWallAndTable tagDISTANCE_BETWEEN_WALL_AND_TABLE = { CUE_LENGTH + EXTRA_CUE_LENGTH_2, CUE_LENGTH + EXTRA_CUE_LENGTH_2, CUE_LENGTH + EXTRA_CUE_LENGTH_2, CUE_LENGTH + EXTRA_CUE_LENGTH_2 };
 #define DistanceBWAT tagDISTANCE_BETWEEN_WALL_AND_TABLE 
 
-///На всякий случай: http://www.billiard-klondayk.ru/razmer-bilyardnoy.htm
-//Викепедия: https://ru.wikipedia.org/wiki/Пул_(бильярд)
+///ГЌГ  ГўГ±ГїГЄГЁГ© Г±Г«ГіГ·Г Г©: http://www.billiard-klondayk.ru/razmer-bilyardnoy.htm
+//Г‚ГЁГЄГҐГЇГҐГ¤ГЁГї: https://ru.wikipedia.org/wiki/ГЏГіГ«_(ГЎГЁГ«ГјГїГ°Г¤)
 
 //=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=
 
-CONST double sizeX = 1200;
-CONST double sizeY = 800;
-CONST double sizestenaUP = 64;
-CONST double sizestenaDOWN = 40;
-CONST double sizestenaLEFT = 40;
-CONST double sizestenaRIGHT = 32;
-CONST double sizeXpol = sizeX - sizestenaLEFT - sizestenaRIGHT;
-CONST double sizeYpol = sizeY - sizestenaUP - sizestenaDOWN;
+CONST double sizeX = 1200;//СЃСѓРјРјР°
+CONST double sizeY = 800;//
+CONST double sizestenaUP = 64;//СЃР°Рј
+CONST double sizestenaDOWN = 40;//
+CONST double sizestenaLEFT = 40;//
+CONST double sizestenaRIGHT = 32;//
+CONST double sizeXpol = sizeX - sizestenaLEFT - sizestenaRIGHT;//3550
+CONST double sizeYpol = sizeY - sizestenaUP - sizestenaDOWN;//1775
 
 CONST double cor3 = sqrt(static_cast<double>(3));
 
-CONST INT RShari = 16;
+CONST INT RShari = 16;//68/2
 
-CONST INT RLuz = 20;
-CONST double Ru = M_SQRT2 * RLuz;
-CONST INT RDugLuz = 10;            
+CONST INT RLuz = 20;//RUglLuz = 72.5/2
+//RBokLuz = 82,5/2 Рё РїРѕРјРµРЅСЏС‚СЊ С‚Р°Рј РіРґРµ Р±РѕРєРѕРІС‹Рµ Р»СѓР·С‹ СЃ СЂР»СѓР· РЅР° СЂР±РѕРєР»СѓР·
+CONST double Ru = M_SQRT2 * RLuz;//RUglLuz
+CONST INT RDugLuz = 10;            //15
 
 CONST INT ColvoCenterDugLuz = 12;
 
