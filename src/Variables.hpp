@@ -73,7 +73,7 @@ struct UPOINT
 
 //Êîíñòàíòû
 
-CONST float SCALE = 2.13f;
+CONST float SCALE = 0.49f;
 CONST WORD NUMBER_OF_BALLS = 16;
 CONST Gdiplus::Color COLOR_KEY(0, 197, 206, 5);
 
@@ -92,10 +92,10 @@ CONST UPOINT TABLE_SIZE = (tagTABLE_SIZE * SCALE);
 
 CONST UPOINT tagFIELD_SIZE(355, 177);
 
-CONST SIZE_T tagCUE_LENGTH = 145;//1450
+CONST SIZE_T tagCUE_LENGTH = 1450;
 CONST SIZE_T CUE_LENGTH = tagCUE_LENGTH * static_cast<SIZE_T>(SCALE);
 
-CONST SIZE_T EXTRA_CUE_LENGTH = 30;//nax.yu
+CONST SIZE_T EXTRA_CUE_LENGTH = 30;
 CONST SIZE_T EXTRA_CUE_LENGTH_2 = static_cast<SIZE_T>(floor(EXTRA_CUE_LENGTH / 2));
 
 CONST DistanceBetweenWallAndTable tagDISTANCE_BETWEEN_WALL_AND_TABLE = { CUE_LENGTH + EXTRA_CUE_LENGTH_2, CUE_LENGTH + EXTRA_CUE_LENGTH_2, CUE_LENGTH + EXTRA_CUE_LENGTH_2, CUE_LENGTH + EXTRA_CUE_LENGTH_2 };
@@ -106,23 +106,26 @@ CONST DistanceBetweenWallAndTable tagDISTANCE_BETWEEN_WALL_AND_TABLE = { CUE_LEN
 
 //=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=
 
-CONST double sizeX = 1200;//сумма
-CONST double sizeY = 800;//
-CONST double sizestenaUP = 64;//сам
-CONST double sizestenaDOWN = 40;//
-CONST double sizestenaLEFT = 40;//
-CONST double sizestenaRIGHT = 32;//
-CONST double sizeXpol = sizeX - sizestenaLEFT - sizestenaRIGHT;//3550
-CONST double sizeYpol = sizeY - sizestenaUP - sizestenaDOWN;//1775
+
+CONST double sizestenaUP = 100 * SCALE;//64;//сам
+CONST double sizestenaDOWN = 100 * SCALE;//40;//
+CONST double sizestenaLEFT = 100 * SCALE;//40;//
+CONST double sizestenaRIGHT = 100 * SCALE;//32;//
+CONST double sizeXpol = 3550 * SCALE; // sizeX - sizestenaLEFT - sizestenaRIGHT
+CONST double sizeYpol = 1775 * SCALE; // sizeY - sizestenaUP - sizestenaDOWN
+
+CONST double sizeX = sizeXpol + sizestenaLEFT + sizestenaRIGHT; //1200;//сумма
+CONST double sizeY = sizestenaUP + sizestenaDOWN + sizeYpol; //800;//
 
 CONST double cor3 = sqrt(static_cast<double>(3));
 
-CONST INT RShari = 16;//68/2
+CONST INT RShari = static_cast<INT>((68 / 2)  * SCALE); // 16
 
-CONST INT RLuz = 20;//RUglLuz = 72.5/2
+CONST INT RLuz = static_cast<INT>((72.5 / 2) * SCALE); //RUglLuz = 20
 //RBokLuz = 82,5/2 и поменять там где боковые лузы с рлуз на рбоклуз
-CONST double Ru = M_SQRT2 * RLuz;//RUglLuz
-CONST INT RDugLuz = 10;            //15
+CONST INT RBokLuz = static_cast<INT>(82.5 / 2);
+CONST double Ru = RLuz; // M_SQRT2 * RLuz
+CONST INT RDugLuz = static_cast<INT>(15 * SCALE); // 10
 
 CONST INT ColvoCenterDugLuz = 12;
 

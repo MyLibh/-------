@@ -7,7 +7,7 @@ using namespace Gdiplus;
 
 class Cue
 {
-private:
+private:public:
 	Image  *texture_;
 	UPOINT  textureSize_;
 
@@ -16,7 +16,9 @@ private:
 	vec cue_;
 	vec auxiliaryLine_;
 
-public:
+	bool draw_;
+
+
 	Cue();
 	~Cue();
 

@@ -51,7 +51,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -80,6 +80,7 @@
     <ClInclude Include="..\src\Cue.hpp" />
     <ClInclude Include="..\src\ProgramManager.hpp" />
     <ClInclude Include="..\src\resource.h" />
+    <ClInclude Include="..\src\Textures.hpp" />
     <ClInclude Include="..\src\Variables.hpp" />
     <ClInclude Include="..\src\Vector.hpp" />
   </ItemGroup>
@@ -88,6 +89,7 @@
     <ClCompile Include="..\src\Cue.cpp" />
     <ClCompile Include="..\src\ProgramManager.cpp" />
     <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\Textures.cpp" />
     <ClCompile Include="..\src\Variables.cpp" />
     <ClCompile Include="..\src\Vector.cpp" />
   </ItemGroup>

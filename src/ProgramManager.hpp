@@ -3,10 +3,11 @@
 #include "Variables.hpp"
 #include "Balls.hpp"
 #include "Cue.hpp"
+#include "Textures.hpp"
 
 using namespace Gdiplus;
 
-class ProgramManager
+class ProgramManager 
 {
 private:
 	HWND        hWnd_;
@@ -21,6 +22,7 @@ private:
 	Font       *font_;
 	SolidBrush *brush_;
 
+	
 	Balls       balls_;
 	Cue         cue_;
 
@@ -39,7 +41,8 @@ public:
 	
 	VOID dump() const { cout << "memDC: " << memDC_ << ", memHbm: " << memHbm_ << ", oldHbm: " << oldHbm_ << ", hInst: " << hInstance_ << endl
 							 << "hWnd: " << hWnd_  /*<<", title: " << title_ << ", wndClassName: " << wndClassName_ */<< endl 
-							 << "graphics: " << graphics_ << ", pen: " << &pen_ << ", font: " << font_ << ", brush: " << &brush_ << endl << endl; }
+							 << "graphics: " << graphics_ << ", pen: " << &pen_ << ", font: " << font_ << ", brush: " << &brush_ << endl
+							 << endl << endl; }
 
 	HDC       getMemDC()       const { return memDC_; }
 	HBITMAP   getMemHbm()      const { return memHbm_; }
@@ -75,11 +78,13 @@ public:
 	VOID initDubbleBuffering(HDC);
 	VOID clearDubbleBuffering();
 
-	VOID drawTable();
+	VOID drawTable(Image*);
 	VOID drawCue(Image *image) { cue_.draw(graphics_, pen_, image); }
 	VOID moveCue() { cue_.rotate(balls_.getBitokCoords(), lParam_); }
-	VOID drawBalls(Image *image, size_t index) { balls_.draw(graphics_, image, index); }
+	VOID drawBalls(Image *images[]) { balls_.draw(graphics_, images); } 
 	VOID moveBalls() { balls_.move(); }
+
+	VOID onPAINT(Image*, Image*, Image*, Image*[]);
 
 	BOOL stopBalls() const { if(balls_.stopped()) graphics_->DrawString(L"EZ WIN", strlen("EZ WIN"), font_, PointF(10, 10), brush_); return balls_.stopped(); }
 };

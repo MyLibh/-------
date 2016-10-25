@@ -38,7 +38,7 @@ public:
 	POINT getBitokCoords() const { POINT point = { static_cast<LONG>(t[0].getX()), static_cast<LONG>(t[0].getY()) }; return point; }
 	
 	VOID move();
-	VOID draw(Gdiplus::Graphics*, Gdiplus::Image*, size_t); 
+	VOID draw(Gdiplus::Graphics*, Gdiplus::Image*[]);
 };
 
 

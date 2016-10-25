@@ -19,8 +19,10 @@ ProgramManager::ProgramManager() :
 	brush_(nullptr),
 	window_()
 {
-	window_.width  =  static_cast<SIZE_T>(floor((DistanceBWAT.left + TABLE_SIZE.width  + DistanceBWAT.right ) * SCALE));
-	window_.height =  static_cast<SIZE_T>(floor((DistanceBWAT.up   + TABLE_SIZE.height + DistanceBWAT.bottom) * SCALE));
+	window_.width  = static_cast<SIZE_T>(sizeX + 100); //static_cast<SIZE_T>(floor((DistanceBWAT.left + TABLE_SIZE.width  + DistanceBWAT.right ) * SCALE));
+	window_.height = static_cast<SIZE_T>(sizeY + 100); //static_cast<SIZE_T>(floor((DistanceBWAT.up   + TABLE_SIZE.height + DistanceBWAT.bottom) * SCALE));
+
+	//loadTextures();
 
 	//HDC hDC = GetDC(hWnd_);
 	//ReleaseDC(hWnd_, hDC);
@@ -48,7 +50,7 @@ ProgramManager::~ProgramManager()
 	oldHbm_ = nullptr;
 }
 
-VOID ProgramManager::drawTable()
+VOID ProgramManager::drawTable(Image*)
 {
 	graphics_->DrawLine(pen_, Point(static_cast<INT>(sizeX - sizestenaRIGHT), static_cast<INT>(sizestenaUP + Ru + RDugLuz)), Point(static_cast<INT>(sizeX - sizestenaRIGHT), static_cast<INT>(sizestenaUP + sizeYpol - Ru - RDugLuz)));
 	graphics_->DrawLine(pen_, Point(static_cast<INT>(        sizestenaLEFT ), static_cast<INT>(sizestenaUP + Ru + RDugLuz)), Point(static_cast<INT>(        sizestenaLEFT ), static_cast<INT>(sizestenaUP + sizeYpol - Ru - RDugLuz)));
@@ -97,3 +99,29 @@ VOID ProgramManager::initManager()
 	reInitFont();
 	reInitBrush();
 }
+
+VOID ProgramManager::onPAINT(Image *background, Image *table, Image *cue, Image *balls[])
+{
+	$r dump();
+
+    PAINTSTRUCT ps;
+    HDC hDC = BeginPaint(hWnd_, &ps);
+
+	initDubbleBuffering(hDC); 
+	loadBackgroundIntoCanvas(hDC, background);
+			
+	moveBalls();
+	moveCue();
+			
+	drawTable(table);
+	drawBalls(balls);
+	drawCue(cue);			                               
+ 	
+	loadBufferIntoCanvas(hDC);
+	clearDubbleBuffering();
+			
+	EndPaint(hWnd_, &ps);
+}
+
+//////////////////////////////////////////
+
