@@ -12,7 +12,7 @@ ProgramManager::ProgramManager() :
 	memHbm_(nullptr), 
 	oldHbm_(nullptr),
 	hInstance_(nullptr),
-	lParam_(0),
+	mouse_(),
 	graphics_(nullptr),
 	pen_(nullptr),
 	font_(nullptr),
@@ -125,3 +125,25 @@ VOID ProgramManager::onPAINT(Image *background, Image *table, Image *cue, Image 
 
 //////////////////////////////////////////
 
+VOID ProgramManager::onPAINT(Textures *textures)
+{
+	$r dump();
+
+    PAINTSTRUCT ps;
+    HDC hDC = BeginPaint(hWnd_, &ps);
+
+	initDubbleBuffering(hDC); 
+	loadBackgroundIntoCanvas(hDC, textures->getBackgroundTexture());
+			
+	moveBalls();
+	moveCue();
+			
+	drawTable(textures->getTableTexture());
+	drawBalls(textures->balls_);
+	drawCue(textures->getCueTexture());			                               
+ 	
+	loadBufferIntoCanvas(hDC);
+	clearDubbleBuffering();
+			
+	EndPaint(hWnd_, &ps);
+}

@@ -2,6 +2,7 @@
 
 #include "Variables.hpp"
 #include "Vector.hpp"
+#include "Mouse.hpp"
 
 using namespace Gdiplus;
 
@@ -26,5 +27,5 @@ private:public:
 	                   << "mouseX: " << mouse_.getX() << ", mouseY: " << mouse_.getY() << ", angle: " << (mouse_ - ball_).getK() << endl << endl; }
 
 	VOID draw(Graphics*, Pen*, Image*);
-	VOID rotate(POINT, LPARAM);
+	VOID rotate(POINT, Mouse);
 };

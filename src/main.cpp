@@ -9,7 +9,7 @@ using namespace Gdiplus;
 WCHAR     title_[MAX_LOADSTRING];         //        
 WCHAR     wndClassName_[MAX_LOADSTRING];  // ¬нести в ProgramManager
 ProgramManager programManager;
-
+Textures *textures;
 Image *background;
 Image *table;
 Image *cue;
@@ -50,6 +50,8 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
 	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);
 
+    textures = new Textures();
+
 	background = new Image(L"../src/Images/Background.jpg");
 	table = new Image(L"../src/Images/Table.jpg");
 	cue = new Image(L"../src/Images/Cue.png");
@@ -57,7 +59,7 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
 	for(size_t i = 0; i < NUMBER_OF_BALLS; i++)
 	{
 		WCHAR wstr[MAX_LOADSTRING] = L"";
-		swprintf(wstr, L"../src/Images/%d.png", i);
+		swprintf_s(wstr, L"../src/Images/%d.png", i); // Long
 
 		balls[i] = new Image(wstr);
 	}
@@ -77,6 +79,7 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
 		if(GetAsyncKeyState(27)) return EXITS::ESCAPE;
     }
 
+    delete(textures);
 	delete(background);
 	delete(table);
 	delete(cue);
@@ -146,7 +149,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         break;
 	case WM_MOUSEMOVE:      
-		programManager.setLParam(lParam); 
+		programManager.setMouse(lParam, 0); 
 		break;
 	case WM_SIZE:
 		{

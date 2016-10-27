@@ -10,9 +10,11 @@ private:
 	Image *background_;
 	Image *table_;
 	Image *cue_;
-	Image *balls_[NUMBER_OF_BALLS];
+	
 
-public:
+public:      
+    Image *balls_[NUMBER_OF_BALLS];
+
 	Textures();
 	~Textures();
 

@@ -15,14 +15,13 @@ private:
 	HBITMAP     memHbm_;
 	HBITMAP     oldHbm_;
 	HINSTANCE   hInstance_;
-	LPARAM      lParam_;
 
 	Graphics   *graphics_;
 	Pen        *pen_;
 	Font       *font_;
 	SolidBrush *brush_;
 
-	
+	Mouse       mouse_;
 	Balls       balls_;
 	Cue         cue_;
 
@@ -56,18 +55,17 @@ public:
 	UPOINT    getMemDCWindow() const { return window_; }
 	//Стандартные функции для шрифта
 
-	VOID setMemDC(HDC hDC)                 { memDC_     = hDC; }
-	VOID setMemHbm(HBITMAP memHbm)         { memHbm_    = memHbm; }
-	VOID setOldHbm(HBITMAP oldHbm)         { oldHbm_    = oldHbm; }
-	VOID setHWND(HWND hWnd)                { hWnd_      = hWnd; }
-	VOID setHINSTANCE(HINSTANCE hInstance) { hInstance_ = hInstance; }
-	VOID setMemDCWindow(RECT rect)         { window_ = rect; }
-	VOID setLParam(LPARAM lParam)          { lParam_ = lParam; }  
-	VOID setPenColor(Color color)          { pen_->SetColor(color); }
-	VOID setPenWidth(REAL width)           { pen_->SetWidth(width); }
+	VOID setMemDC(HDC hDC)                   { memDC_     = hDC; }
+	VOID setMemHbm(HBITMAP memHbm)           { memHbm_    = memHbm; }
+	VOID setOldHbm(HBITMAP oldHbm)           { oldHbm_    = oldHbm; }
+	VOID setHWND(HWND hWnd)                  { hWnd_      = hWnd; }
+	VOID setHINSTANCE(HINSTANCE hInstance)   { hInstance_ = hInstance; }
+	VOID setMemDCWindow(RECT rect)           { window_ = rect; }
+	VOID setMouse(LPARAM lParam, int button) { mouse_.update(lParam, button); }  
+	VOID setPenColor(Color color)            { pen_->SetColor(color); }
+	VOID setPenWidth(REAL width)             { pen_->SetWidth(width); }
 
 	VOID setBrushColor(Color color = Color::Black) { brush_->SetColor(color); }
-	
 
 	VOID loadTitle(WCHAR *title_)                           { LoadStringW(hInstance_, IDS_APP_TITLE, title_, MAX_LOADSTRING); }
 	VOID loadWndClassName(WCHAR *wndClassName_)             { LoadStringW(hInstance_, IDC_BILLIARDS, wndClassName_, MAX_LOADSTRING);}
@@ -80,11 +78,12 @@ public:
 
 	VOID drawTable(Image*);
 	VOID drawCue(Image *image) { cue_.draw(graphics_, pen_, image); }
-	VOID moveCue() { cue_.rotate(balls_.getBitokCoords(), lParam_); }
+	VOID moveCue() { cue_.rotate(balls_.getBitokCoords(), mouse_); }
 	VOID drawBalls(Image *images[]) { balls_.draw(graphics_, images); } 
 	VOID moveBalls() { balls_.move(); }
 
 	VOID onPAINT(Image*, Image*, Image*, Image*[]);
+    VOID onPAINT(Textures*); // Testing
 
 	BOOL stopBalls() const { if(balls_.stopped()) graphics_->DrawString(L"EZ WIN", strlen("EZ WIN"), font_, PointF(10, 10), brush_); return balls_.stopped(); }
 };

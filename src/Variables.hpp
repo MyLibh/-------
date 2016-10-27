@@ -115,7 +115,7 @@ CONST double sizeXpol = 3550 * SCALE; // sizeX - sizestenaLEFT - sizestenaRIGHT
 CONST double sizeYpol = 1775 * SCALE; // sizeY - sizestenaUP - sizestenaDOWN
 
 CONST double sizeX = sizeXpol + sizestenaLEFT + sizestenaRIGHT; //1200;//сумма
-CONST double sizeY = sizestenaUP + sizestenaDOWN + sizeYpol; //800;//
+CONST double sizeY = sizestenaUP + sizestenaDOWN + sizeYpol; //800;
 
 CONST double cor3 = sqrt(static_cast<double>(3));
 

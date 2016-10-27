@@ -45,10 +45,10 @@ VOID Cue::draw(Graphics *graphics, Pen *pen, Image *image)
 	}
 }
 
-VOID Cue::rotate(POINT point, LPARAM lParam)
+VOID Cue::rotate(POINT point, Mouse mouse)
 {
-	mouse_.setX(LOWORD(lParam));
-	mouse_.setY(HIWORD(lParam));
+	mouse_.setX(mouse.getMouseCoords().x);
+	mouse_.setY(mouse.getMouseCoords().y);
 
 	ball_.setX(point.x);
 	ball_.setY(point.y);
