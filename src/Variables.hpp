@@ -12,15 +12,20 @@
 #include <math.h>
 
 #include "resource.h"
+#include "UPOINT.hpp"
 
 using std::cout;
 using std::endl;
+using std::wstring;
+
 //===========================================================================================================
 
 #define MAX_LOADSTRING 100
 #define PAUSE system("pause");
 
 //===========================================================================================================
+
+inline BOOL In(RECT, POINT);
 
 BOOL SetConsoleColor(unsigned); 
 
@@ -34,10 +39,11 @@ enum EXITS
 	WNDCLASS_FAILED      = -15001,
 	WNDCREATE_FAILED     = -15002,
 	CONSOLECREATE_FAILED = -15003,
+	GDIPINIT_FAILED      = -15004,
 
-	ESCAPE           = 27,
+	ESCAPE               = 27,
 
-	BALLS_STOPPED    =  15001
+	BALLS_STOPPED        =  15001
 };
 
 
@@ -51,30 +57,66 @@ struct DistanceBetweenWallAndTable
 		   bottom;
 };
 
-struct UPOINT
-{
-	size_t width,
-		   height;
-
-	UPOINT();
-	UPOINT(SIZE_T, SIZE_T);
-	UPOINT(const UPOINT&);
-	~UPOINT();
-
-	UPOINT &operator=(RECT);
-	UPOINT &operator=(UPOINT);
-	UPOINT operator*(float) const;
-	UPOINT operator*(UPOINT) const;
-
-	//template<typename T>
-	//UPOINT& operator*=(T);
-	UPOINT &operator*=(float);
-};
-
 //Êîíñòàíòû
 
-CONST float SCALE = 0.49f;
+//==========================================
+
 CONST WORD NUMBER_OF_BALLS = 16;
+
+CONST WORD NUMBER_OF_TEXTURES = NUMBER_OF_BALLS + 1 + 1 + 1 + 1; // background, table, cue, menu
+
+CONST wstring  WAYS[NUMBER_OF_TEXTURES] =
+{ 
+	L"../src/Images/0.png",
+	L"../src/Images/1.png",
+	L"../src/Images/2.png",
+	L"../src/Images/3.png",
+	L"../src/Images/4.png",
+	L"../src/Images/5.png",
+	L"../src/Images/6.png",
+	L"../src/Images/7.png",
+	L"../src/Images/8.png",
+	L"../src/Images/9.png",
+	L"../src/Images/10.png",
+	L"../src/Images/11.png",
+	L"../src/Images/12.png",
+	L"../src/Images/13.png",
+	L"../src/Images/14.png",
+	L"../src/Images/15.png",
+	L"../src/Images/Background.jpg",
+	L"../src/Images/Table.jpg",
+	L"../src/Images/Cue.png",
+	L"../src/Images/Menu.jpg"
+};
+
+enum TEXTURES
+{
+	zero       =  0,
+	thirst     =  1,
+	second     =  2,
+	third      =  3,
+	fourth     =  4,
+	fifth      =  5,
+	sixth      =  6,
+	seventh    =  7,
+	eighth     =  8,
+	nineth     =  9,
+	tenth      = 10,
+	eleventh   = 11,
+	twelfth    = 12,
+	thirteenth = 13,
+	fourteenth = 14,
+	fifteenth  = 15,
+	background = 16,
+	table      = 17,
+	cue        = 18,
+	menu       = 19
+};
+
+//==========================================
+
+CONST float SCALE = 0.49f;
+
 CONST Gdiplus::Color COLOR_KEY(0, 197, 206, 5);
 
 //Ìèëëèìåòðû

@@ -1,7 +1,7 @@
 ﻿#define IDC_MYICON                      2
 #define IDC_BILLIARDS_DIALOG            102
 #define IDS_APP_TITLE                   103
-#define IDD_ABOUTBOX                    103
+#define IDD_ABOUTBOX                    103 
 #define IDM_ABOUT                       104
 #define IDM_EXIT                        105
 #define IDI_BILLIARDS                   107
@@ -11,7 +11,7 @@
 #define IDC_STATIC                      -1
 
 //#define __tagVERSION__ 
-#define __VERSION__    "0.14v"
+#define __VERSION__    "0.15v"
 
 //#define __tagAUTHOR__ "A&A"
 #define __AUTHOR__    "A&A"

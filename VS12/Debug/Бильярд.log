@@ -1,36 +1,24 @@
-﻿Build started 27.10.2016 12:26:12.
-     1>Project "C:\Users\User\Documents\GitHub\-------\VS12\Бильярд.vcxproj" on node 2 (Build target(s)).
-     1>InitializeBuildStatus:
-         Creating "Debug\Бильярд.unsuccessfulbuild" because "AlwaysCreate" was specified.
-       ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _CRT_NON_CONFORMING_SWPRINTFS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt ..\src\Balls.cpp ..\src\Cue.cpp ..\src\Menu.cpp ..\src\Mouse.cpp ..\src\ProgramManager.cpp ..\src\main.cpp ..\src\Textures.cpp ..\src\Variables.cpp ..\src\Vector.cpp
-         main.cpp
+﻿Построение начато 29.10.2016 22:57:53.
+     1>Проект "C:\Users\Alex Golden\Documents\GitHub\-------\VS12\Бильярд.vcxproj" в узле 2 (целевые объекты Build).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _CRT_NON_CONFORMING_SWPRINTFS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt ..\src\ProgramManager.cpp
          ProgramManager.cpp
-         Mouse.cpp
-         Menu.cpp
-     1>c:\users\user\documents\github\-------\src\menu.hpp(12): error C2864: 'Menu::NUMBER_OF_BUTTONS' : only static const integral data members can be initialized within a class
-     1>c:\users\user\documents\github\-------\src\menu.hpp(14): error C2327: 'Menu::NUMBER_OF_BUTTONS' : is not a type name, static, or enumerator
-     1>c:\users\user\documents\github\-------\src\menu.hpp(14): error C2065: 'NUMBER_OF_BUTTONS' : undeclared identifier
-     1>c:\users\user\documents\github\-------\src\menu.hpp(15): error C2327: 'Menu::NUMBER_OF_BUTTONS' : is not a type name, static, or enumerator
-     1>c:\users\user\documents\github\-------\src\menu.hpp(15): error C2065: 'NUMBER_OF_BUTTONS' : undeclared identifier
-     1>c:\users\user\documents\github\-------\src\menu.cpp(8): error C2758: 'Menu::NUMBER_OF_BUTTONS' : must be initialized in constructor base/member initializer list
-                 c:\users\user\documents\github\-------\src\menu.hpp(12) : see declaration of 'Menu::NUMBER_OF_BUTTONS'
-     1>c:\users\user\documents\github\-------\src\menu.cpp(8): error C2439: 'Menu::texts_' : member could not be initialized
-                 c:\users\user\documents\github\-------\src\menu.hpp(14) : see declaration of 'Menu::texts_'
-         Cue.cpp
-         Generating Code...
-         Compiling...
-         Vector.cpp
-         Variables.cpp
-         Textures.cpp
-     1>c:\users\user\documents\github\-------\src\textures.cpp(18): warning C4996: 'swprintf': This function or variable may be unsafe. Consider using swprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\swprintf.inl(85) : see declaration of 'swprintf'
-     1>c:\users\user\documents\github\-------\src\textures.cpp(42): warning C4996: 'swprintf': This function or variable may be unsafe. Consider using swprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\swprintf.inl(85) : see declaration of 'swprintf'
-         Balls.cpp
-         Generating Code...
-     1>Done Building Project "C:\Users\User\Documents\GitHub\-------\VS12\Бильярд.vcxproj" (Build target(s)) -- FAILED.
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Alex Golden\Documents\GitHub\-------\VS12\Debug\Бильярд.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Alex Golden\Documents\GitHub\-------\VS12\Debug\Бильярд.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Alex Golden\Documents\GitHub\-------\VS12\Debug\Бильярд.lib" /MACHINE:X86 "Debug\Бильярд.res"
+         Debug\Balls.obj
+         Debug\Button.obj
+         Debug\Cue.obj
+         Debug\Menu.obj
+         Debug\Mouse.obj
+         Debug\ProgramManager.obj
+         Debug\main.obj
+         Debug\Textures.obj
+         Debug\UPOINT.obj
+         Debug\Variables.obj
+         Debug\Vector.obj
+         Бильярд.vcxproj -> C:\Users\Alex Golden\Documents\GitHub\-------\VS12\Debug\Бильярд.exe
+     1>Построение проекта "C:\Users\Alex Golden\Documents\GitHub\-------\VS12\Бильярд.vcxproj" завершено (целевые объекты Build).
 
-Build FAILED.
+Построение успешно завершено.
 
-Time Elapsed 00:00:09.60
+Затраченное время: 00:00:02.04

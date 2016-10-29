@@ -8,17 +8,12 @@ using namespace Gdiplus;
 
 Textures::Textures()
 {
-	background_ = new Image(L"../src/Images/Background.jpg");
-	table_      = nullptr;
-	cue_        = new Image(L"../src/Images/Cue.png");
+	background_ = new Image(WAYS[TEXTURES::background].c_str());
+	table_      = new Image(WAYS[TEXTURES::table].c_str());
+	cue_        = new Image(WAYS[TEXTURES::cue].c_str());
+	menu_       = new Image(WAYS[TEXTURES::menu].c_str());
 
-	for(size_t i = 0; i < NUMBER_OF_BALLS; i++)
-	{
-		WCHAR wstr[MAX_LOADSTRING] = L"";
-		swprintf(wstr, L"../src/Images/%d.png", i);
-
-		balls_[i] = new Image(wstr);
-	}
+	for(size_t i = 0; i < NUMBER_OF_BALLS; i++) balls_[i] = new Image(WAYS[i].c_str());	
 }
 
 Textures::~Textures()
@@ -26,21 +21,8 @@ Textures::~Textures()
 	delete(background_);
 	delete(table_);
 	delete(cue_);
+	delete(menu_);
 
 	for(size_t i = 0; i < NUMBER_OF_BALLS; i++) delete(balls_[i]);
 }
 
-VOID Textures::loadTextures()
-{
-	background_ = new Image(L"../src/Images/Background.jpg");
-	table_      = nullptr;
-	cue_        = new Image(L"../src/Images/Cue.png");
-
-	for(size_t i = 0; i < NUMBER_OF_BALLS; i++)
-	{
-		WCHAR wstr[MAX_LOADSTRING] = L"";
-		swprintf(wstr, L"../src/Images/%d.png", i);
-
-		balls_[i] = new Image(wstr);
-	}
-}

@@ -256,12 +256,13 @@ VOID Balls::move()
 	repulsion();
 }
 
-VOID Balls::draw(Gdiplus::Graphics *graphics, Gdiplus::Image *images[]) 
+VOID Balls::draw(Graphics *graphics, Image *images[]) const
 { 
 	ImageAttributes imAttr;
 	imAttr.SetColorKey(COLOR_KEY, COLOR_KEY);
 	for(size_t i = 0; i < NUMBER_OF_BALLS; i++)
 		graphics->DrawImage(images[i], Rect(static_cast<INT>(t[i].getX()) - RShari, static_cast<INT>(t[i].getY()) - RShari, 2 * RShari, 2 * RShari), 0, 0, 2 * RShari, 2 * RShari, Unit::UnitPixel, &imAttr, 0); 
 }
+
 
 

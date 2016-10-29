@@ -9,8 +9,10 @@ double atan_(double, double);
 class vec
 {
 private:
-	double x_, y_;
-    double k_, l_;
+	double x_;
+	double y_;
+    mutable double l_;
+	mutable double k_;
 
 public:
     vec();
@@ -18,19 +20,19 @@ public:
 
 	VOID dump() const { cout << x_ << y_ << k_ << l_ << l_ * cos(k_) << l_ * sin(k_) << endl << endl; }
 
-	VOID setL(double l) { l_ = l; }
-	VOID setK(double k) { k_ = k; }
-	VOID setX(double x) { x_ = x; }
-	VOID setY(double y) { y_ = y; }
+	inline VOID setL(double l) { l_ = l; }
+	inline VOID setK(double k) { k_ = k; }
+	inline VOID setX(double x) { x_ = x; }
+	inline VOID setY(double y) { y_ = y; }
 	VOID setLK();
     VOID setXY();
 
-	double getL() const { return l_; }
-	double getK() const { return k_; }
-	double getX() const { return x_; }
-	double getY() const { return y_; }  
+	inline double getL() const { return l_; }
+	inline double getK() const { return k_; }
+	inline double getX() const { return x_; }
+	inline double getY() const { return y_; }  
 
-    VOID draw(double, double, Graphics*, Pen*, Color = Color::Yellow);
+    VOID draw(double, double, Graphics*, Pen*, Color = Color::Yellow) const;
 
     vec operator=(vec);
     vec operator=(POINT);

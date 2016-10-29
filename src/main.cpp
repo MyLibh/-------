@@ -1,19 +1,12 @@
 #include "ProgramManager.hpp"
 
-#define __DEBUG
+//#define __DEBUG
 
 #pragma comment (lib, "gdiplus.lib")
 
 using namespace Gdiplus;    
 
-WCHAR     title_[MAX_LOADSTRING];         //        
-WCHAR     wndClassName_[MAX_LOADSTRING];  // ¬нести в ProgramManager
 ProgramManager programManager;
-Textures *textures;
-Image *background;
-Image *table;
-Image *cue;
-Image *balls[NUMBER_OF_BALLS];
 
 ATOM                MyRegisterClass();
 HWND                InitInstance(INT);
@@ -37,11 +30,9 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
 	GdiplusStartupInput gfd;
 	ULONG_PTR token = NULL;
 	Status st = GdiplusStartup(&token, &gfd, NULL);
-    if (st != NULL) MessageBox(NULL, L"", L"FATAL ERROR", MB_OK | MB_ICONERROR);
+    if (st != NULL) return EXITS::GDIPINIT_FAILED;
 
 	programManager.setHINSTANCE(hInstance);
-	programManager.loadTitle(title_);
-	programManager.loadWndClassName(wndClassName_);
 
     if(!MyRegisterClass()) return EXITS::WNDCLASS_FAILED;
 
@@ -50,54 +41,36 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
 	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);
 
-    textures = new Textures();
-
-	background = new Image(L"../src/Images/Background.jpg");
-	table = new Image(L"../src/Images/Table.jpg");
-	cue = new Image(L"../src/Images/Cue.png");
-
-	for(size_t i = 0; i < NUMBER_OF_BALLS; i++)
-	{
-		WCHAR wstr[MAX_LOADSTRING] = L"";
-		swprintf_s(wstr, L"../src/Images/%d.png", i); // Long
-
-		balls[i] = new Image(wstr);
-	}
-
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_BILLIARDS));
 
     MSG msg = { };
 
-    while (GetMessage(&msg, nullptr, 0, 0))
+    while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) 
     {
         if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
         {
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }
-	
+		
+		$r programManager.dump();
+		programManager.work();	
+
+		if(programManager.stopBalls()) PostQuitMessage(EXITS::BALLS_STOPPED);
 		if(GetAsyncKeyState(27)) return EXITS::ESCAPE;
     }
-
-    delete(textures);
-	delete(background);
-	delete(table);
-	delete(cue);
-
-	for(size_t i = 0; i < NUMBER_OF_BALLS; i++) delete(balls[i]);
 
 	GdiplusShutdown(token);
 
 #ifdef __DEBUG 
 	PAUSE
 #endif
+
     return static_cast<INT>(msg.wParam);
 }
 
 ATOM MyRegisterClass()
 {
-	//HBITMAP background = LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP1));
-
     WNDCLASSEXW wcex = { sizeof(WNDCLASSEX) };
 	wcex.style          = CS_HREDRAW | CS_VREDRAW;
     wcex.lpfnWndProc    = WndProc;
@@ -108,7 +81,7 @@ ATOM MyRegisterClass()
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
     wcex.hbrBackground  = /*(background)? CreatePatternBrush(background) : */reinterpret_cast<HBRUSH>(COLOR_WINDOW + 1);
     wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_BILLIARDS);
-    wcex.lpszClassName  = wndClassName_;
+    wcex.lpszClassName  = programManager.getWndClassName();
     wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
     return RegisterClassExW(&wcex);
@@ -116,7 +89,7 @@ ATOM MyRegisterClass()
 
 HWND InitInstance(INT nCmdShow)
 {
-   HWND hWnd = CreateWindowW(wndClassName_, title_, WS_OVERLAPPEDWINDOW,
+   HWND hWnd = CreateWindowW(programManager.getWndClassName(), programManager.getTitle(), WS_OVERLAPPEDWINDOW,
       10, 10, programManager.getMemDCWindow().width, programManager.getMemDCWindow().height, nullptr, nullptr, programManager.getHINSTANCE(), nullptr);
 
    programManager.setHWND(hWnd);
@@ -129,7 +102,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     switch (message)
     {
 	case WM_CREATE:
-		SetTimer(hWnd, NULL, 60, NULL);
+		//SetTimer(hWnd, NULL, 1, NULL);
 		break;
     case WM_COMMAND:
         {
@@ -138,7 +111,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             switch (wmId)
             {
             case IDM_ABOUT:
-				DialogBox(programManager.getHINSTANCE(), MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
+				//DialogBox(programManager.getHINSTANCE(), MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
                 break;
             case IDM_EXIT:
                 DestroyWindow(hWnd);
@@ -149,24 +122,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         break;
 	case WM_MOUSEMOVE:      
-		programManager.setMouse(lParam, 0); 
+		programManager.setMouse(lParam, wParam); 
 		break;
 	case WM_SIZE:
 		{
-			RECT tmpRect = {};
-			GetClientRect(hWnd, &tmpRect); 
+			//RECT tmpRect = {};
+			//GetClientRect(hWnd, &tmpRect); 
 
-			programManager.setMemDCWindow(tmpRect);
+			//programManager.setMemDCWindow(tmpRect);
 		}
 		break;
 	case WM_TIMER:
-		InvalidateRect(hWnd, NULL, false);
+		//InvalidateRect(hWnd, NULL, false);
 		break;
     case WM_PAINT:
 		{
-			programManager.onPAINT(background, table, cue, balls);
-
-			if(programManager.stopBalls()) PostQuitMessage(EXITS::BALLS_STOPPED); 
+			programManager.onPAINT(); 
         }
         break;
     case WM_DESTROY:

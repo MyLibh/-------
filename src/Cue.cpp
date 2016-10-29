@@ -5,29 +5,26 @@
 using namespace Gdiplus;
 
 Cue::Cue() :
-	textureSize_(),
 	mouse_(),
 	ball_(),
 	cue_(),
 	auxiliaryLine_(),
-	draw_(false)
+	draw_(true)
 {
-	textureSize_.width  = 1100 / 5; // Çàãíàòü â êîíñòàíòû
-	textureSize_.height = 360  / 5; //
+	//textureSize_.width  = 1100 / 5; // Çàãíàòü â êîíñòàíòû
+	//textureSize_.height = 360  / 5; //
 
-	textureSize_ *= static_cast<float>(SCALE);
+	//textureSize_ *= SCALE;
 }
 
 Cue::~Cue()
-{
-	//delete(texture_);
-}
+{}
 
-VOID Cue::draw(Graphics *graphics, Pen *pen, Image *image)
+VOID Cue::draw(Graphics *graphics, Pen *pen, Image *cue) const
 {	
 	if(draw_)
 	{
-		cue_.draw((ball_ - cue_).getX(), (ball_ - cue_).getY(), graphics, pen);
+		cue_.draw((ball_ - cue_).getX(), (ball_ - cue_).getY(), graphics, pen); 
 		auxiliaryLine_.draw((ball_ - auxiliaryLine_).getX(), (ball_ - auxiliaryLine_).getY(), graphics, pen, Color::Gray);
 
 		pen->SetColor(Color::Gray);
@@ -39,7 +36,7 @@ VOID Cue::draw(Graphics *graphics, Pen *pen, Image *image)
 
 		ImageAttributes imAttr;
 		imAttr.SetColorKey(COLOR_KEY, COLOR_KEY);		
-		graphics->DrawImage(image, Rect(static_cast<INT>(ball_.getX() - 884), static_cast<INT>(ball_.getY() - 20 / 2), 884, 20), 0, 0, 884, 20, Unit::UnitPixel, &imAttr, 0);
+		graphics->DrawImage(cue, Rect(static_cast<INT>(ball_.getX() - 884), static_cast<INT>(ball_.getY() - 20 / 2), 884, 20), 0, 0, 884, 20, Unit::UnitPixel, &imAttr, 0);
 
 		//graphics->ResetTransform();
 	}

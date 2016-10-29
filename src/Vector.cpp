@@ -31,7 +31,7 @@ vec::vec(double x, double y) :
     l_(atan_(x_, y_))
 {}
 
-VOID vec::draw(double x0, double y0, Graphics *graphics, Pen *pen, Color color /* = Color::Yellow */) 
+VOID vec::draw(double x0, double y0, Graphics *graphics, Pen *pen, Color color /* = Color::Yellow */) const
 {
 	pen->SetColor(color);
 	pen->SetWidth(2);
@@ -40,7 +40,8 @@ VOID vec::draw(double x0, double y0, Graphics *graphics, Pen *pen, Color color /
     graphics->DrawLine(pen, Point(static_cast<INT>(x0 + x_), static_cast<INT>(y_ + y0)), Point(static_cast<INT>(x0 + x_ - ((l_ < 0)? -1 : 1) * 5 * cos(k_ + M_PI_4)), static_cast<INT>(y_ + y0 - ((l_ < 0)? -1 : 1) * 5 * sin(k_ + M_PI_4))));
     graphics->DrawLine(pen, Point(static_cast<INT>(x0 + x_), static_cast<INT>(y_ + y0)), Point(static_cast<INT>(x0 + x_ - ((l_ < 0)? -1 : 1) * 5 * cos(k_ - M_PI_4)), static_cast<INT>(y_ + y0 - ((l_ < 0)? -1 : 1) * 5 * sin(k_ - M_PI_4))));
 
-    setLK();
+    l_ = sqrt(x_ * x_ + y_ * y_);
+    k_ = atan_(x_, y_);
 }
 
 VOID vec::setXY()

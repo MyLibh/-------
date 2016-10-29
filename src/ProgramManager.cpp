@@ -22,15 +22,13 @@ ProgramManager::ProgramManager() :
 	window_.width  = static_cast<SIZE_T>(sizeX + 100); //static_cast<SIZE_T>(floor((DistanceBWAT.left + TABLE_SIZE.width  + DistanceBWAT.right ) * SCALE));
 	window_.height = static_cast<SIZE_T>(sizeY + 100); //static_cast<SIZE_T>(floor((DistanceBWAT.up   + TABLE_SIZE.height + DistanceBWAT.bottom) * SCALE));
 
-	//loadTextures();
+	textures_ = new Textures();
 
-	//HDC hDC = GetDC(hWnd_);
-	//ReleaseDC(hWnd_, hDC);
+	LoadStringW(hInstance_, IDS_APP_TITLE, title_, MAX_LOADSTRING);
+	LoadStringW(hInstance_, IDC_BILLIARDS, wndClassName_, MAX_LOADSTRING);
 }
 
-ProgramManager::ProgramManager(CONST ProgramManager &manager)
-{
-}
+//ProgramManager::ProgramManager(ProgramManager &manager) { $b PAUSE; }
 
 ProgramManager::~ProgramManager()
 {
@@ -38,6 +36,8 @@ ProgramManager::~ProgramManager()
 	//delete(pen_);
 	//delete(font_);
 	//delete(brush_);
+
+	delete(textures_);
 
 	DeleteObject(memHbm_);
 	DeleteObject(oldHbm_);
@@ -50,7 +50,7 @@ ProgramManager::~ProgramManager()
 	oldHbm_ = nullptr;
 }
 
-VOID ProgramManager::drawTable(Image*)
+VOID ProgramManager::drawTable() const
 {
 	graphics_->DrawLine(pen_, Point(static_cast<INT>(sizeX - sizestenaRIGHT), static_cast<INT>(sizestenaUP + Ru + RDugLuz)), Point(static_cast<INT>(sizeX - sizestenaRIGHT), static_cast<INT>(sizestenaUP + sizeYpol - Ru - RDugLuz)));
 	graphics_->DrawLine(pen_, Point(static_cast<INT>(        sizestenaLEFT ), static_cast<INT>(sizestenaUP + Ru + RDugLuz)), Point(static_cast<INT>(        sizestenaLEFT ), static_cast<INT>(sizestenaUP + sizeYpol - Ru - RDugLuz)));
@@ -90,6 +90,7 @@ VOID ProgramManager::initDubbleBuffering(HDC hDC)
 	reInitPen();
 	reInitFont();
 	reInitBrush();
+	reInitTextures();
 }
 
 VOID ProgramManager::initManager()
@@ -100,50 +101,26 @@ VOID ProgramManager::initManager()
 	reInitBrush();
 }
 
-VOID ProgramManager::onPAINT(Image *background, Image *table, Image *cue, Image *balls[])
-{
-	$r dump();
+VOID ProgramManager::onPAINT()
+{}
 
-    PAINTSTRUCT ps;
-    HDC hDC = BeginPaint(hWnd_, &ps);
+VOID ProgramManager::work()
+{
+    HDC hDC = GetDC(hWnd_);
 
 	initDubbleBuffering(hDC); 
-	loadBackgroundIntoCanvas(hDC, background);
+	loadBackgroundIntoCanvas(hDC);
 			
 	moveBalls();
 	moveCue();
 			
-	drawTable(table);
-	drawBalls(balls);
-	drawCue(cue);			                               
+	drawTable();
+	drawBalls();
+	drawCue();	
+	//drawMenu();
  	
 	loadBufferIntoCanvas(hDC);
 	clearDubbleBuffering();
 			
-	EndPaint(hWnd_, &ps);
-}
-
-//////////////////////////////////////////
-
-VOID ProgramManager::onPAINT(Textures *textures)
-{
-	$r dump();
-
-    PAINTSTRUCT ps;
-    HDC hDC = BeginPaint(hWnd_, &ps);
-
-	initDubbleBuffering(hDC); 
-	loadBackgroundIntoCanvas(hDC, textures->getBackgroundTexture());
-			
-	moveBalls();
-	moveCue();
-			
-	drawTable(textures->getTableTexture());
-	drawBalls(textures->balls_);
-	drawCue(textures->getCueTexture());			                               
- 	
-	loadBufferIntoCanvas(hDC);
-	clearDubbleBuffering();
-			
-	EndPaint(hWnd_, &ps);
+	ReleaseDC(hWnd_, hDC);
 }

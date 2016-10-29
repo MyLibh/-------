@@ -3,6 +3,8 @@
 #include "Variables.hpp"
 #include "Vector.hpp"
 
+using namespace Gdiplus;
+
 CONST vec CenterDugLuz[ColvoCenterDugLuz] =
     { 
     vec(sizeX - sizestenaRIGHT + RDugLuz,            sizestenaUP + Ru + RDugLuz),
@@ -35,10 +37,10 @@ public:
 
 	BOOL stopped() const;	
 
-	POINT getBitokCoords() const { POINT point = { static_cast<LONG>(t[0].getX()), static_cast<LONG>(t[0].getY()) }; return point; }
+	inline POINT getBitokCoords() const { POINT point = { static_cast<LONG>(t[0].getX()), static_cast<LONG>(t[0].getY()) }; return point; }
 	
 	VOID move();
-	VOID draw(Gdiplus::Graphics*, Gdiplus::Image*[]);
+	VOID draw(Graphics*, Image*[]) const;
 };
 
 
