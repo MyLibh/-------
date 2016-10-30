@@ -114,7 +114,7 @@ VOID ProgramManager::work()
 	if(menu_.isActive())
 	{
 		drawMenu();
-		menu_.procedure();
+		menu_.procedure(mouse_, &balls_);
 	}
 	else
 	{

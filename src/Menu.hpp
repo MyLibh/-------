@@ -1,6 +1,7 @@
 #include "Variables.hpp"
 #include "Textures.hpp"
 #include "Button.hpp"
+#include "Balls.hpp"
 
 #pragma once
 
@@ -24,6 +25,6 @@ public:
 	inline VOID activate()   { inMenu_ =  true; }
 	inline VOID deactivate() { inMenu_ = false; }
 
-    VOID draw(Graphics*, Image*, UPOINT, Pen*, Brush*, Font*) const;
-    VOID procedure();
+    VOID draw(Graphics*, Image*, UPOINT, Pen*, SolidBrush*, Font*) const;
+    VOID procedure(Mouse, Balls*);
 };

@@ -26,7 +26,8 @@ private:
 
 	inline BOOL in(long coord, long less, long more) const { return more >= coord && less <= coord; }
 	inline BOOL in(POINT point) const { return in(point.x, rect_.left, rect_.right) && in(point.y, rect_.top, rect_.bottom); }
-	inline Rect RECT2Rect() const { return Rect(rect_.left, rect_.top, rect_.right - rect_.left, rect_.bottom - rect_.top); }	
+	inline Rect RECT2Rect() const { return Rect(rect_.left, rect_.top, rect_.right - rect_.left, rect_.bottom - rect_.top); }
+	inline RectF RECT2RectF() const { return RectF(static_cast<REAL>(rect_.left), static_cast<REAL>(rect_.top), static_cast<REAL>(rect_.right - rect_.left), static_cast<REAL>(rect_.bottom - rect_.top)); }
 
 public:
     Button();
@@ -44,7 +45,8 @@ public:
     inline VOID activate()   { active_ = FALSE; }
 
 	inline VOID setText(wstring wstr) { text_ = wstr; }
+	VOID setOptions(Rect, wstring, bool = TRUE);
 	
-	VOID draw(Graphics*, Pen*, Brush*, Font*) const;
-	inline BOOL pressed(Mouse mouse) const { return (in(mouse.getCoords()) && mouse.getButton() == MouseButtons::Left)? TRUE : FALSE; }
+	VOID draw(Graphics*, Pen*, SolidBrush*, Font*) const;
+	inline BOOL pressed(Mouse mouse) const { return (in(mouse.getCoords()) && mouse.getButton() == MouseButtons::Left && active_)? TRUE : FALSE; }
 };

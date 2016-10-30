@@ -19,12 +19,12 @@ Button::Button() :
 
 Button::Button(RECT rect, wstring text, bool active /* = FALSE */) :
 	rect_(rect),
-	text_(text),
+	text_(text.begin(), text.end()),
 	active_(active)
 {}
 
 Button::Button(Rect rect, wstring text, bool active /* = FALSE */) :
-	text_(text),
+	text_(text.begin(), text.end()),
 	active_(active)
 {
 	rect_.left   = rect.GetLeft();
@@ -36,8 +36,28 @@ Button::Button(Rect rect, wstring text, bool active /* = FALSE */) :
 Button::~Button()
 {}
 
-VOID Button::draw(Graphics *graphics, Pen *pen, Brush *brush, Font *font) const
+VOID Button::setOptions(Rect rect, wstring text, bool active /* = TRUE */)
 {
+	rect_.left   = rect.GetLeft();
+	rect_.top    = rect.GetTop();
+	rect_.right  = rect.GetRight();
+	rect_.bottom = rect.GetBottom();
+
+	//std::copy(text.begin(), text.end(), std::back_inserter(text_));
+
+	//text_ = text.substr();
+
+	active_ = active;
+}
+
+VOID Button::draw(Graphics *graphics, Pen *pen, SolidBrush *brush, Font *font) const
+{
+	pen->SetColor(Color(5, 159, 225));
+	pen->SetWidth(3);
+	brush->SetColor(Color(255, 125, 34));
+	
+
 	graphics->DrawRectangle(pen, RECT2Rect());
-	graphics->DrawString(text_.c_str(), text_.length(), font, PointF(static_cast<REAL>(rect_.left), static_cast<REAL>(rect_.top)), brush);
+	StringFormat sf;
+	graphics->DrawString(text_.c_str(), text_.length(), font, RECT2RectF(), &sf, brush);
 }

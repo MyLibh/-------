@@ -7,6 +7,8 @@
 #include <stdio.h>
 #include <iostream>
 #include <io.h>
+#include <algorithm>
+#include <iterator>
 
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -38,6 +40,7 @@ enum EXITS
 	WNDCREATE_FAILED     = -15002,
 	CONSOLECREATE_FAILED = -15003,
 	GDIPINIT_FAILED      = -15004,
+	NONEBUTTON_PRESSED   = -15005,
 
 	ESCAPE               = 27,
 

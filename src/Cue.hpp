@@ -22,7 +22,8 @@ public:
 	Cue();
 	~Cue();
 
-	VOID dump() { cout << "mouseX: " << mouse_.getX() << ", mouseY: " << mouse_.getY() << ", angle: " << atan_(mouse_.getX() - ball_.getX(),  mouse_.getY() - ball_.getY()) << endl << endl; }
+	inline VOID dump() const { $g cout << __FUNCTION__ << endl;
+								  cout << "mouseX: " << mouse_.getX() << ", mouseY: " << mouse_.getY() << ", angle: " << atan_(mouse_.getX() - ball_.getX(),  mouse_.getY() - ball_.getY()) << endl << endl; }
 
 	inline VOID activate()   { draw_ =  TRUE; }
 	inline VOID deactivate() { draw_ = FALSE; }
