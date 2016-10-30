@@ -6,7 +6,7 @@ using namespace Gdiplus;
 
 double atan_(double, double);
 
-class vec
+class vec final
 {
 private:
 	double x_;

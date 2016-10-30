@@ -3,7 +3,7 @@
 
 #pragma once
 
-struct UPOINT
+struct UPOINT final
 {
 	size_t width,
 		   height;

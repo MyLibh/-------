@@ -8,7 +8,7 @@
 
 using namespace Gdiplus;
 
-class ProgramManager 
+class ProgramManager final
 {
 private:
 	HWND        hWnd_;
@@ -25,12 +25,12 @@ private:
 	SolidBrush *brush_;
 
 	Textures    *textures_;
+	Button      exit_;
 	Mouse       mouse_;
 	Balls       balls_;
 	Cue         cue_;
 	Menu        menu_;
 	
-
 	UPOINT      window_; // Улучшить название(размеры memDC)
 
 	VOID reInitGraphics() { delete(graphics_); graphics_ = new Graphics(memDC_); }
@@ -85,8 +85,9 @@ public:
 
 	VOID drawTable() const; // { graphics->DrawImage(textures_->getTableTexture(), RectF());); } 
 	inline VOID drawCue()   const { cue_.draw(graphics_, pen_, textures_->getCueTexture()); }
-	inline VOID drawMenu()  const { menu_.draw(graphics_, textures_->getMenuTexture(), window_, pen_, font_); }
+	inline VOID drawMenu()  const { menu_.draw(graphics_, textures_->getMenuTexture(), window_, pen_, brush_, font_); }
 	inline VOID drawBalls() const { balls_.draw(graphics_, textures_->getBallsTexture()); }
+	inline VOID drawExit()  const { exit_.draw(graphics_, pen_, brush_, font_); }
 
 	inline VOID moveCue() { cue_.rotate(balls_.getBitokCoords(), mouse_); } 
 	inline VOID moveBalls() { balls_.move(); }

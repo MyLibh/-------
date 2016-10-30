@@ -25,8 +25,6 @@ using std::wstring;
 
 //===========================================================================================================
 
-inline BOOL In(RECT, POINT);
-
 BOOL SetConsoleColor(unsigned); 
 
 #define $r SetConsoleColor(0x0c);
@@ -64,8 +62,20 @@ struct DistanceBetweenWallAndTable
 CONST WORD NUMBER_OF_BALLS = 16;
 
 CONST WORD NUMBER_OF_TEXTURES = NUMBER_OF_BALLS + 1 + 1 + 1 + 1; // background, table, cue, menu
+CONST WORD NUMBER_OF_WTEXTS   = 6;
 
-CONST wstring  WAYS[NUMBER_OF_TEXTURES] =
+CONST wstring TEXTS[NUMBER_OF_WTEXTS] = 
+{
+	L"Продолжить",
+	L"Старт",
+	L"Настройки",
+	L"Помощь",
+	L"П",
+	L"X"
+
+};
+
+CONST wstring WAYS[NUMBER_OF_TEXTURES] =
 { 
 	L"../src/Images/0.png",
 	L"../src/Images/1.png",
@@ -87,6 +97,16 @@ CONST wstring  WAYS[NUMBER_OF_TEXTURES] =
 	L"../src/Images/Table.jpg",
 	L"../src/Images/Cue.png",
 	L"../src/Images/Menu.jpg"
+};
+
+enum WTEXTS
+{
+	Continue = 0,
+	Start    = 1, 
+	Settings = 2,
+	Help     = 3,
+	Profile  = 4,
+	Exit     = 5
 };
 
 enum TEXTURES

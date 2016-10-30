@@ -4,14 +4,40 @@
 
 using namespace Gdiplus;
 
-Button::Button()
+inline BOOL In(RECT rect, POINT point)
+{
+	return(rect.left <= point.x && rect.right >= point.x && rect.bottom <= point.y && rect.top >= point.y)? TRUE : FALSE;
+}
+
+//=============================================================================================================================
+
+Button::Button() : 
+	rect_(),
+	text_(L""),
+	active_(FALSE)
 {}
+
+Button::Button(RECT rect, wstring text, bool active /* = FALSE */) :
+	rect_(rect),
+	text_(text),
+	active_(active)
+{}
+
+Button::Button(Rect rect, wstring text, bool active /* = FALSE */) :
+	text_(text),
+	active_(active)
+{
+	rect_.left   = rect.GetLeft();
+	rect_.top    = rect.GetTop();
+	rect_.right  = rect.GetRight();
+	rect_.bottom = rect.GetBottom();
+}
 
 Button::~Button()
 {}
 
-VOID Button::draw(Graphics *graphics, Pen *pen, Font *font) const
+VOID Button::draw(Graphics *graphics, Pen *pen, Brush *brush, Font *font) const
 {
 	graphics->DrawRectangle(pen, RECT2Rect());
-	//graphics->DrawString();
+	graphics->DrawString(text_.c_str(), text_.length(), font, PointF(static_cast<REAL>(rect_.left), static_cast<REAL>(rect_.top)), brush);
 }

@@ -4,7 +4,7 @@
 
 using namespace Gdiplus;
 
-class Textures
+class Textures final
 {
 private:
 	Image *background_;

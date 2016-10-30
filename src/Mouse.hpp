@@ -2,7 +2,7 @@
 
 #pragma once
 
-class Mouse
+class Mouse final
 {
 private:
     POINT mouse_;
@@ -15,11 +15,16 @@ public:
     Mouse();
     ~Mouse();
 
+	inline VOID dump() const { $y cout << __FUNCTION__ << endl; 
+	                              cout << "x: " << mouse_.x << ", y: " << mouse_.y << ", button: " << button_ << endl << endl;}
+
     inline VOID update(LPARAM lParam, INT16 button) { setMouseCoords(lParam); setButton(button); }
 
     inline VOID setMouseCoords(POINT point) { SetCursorPos(point.x, point.y); }
     //inline VOID setButton() { }
 
-    inline POINT getMouseCoords() const { return mouse_; }
-    inline INT16 getButton()      const { return button_; }
+    inline POINT getCoords() const { return mouse_; }
+	inline LONG  getX()      const { return mouse_.x; }
+	inline LONG  getY()      const { return mouse_.y; }
+    inline INT16 getButton() const { return button_; }
 };

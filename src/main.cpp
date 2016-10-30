@@ -1,6 +1,6 @@
 #include "ProgramManager.hpp"
 
-//#define __DEBUG
+#define __DEBUG
 
 #pragma comment (lib, "gdiplus.lib")
 
@@ -44,7 +44,6 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_BILLIARDS));
 
     MSG msg = { };
-
     while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) 
     {
         if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
@@ -53,7 +52,7 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
             DispatchMessage(&msg);
         }
 		
-		$r programManager.dump();
+		//$r programManager.dump();
 		programManager.work();	
 
 		if(programManager.stopBalls()) PostQuitMessage(EXITS::BALLS_STOPPED);
@@ -90,7 +89,7 @@ ATOM MyRegisterClass()
 HWND InitInstance(INT nCmdShow)
 {
    HWND hWnd = CreateWindowW(programManager.getWndClassName(), programManager.getTitle(), WS_OVERLAPPEDWINDOW,
-      10, 10, programManager.getMemDCWindow().width, programManager.getMemDCWindow().height, nullptr, nullptr, programManager.getHINSTANCE(), nullptr);
+      0, 0, programManager.getMemDCWindow().width, programManager.getMemDCWindow().height, nullptr, nullptr, programManager.getHINSTANCE(), nullptr);
 
    programManager.setHWND(hWnd);
 

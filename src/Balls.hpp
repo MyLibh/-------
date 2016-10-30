@@ -21,7 +21,7 @@ CONST vec CenterDugLuz[ColvoCenterDugLuz] =
     vec(sizeXpol / 2 + sizestenaLEFT + RLuz + RDugLuz,            sizestenaUP - RDugLuz),
     };
 
-class Balls
+class Balls final
 {
 private:
 	vec t[NUMBER_OF_BALLS];
@@ -39,6 +39,7 @@ public:
 
 	inline POINT getBitokCoords() const { POINT point = { static_cast<LONG>(t[0].getX()), static_cast<LONG>(t[0].getY()) }; return point; }
 	
+	VOID restart();
 	VOID move();
 	VOID draw(Graphics*, Image*[]) const;
 };

@@ -7,23 +7,20 @@ using namespace Gdiplus;
 //=============================================================================================================================
 
 ProgramManager::ProgramManager() : 
+	window_(static_cast<SIZE_T>(sizeX + 100), static_cast<SIZE_T>(sizeY + 100)),
 	hWnd_(nullptr),
 	memDC_(nullptr), 
 	memHbm_(nullptr), 
 	oldHbm_(nullptr),
 	hInstance_(nullptr),
+	textures_(nullptr),
+	exit_(Rect(static_cast<INT>(sizeX), 0, 100, 100), TEXTS[WTEXTS::Exit], TRUE),
 	mouse_(),
 	graphics_(nullptr),
 	pen_(nullptr),
 	font_(nullptr),
-	brush_(nullptr),
-	window_()
+	brush_(nullptr)	
 {
-	window_.width  = static_cast<SIZE_T>(sizeX + 100); //static_cast<SIZE_T>(floor((DistanceBWAT.left + TABLE_SIZE.width  + DistanceBWAT.right ) * SCALE));
-	window_.height = static_cast<SIZE_T>(sizeY + 100); //static_cast<SIZE_T>(floor((DistanceBWAT.up   + TABLE_SIZE.height + DistanceBWAT.bottom) * SCALE));
-
-	textures_ = new Textures();
-
 	LoadStringW(hInstance_, IDS_APP_TITLE, title_, MAX_LOADSTRING);
 	LoadStringW(hInstance_, IDC_BILLIARDS, wndClassName_, MAX_LOADSTRING);
 }
@@ -111,13 +108,26 @@ VOID ProgramManager::work()
 	initDubbleBuffering(hDC); 
 	loadBackgroundIntoCanvas(hDC);
 			
-	moveBalls();
-	moveCue();
-			
+	//mouse_.dump();
+	//exit_.dump();
+
+	if(menu_.isActive())
+	{
+		drawMenu();
+		menu_.procedure();
+	}
+	else
+	{
 	drawTable();
 	drawBalls();
 	drawCue();	
-	//drawMenu();
+	drawExit();
+
+	if(exit_.pressed(mouse_)) menu_.activate();
+
+	moveBalls();
+	moveCue();
+	}
  	
 	loadBufferIntoCanvas(hDC);
 	clearDubbleBuffering();

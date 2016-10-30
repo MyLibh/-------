@@ -10,12 +10,19 @@ Menu::Menu()
 Menu::~Menu()
 {}
 
-VOID Menu::draw(Graphics *graphics, Image *image, UPOINT windowSize, Pen *pen, Font *font) const
+VOID Menu::draw(Graphics *graphics, Image *image, UPOINT windowSize, Pen *pen, Brush* brush, Font *font) const
 {
-    graphics->DrawImage(image, Rect(0, 0, windowSize.width, windowSize.height));
+    if(inMenu_)
+	{
+		graphics->DrawImage(image, Rect(0, 0, windowSize.width, windowSize.height));
 
-    for(SIZE_T i = 0; i < NUMBER_OF_BUTTONS; i++) buttons_[i].draw(graphics, pen, font);
+		for(SIZE_T i = 0; i < NUMBER_OF_BUTTONS; i++) buttons_[i].draw(graphics, pen, brush, font);
+	}
 }
 
 VOID Menu::procedure()
-{}
+{
+	if(inMenu_)
+	{
+	}
+}
