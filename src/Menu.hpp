@@ -25,6 +25,6 @@ public:
 	inline VOID activate()   { inMenu_ =  true; }
 	inline VOID deactivate() { inMenu_ = false; }
 
-    VOID draw(Graphics*, Image*, UPOINT, Pen*, SolidBrush*, Font*) const;
+    VOID draw(Graphics*, Image*, UPOINT, Pen&, SolidBrush&, Font&) const;
     VOID procedure(Mouse, Balls*);
 };

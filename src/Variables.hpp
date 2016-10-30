@@ -6,9 +6,14 @@
 #include <vector>
 #include <stdio.h>
 #include <iostream>
+#include <fstream>
 #include <io.h>
 #include <algorithm>
 #include <iterator>
+#include <string>
+#include <map>
+#include <list>
+#include <stdlib.h>
 
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -16,13 +21,10 @@
 #include "resource.h"
 #include "UPOINT.hpp"
 
-using std::cout;
-using std::endl;
-using std::wstring;
+using namespace std;
 
 //===========================================================================================================
 
-#define MAX_LOADSTRING 100
 #define PAUSE system("pause");
 
 //===========================================================================================================
@@ -41,6 +43,8 @@ enum EXITS
 	CONSOLECREATE_FAILED = -15003,
 	GDIPINIT_FAILED      = -15004,
 	NONEBUTTON_PRESSED   = -15005,
+	LOGFILECREATE_FAILED = -15006,
+	CFGFILECREATE_FAILED = -15007,
 
 	ESCAPE               = 27,
 

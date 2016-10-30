@@ -8,6 +8,7 @@ Cue::Cue() :
 	mouse_(),
 	ball_(),
 	cue_(),
+	angle_(0),
 	auxiliaryLine_(),
 	draw_(TRUE)
 {
@@ -20,23 +21,25 @@ Cue::Cue() :
 Cue::~Cue()
 {}
 
-VOID Cue::draw(Graphics *graphics, Pen *pen, Image *cue) const
+VOID Cue::draw(Graphics *graphics, Pen &pen, Image *cue) const
 {	
-	cue_.draw((ball_ - cue_).getX(), (ball_ - cue_).getY(), graphics, pen); 
-	auxiliaryLine_.draw((ball_ - auxiliaryLine_).getX(), (ball_ - auxiliaryLine_).getY(), graphics, pen, Color::Gray);
+	cue_.draw((ball_ - cue_).getX(), (ball_ - cue_).getY(), graphics, &pen); 
+	auxiliaryLine_.draw((ball_ - auxiliaryLine_).getX(), (ball_ - auxiliaryLine_).getY(), graphics, &pen, Color::Gray);
 
-	pen->SetColor(Color::Gray);
-	pen->SetWidth(3);
-	graphics->DrawEllipse(pen, static_cast<INT>(mouse_.getX() - RShari / 2), static_cast<INT>(mouse_.getY() - RShari / 2), RShari, RShari);
+	pen.SetColor(Color::Gray);
+	pen.SetWidth(3);
+	graphics->DrawEllipse(&pen, static_cast<INT>(mouse_.getX() - RShari / 2), static_cast<INT>(mouse_.getY() - RShari / 2), RShari, RShari);
 
 	//graphics->TranslateTransform(static_cast<REAL>(ball_.getX()), static_cast<REAL>(ball_.getY()));
-	//graphics->RotateTransform(static_cast<REAL>(atan_(mouse_.getX() - ball_.getX(),  mouse_.getY() - ball_.getY()))); 
+	//angle_ += 1.0f;
+	//graphics->RotateTransform(angle_); 
+	//graphics->
 
 	ImageAttributes imAttr;
 	imAttr.SetColorKey(COLOR_KEY, COLOR_KEY);		
 	graphics->DrawImage(cue, Rect(static_cast<INT>(ball_.getX() - 884), static_cast<INT>(ball_.getY() - 20 / 2), 884, 20), 0, 0, 884, 20, Unit::UnitPixel, &imAttr, 0);
 
-	//graphics->ResetTransform();
+	graphics->ResetTransform();
 }
 
 VOID Cue::rotate(POINT point, Mouse mouse)

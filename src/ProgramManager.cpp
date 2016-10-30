@@ -6,34 +6,42 @@ using namespace Gdiplus;
 
 //=============================================================================================================================
 
-ProgramManager::ProgramManager() : 
+ProgramManager::ProgramManager(HWND hWnd, HINSTANCE hInstance) : 
 	window_(static_cast<SIZE_T>(sizeX + 100), static_cast<SIZE_T>(sizeY + 100)),
-	hWnd_(nullptr),
+	hWnd_(hWnd),
 	memDC_(nullptr), 
 	memHbm_(nullptr), 
 	oldHbm_(nullptr),
-	hInstance_(nullptr),
-	textures_(nullptr),
+	hInstance_(hInstance),
+	textures_(new Textures()),
 	exit_(Rect(static_cast<INT>(sizeX), 0, 100, 100), TEXTS[WTEXTS::Exit], TRUE),
 	mouse_(),
+	log_("../src/Billiards.log", ios::ate | ios::out),
 	graphics_(nullptr),
-	pen_(nullptr),
-	font_(nullptr),
-	brush_(nullptr)	
+	pen_(new Pen(Color::Yellow, 10)),
+	font_(new Font(L"Times New Roman", 25, 0, Unit::UnitPoint)),
+	brush_(new SolidBrush(Color::Black))	
 {
 	LoadStringW(hInstance_, IDS_APP_TITLE, title_, MAX_LOADSTRING);
 	LoadStringW(hInstance_, IDC_BILLIARDS, wndClassName_, MAX_LOADSTRING);
+
+	if(!log_.is_open()) PostQuitMessage(EXITS::LOGFILECREATE_FAILED);
+	//HDC hDC = GetDC(hWnd_);
+
+	//initDubbleBuffering(hDC);
+	//graphics_ = new Graphics(memDC_);
+
+	//ReleaseDC(hWnd_, hDC);
 }
 
 //ProgramManager::ProgramManager(ProgramManager &manager) { $b PAUSE; }
 
 ProgramManager::~ProgramManager()
 {
-	//delete(graphics_); //Исключение, когда есть
-	//delete(pen_);
-	//delete(font_);
-	//delete(brush_);
-
+	delete(graphics_); 
+	delete(pen_);
+	delete(font_);
+	delete(brush_);
 	delete(textures_);
 
 	DeleteObject(memHbm_);
@@ -41,10 +49,13 @@ ProgramManager::~ProgramManager()
 
 	DeleteDC(memDC_);
 	
-	hWnd_   = nullptr;
-	memDC_  = nullptr;
-	memHbm_ = nullptr;
-	oldHbm_ = nullptr;
+	hWnd_      = nullptr;
+	hInstance_ = nullptr;
+	memDC_     = nullptr;
+	memHbm_    = nullptr;
+	oldHbm_    = nullptr;
+
+	log_.close();
 }
 
 VOID ProgramManager::drawTable() const
@@ -70,32 +81,31 @@ VOID ProgramManager::drawTable() const
 	for (int i = 0; i < ColvoCenterDugLuz; i++) graphics_->DrawEllipse(pen_, static_cast<INT>(CenterDugLuz[i].getX() - RDugLuz  / 2), static_cast<INT>(CenterDugLuz[i].getY() - RDugLuz / 2), RDugLuz, RDugLuz);
 }
 
-VOID ProgramManager::clearDubbleBuffering()
-{
-	SelectObject(getMemDC(), getOldHbm());
-	DeleteObject(getMemHbm());
-	DeleteDC(getMemDC());
-}
-
 VOID ProgramManager::initDubbleBuffering(HDC hDC)
 {
 	setMemDC(CreateCompatibleDC(hDC));
 	setMemHbm(CreateCompatibleBitmap(GetDC(hWnd_), window_.width, window_.height));
 	setOldHbm((HBITMAP)SelectObject(getMemDC(), getMemHbm()));	
+	setDefaults();
 
-	reInitGraphics();
-	reInitPen();
-	reInitFont();
-	reInitBrush();
-	reInitTextures();
+	graphics_ = new Graphics(memDC_);
 }
 
-VOID ProgramManager::initManager()
+VOID ProgramManager::clearDubbleBuffering()
 {
-	reInitGraphics();
-	reInitPen();
-	reInitFont();
-	reInitBrush();
+	SelectObject(getMemDC(), getOldHbm());
+	DeleteObject(getMemHbm());
+	DeleteDC(getMemDC());
+
+	delete(graphics_);
+}
+
+VOID ProgramManager::setDefaults()
+{
+	setPenColor();
+	setPenWidth();
+	setBrushColor();
+	//функции для шрифта
 }
 
 VOID ProgramManager::onPAINT()
@@ -110,7 +120,7 @@ VOID ProgramManager::work()
 			
 	//mouse_.dump();
 	//exit_.dump();
-
+	
 	if(menu_.isActive())
 	{
 		drawMenu();
@@ -128,9 +138,9 @@ VOID ProgramManager::work()
 	moveBalls();
 	moveCue();
 	}
- 	
-	loadBufferIntoCanvas(hDC);
+
+	loadBufferIntoCanvas(hDC);	
 	clearDubbleBuffering();
 			
-	ReleaseDC(hWnd_, hDC);
+	ReleaseDC(hWnd_, hDC); 
 }

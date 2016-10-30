@@ -6,14 +6,15 @@
 
 using namespace Gdiplus;    
 
-ProgramManager programManager;
+ProgramManager *programManager = nullptr;
 
-ATOM                MyRegisterClass();
-HWND                InitInstance(INT);
+ATOM                MyRegisterClass(HINSTANCE, WCHAR[]);
+HWND                InitInstance(HINSTANCE, INT, WCHAR[], WCHAR[]);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 HWND                EnableConsole();
-VOID                DoFrame(HWND, Gdiplus::Graphics*, HDC, HBITMAP, HBITMAP);
+
+CONST SIZE_T MAX_LOADSTRING = 64;
 
 INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
                       _In_opt_ HINSTANCE hPrevInstance,
@@ -32,34 +33,41 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
 	Status st = GdiplusStartup(&token, &gfd, NULL);
     if (st != NULL) return EXITS::GDIPINIT_FAILED;
 
-	programManager.setHINSTANCE(hInstance);
+	WCHAR title[MAX_LOADSTRING] = L"";
+	WCHAR wndClassName[MAX_LOADSTRING] = L"";
 
-    if(!MyRegisterClass()) return EXITS::WNDCLASS_FAILED;
+	LoadStringW(hInstance, IDS_APP_TITLE, title, MAX_LOADSTRING);
+	LoadStringW(hInstance, IDC_BILLIARDS, wndClassName, MAX_LOADSTRING);
+
+    if (!MyRegisterClass(hInstance, wndClassName)) return EXITS::WNDCLASS_FAILED;
 
 	HWND hWnd = nullptr;
-    if (!(hWnd = InitInstance(nCmdShow))) return EXITS::WNDCREATE_FAILED;
+    if (!(hWnd = InitInstance(hInstance, nCmdShow, title, wndClassName))) return EXITS::WNDCREATE_FAILED;
 	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);
 
+	programManager = new ProgramManager(hWnd, hInstance);
+
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_BILLIARDS));
 
-    MSG msg = { };
+	MSG msg = { };
     while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) 
     {
         if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
         {
             TranslateMessage(&msg);
             DispatchMessage(&msg);
-        }
-		
+        }		
 		//$r programManager.dump();
-		programManager.work();	
+	    programManager->work();	
 
-		if(programManager.stopBalls()) PostQuitMessage(EXITS::BALLS_STOPPED);
+		if(programManager->stopBalls()) PostQuitMessage(EXITS::BALLS_STOPPED);
 		if(GetAsyncKeyState(27)) return EXITS::ESCAPE;
     }
 
 	GdiplusShutdown(token);
+
+	delete(programManager);
 
 #ifdef __DEBUG 
 	PAUSE
@@ -68,30 +76,28 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
     return static_cast<INT>(msg.wParam);
 }
 
-ATOM MyRegisterClass()
+ATOM MyRegisterClass(HINSTANCE hInstance, WCHAR wndClassName[])
 {
     WNDCLASSEXW wcex = { sizeof(WNDCLASSEX) };
 	wcex.style          = CS_HREDRAW | CS_VREDRAW;
     wcex.lpfnWndProc    = WndProc;
     wcex.cbClsExtra     = 0;
     wcex.cbWndExtra     = 0;
-    wcex.hInstance      = programManager.getHINSTANCE();
+    wcex.hInstance      = hInstance;
     wcex.hIcon          = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_BILLIARDS));
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
-    wcex.hbrBackground  = /*(background)? CreatePatternBrush(background) : */reinterpret_cast<HBRUSH>(COLOR_WINDOW + 1);
+    wcex.hbrBackground  = reinterpret_cast<HBRUSH>(COLOR_WINDOW + 1);
     wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_BILLIARDS);
-    wcex.lpszClassName  = programManager.getWndClassName();
+    wcex.lpszClassName  = wndClassName;
     wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
     return RegisterClassExW(&wcex);
 }
 
-HWND InitInstance(INT nCmdShow)
+HWND InitInstance(HINSTANCE hInstance, INT nCmdShow, WCHAR title[], WCHAR wndClassName[])
 {
-   HWND hWnd = CreateWindowW(programManager.getWndClassName(), programManager.getTitle(), WS_OVERLAPPEDWINDOW,
-      0, 0, programManager.getMemDCWindow().width, programManager.getMemDCWindow().height, nullptr, nullptr, programManager.getHINSTANCE(), nullptr);
-
-   programManager.setHWND(hWnd);
+   HWND hWnd = CreateWindowW(wndClassName, title, WS_OVERLAPPEDWINDOW,
+      0, 0, static_cast<INT>(sizeX) + 100, static_cast<INT>(sizeY) + 100, nullptr, nullptr, hInstance, nullptr);
 
    return hWnd;
 }
@@ -121,7 +127,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         break;
 	case WM_MOUSEMOVE:      
-		programManager.setMouse(lParam, wParam); 
+		programManager->setMouse(lParam, wParam); 
 		break;
 	case WM_SIZE:
 		{
@@ -136,7 +142,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		break;
     case WM_PAINT:
 		{
-			programManager.onPAINT(); 
+			programManager->onPAINT(); 
         }
         break;
     case WM_DESTROY:

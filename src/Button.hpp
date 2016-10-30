@@ -47,6 +47,6 @@ public:
 	inline VOID setText(wstring wstr) { text_ = wstr; }
 	VOID setOptions(Rect, wstring, bool = TRUE);
 	
-	VOID draw(Graphics*, Pen*, SolidBrush*, Font*) const;
+	VOID draw(Graphics*, Pen&, SolidBrush&, Font&) const;
 	inline BOOL pressed(Mouse mouse) const { return (in(mouse.getCoords()) && mouse.getButton() == MouseButtons::Left && active_)? TRUE : FALSE; }
 };

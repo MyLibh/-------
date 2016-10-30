@@ -15,9 +15,8 @@ private:
 
 public:      
 	Textures();
+	Textures(ifstream);
 	~Textures();
-
-	//VOID loadFromConfig(WCHAR*);
 
 	inline Image *getBackgroundTexture() const { return background_; }
 	inline Image *getCueTexture()        const { return cue_; }

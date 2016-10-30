@@ -23,7 +23,7 @@ Menu::Menu()
 Menu::~Menu()
 {}
 
-VOID Menu::draw(Graphics *graphics, Image *image, UPOINT windowSize, Pen *pen, SolidBrush* brush, Font *font) const
+VOID Menu::draw(Graphics *graphics, Image *image, UPOINT windowSize, Pen &pen, SolidBrush &brush, Font &font) const
 {
 	graphics->DrawImage(image, Rect(0, 0, windowSize.width, windowSize.height));
 

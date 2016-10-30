@@ -50,14 +50,14 @@ VOID Button::setOptions(Rect rect, wstring text, bool active /* = TRUE */)
 	active_ = active;
 }
 
-VOID Button::draw(Graphics *graphics, Pen *pen, SolidBrush *brush, Font *font) const
+VOID Button::draw(Graphics *graphics, Pen &pen, SolidBrush &brush, Font &font) const
 {
-	pen->SetColor(Color(5, 159, 225));
-	pen->SetWidth(3);
-	brush->SetColor(Color(255, 125, 34));
+	pen.SetColor(Color(5, 159, 225));
+	pen.SetWidth(3);
+	brush.SetColor(Color(255, 125, 34));
 	
 
-	graphics->DrawRectangle(pen, RECT2Rect());
+	graphics->DrawRectangle(&pen, RECT2Rect());
 	StringFormat sf;
-	graphics->DrawString(text_.c_str(), text_.length(), font, RECT2RectF(), &sf, brush);
+	graphics->DrawString(text_.c_str(), text_.length(), &font, RECT2RectF(), &sf, &brush);
 }

@@ -16,6 +16,8 @@ private:
 	vec cue_;
 	vec auxiliaryLine_;
 
+	mutable REAL angle_;
+
 	bool draw_;
 
 public:
@@ -28,6 +30,6 @@ public:
 	inline VOID activate()   { draw_ =  TRUE; }
 	inline VOID deactivate() { draw_ = FALSE; }
 
-	VOID draw(Graphics*, Pen*, Image*) const;
+	VOID draw(Graphics*, Pen&, Image*) const;
 	VOID rotate(POINT, Mouse);
 };
