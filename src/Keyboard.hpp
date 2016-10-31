@@ -2,6 +2,8 @@
 
 #include "Variables.hpp"
 
+#define Key(param) GetAsyncKeyState(param)
+
 class Keyboard
 {
 public:
@@ -10,6 +12,8 @@ public:
 
 	enum Keys
 	{
+		ESCAPE = 27,
+		SPACE  = 32
 	};
 };
 

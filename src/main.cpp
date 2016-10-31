@@ -26,6 +26,8 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
+	system("chcp 1251");
+
 #ifdef __DEBUG 
 	if(!EnableConsole()) return EXITS::CONSOLECREATE_FAILED;
 #endif
@@ -64,12 +66,22 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
 
 		if(programManager->stopBalls()) 
 		{
-			$y cout << "Шары остановились" << endl;
-			PAUSE
-			programManager->nextMove();
+			POINT cursor;
+			//while(!Key(VK_UP))
+			//{
+			//	GetCursorPos(&cursor);
+			//	
+			//	programManager->setZeroBallCoords(cursor);
+			//	programManager->work();
+			//}
+
+			while(!Key(Keyboard::Keys::SPACE)) programManager->work();
+
+			GetCursorPos(&cursor);			
+			programManager->nextMove(cursor);
 			//PostQuitMessage(EXITS::BALLS_STOPPED);
 		}
-		if(GetAsyncKeyState(27)) return EXITS::ESCAPE;
+		if(Key(Keyboard::Keys::ESCAPE)) return EXITS::ESCAPE;
     }
 
 	GdiplusShutdown(token);

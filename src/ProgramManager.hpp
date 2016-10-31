@@ -5,7 +5,8 @@
 #include "Cue.hpp"
 #include "Textures.hpp"
 #include "Menu.hpp"
-
+#include "Keyboard.hpp"
+ 
 using namespace Gdiplus;
 
 class ProgramManager final : private Menu, private Balls, private Cue, private Mouse
@@ -73,6 +74,7 @@ public:
 	inline VOID setPenColor(Color color = Color::Yellow)  { pen_->SetColor(color); }
 	inline VOID setPenWidth(REAL width = 10)              { pen_->SetWidth(width); }	
 	inline VOID setBrushColor(Color color = Color::Black) { brush_->SetColor(color); }
+	inline VOID setZeroBallCoords(POINT coords)           { Balls::setZeroBallCoords(coords); }
 
 	inline CONST VOID loadBackgroundIntoCanvas(HDC canvas) const { graphics_->DrawImage(&textures_->getBackgroundTexture(), RectF(0, 0, static_cast<REAL>(window_.width), static_cast<REAL>(window_.height))); }
 	inline CONST VOID loadBufferIntoCanvas(HDC canvas)     const { BitBlt(canvas, 0, 0, window_.width, window_.height, memDC_, 0, 0, SRCCOPY); }
@@ -88,7 +90,7 @@ public:
 
 	inline VOID moveCue() { Cue::rotate(Balls::getBallCoords(textures_->TEXTURES::zero), Mouse::getCoords()); } 
 	inline VOID moveBalls() { Balls::move(); }
-	inline VOID nextMove() { Balls::nextMove(); }
+	inline VOID nextMove(POINT mouse) { Balls::nextMove(mouse); }
 	inline MenuActions menuProcedure(POINT mouse, INT16 button) { return Menu::procedure(mouse, button); }
 
     VOID onPAINT(); 

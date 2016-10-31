@@ -16,6 +16,7 @@
 #include <map>
 #include <list>
 #include <stdlib.h>
+#include <locale>
 
 #include "resource.h"
 #include "UPOINT.hpp"

@@ -27,10 +27,15 @@ class Balls
 private:
 	vec t[NUMBER_OF_BALLS];
 	vec v[NUMBER_OF_BALLS];
-	int golled;
+	bool scored_[NUMBER_OF_BALLS];
+	WORD numScored_;
 
 	VOID repulsion();
 	VOID repulsionFrom();
+
+protected:
+	inline VOID setZeroBallCoords(POINT coords) { t[0] = vec(coords.x, coords.y); }
+	inline vec impactDirection(POINT mouse) const { return vec(static_cast<double>(static_cast<INT>((mouse.x - v[0].getX()))%20), static_cast<double>(static_cast<INT>((mouse.y - v[0].getY()))%20)); }
 
 public:	
 	Balls();
@@ -44,7 +49,8 @@ public:
 	VOID move();
 	VOID draw(Graphics*, Image*[]) const;
 
-	inline VOID nextMove() { v[0] = vec(19, 1); }
+	
+	inline VOID nextMove(POINT mouse) { v[0] = impactDirection(mouse); }
 };
 
 
