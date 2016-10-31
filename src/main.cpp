@@ -8,6 +8,8 @@ using namespace Gdiplus;
 
 ProgramManager *programManager = nullptr;
 
+class Exception {};
+
 ATOM                MyRegisterClass(HINSTANCE, WCHAR[]);
 HWND                InitInstance(HINSTANCE, INT, WCHAR[], WCHAR[]);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
@@ -31,7 +33,7 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
 	GdiplusStartupInput gfd;
 	ULONG_PTR token = NULL;
 	Status st = GdiplusStartup(&token, &gfd, NULL);
-    if (st != NULL) return EXITS::GDIPINIT_FAILED;
+	if (st != NULL) return EXITS::GDIPINIT_FAILED;
 
 	WCHAR title[MAX_LOADSTRING] = L"";
 	WCHAR wndClassName[MAX_LOADSTRING] = L"";
@@ -39,17 +41,16 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
 	LoadStringW(hInstance, IDS_APP_TITLE, title, MAX_LOADSTRING);
 	LoadStringW(hInstance, IDC_BILLIARDS, wndClassName, MAX_LOADSTRING);
 
-    if (!MyRegisterClass(hInstance, wndClassName)) return EXITS::WNDCLASS_FAILED;
+	if (!MyRegisterClass(hInstance, wndClassName)) return EXITS::WNDCLASS_FAILED;
 
 	HWND hWnd = nullptr;
-    if (!(hWnd = InitInstance(hInstance, nCmdShow, title, wndClassName))) return EXITS::WNDCREATE_FAILED;
+	if (!(hWnd = InitInstance(hInstance, nCmdShow, title, wndClassName))) return EXITS::WNDCREATE_FAILED;
 	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);
 
 	programManager = new ProgramManager(hWnd, hInstance);
 
-    HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_BILLIARDS));
-
+	HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_BILLIARDS));
 	MSG msg = { };
     while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) 
     {
@@ -58,10 +59,16 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }		
-		//$r programManager.dump();
+		//$r programManager->dump();
 	    programManager->work();	
 
-		if(programManager->stopBalls()) PostQuitMessage(EXITS::BALLS_STOPPED);
+		if(programManager->stopBalls()) 
+		{
+			$y cout << "Шары остановились" << endl;
+			PAUSE
+			programManager->nextMove();
+			//PostQuitMessage(EXITS::BALLS_STOPPED);
+		}
 		if(GetAsyncKeyState(27)) return EXITS::ESCAPE;
     }
 

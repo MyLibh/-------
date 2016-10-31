@@ -21,7 +21,7 @@ Cue::Cue() :
 Cue::~Cue()
 {}
 
-VOID Cue::draw(Graphics *graphics, Pen &pen, Image *cue) const
+VOID Cue::draw(Graphics *graphics, Pen &pen, Image &cue) const
 {	
 	cue_.draw((ball_ - cue_).getX(), (ball_ - cue_).getY(), graphics, &pen); 
 	auxiliaryLine_.draw((ball_ - auxiliaryLine_).getX(), (ball_ - auxiliaryLine_).getY(), graphics, &pen, Color::Gray);
@@ -33,22 +33,21 @@ VOID Cue::draw(Graphics *graphics, Pen &pen, Image *cue) const
 	//graphics->TranslateTransform(static_cast<REAL>(ball_.getX()), static_cast<REAL>(ball_.getY()));
 	//angle_ += 1.0f;
 	//graphics->RotateTransform(angle_); 
-	//graphics->
 
 	ImageAttributes imAttr;
 	imAttr.SetColorKey(COLOR_KEY, COLOR_KEY);		
-	graphics->DrawImage(cue, Rect(static_cast<INT>(ball_.getX() - 884), static_cast<INT>(ball_.getY() - 20 / 2), 884, 20), 0, 0, 884, 20, Unit::UnitPixel, &imAttr, 0);
+	graphics->DrawImage(&cue, Rect(static_cast<INT>(ball_.getX() - 884), static_cast<INT>(ball_.getY() - 20 / 2), 884, 20), 0, 0, 884, 20, Unit::UnitPixel, &imAttr, 0);
 
 	graphics->ResetTransform();
 }
 
-VOID Cue::rotate(POINT point, Mouse mouse)
+VOID Cue::rotate(POINT ball, POINT mouse)
 {
-	mouse_.setX(mouse.getX());
-	mouse_.setY(mouse.getY());
+	mouse_.setX(mouse.x);
+	mouse_.setY(mouse.y);
 
-	ball_.setX(point.x);
-	ball_.setY(point.y);
+	ball_.setX(ball.x);
+	ball_.setY(ball.y);
 
 	cue_ = mouse_ - ball_;
 	auxiliaryLine_ = ball_ - mouse_;

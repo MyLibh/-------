@@ -1,6 +1,6 @@
-#include "Variables.hpp"
-
 #pragma once
+
+#include "Variables.hpp"
 
 using namespace Gdiplus;
 

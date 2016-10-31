@@ -1,5 +1,7 @@
 #pragma once
 
+#define _USE_MATH_DEFINES
+#include <math.h>
 #include <windows.h>
 #include <gdiplus.h>
 #include <Istream>
@@ -14,9 +16,6 @@
 #include <map>
 #include <list>
 #include <stdlib.h>
-
-#define _USE_MATH_DEFINES
-#include <math.h>
 
 #include "resource.h"
 #include "UPOINT.hpp"
@@ -51,7 +50,6 @@ enum EXITS
 	BALLS_STOPPED        =  15001
 };
 
-
 //===========================================================================================================
 
 struct DistanceBetweenWallAndTable
@@ -62,85 +60,9 @@ struct DistanceBetweenWallAndTable
 		   bottom;
 };
 
-//Êîíñòàíòû
-
 //==========================================
 
 CONST WORD NUMBER_OF_BALLS = 16;
-
-CONST WORD NUMBER_OF_TEXTURES = NUMBER_OF_BALLS + 1 + 1 + 1 + 1; // background, table, cue, menu
-CONST WORD NUMBER_OF_WTEXTS   = 6;
-
-CONST wstring TEXTS[NUMBER_OF_WTEXTS] = 
-{
-	L"Продолжить",
-	L"Старт",
-	L"Настройки",
-	L"Помощь",
-	L"П",
-	L"X"
-
-};
-
-CONST wstring WAYS[NUMBER_OF_TEXTURES] =
-{ 
-	L"../src/Images/0.png",
-	L"../src/Images/1.png",
-	L"../src/Images/2.png",
-	L"../src/Images/3.png",
-	L"../src/Images/4.png",
-	L"../src/Images/5.png",
-	L"../src/Images/6.png",
-	L"../src/Images/7.png",
-	L"../src/Images/8.png",
-	L"../src/Images/9.png",
-	L"../src/Images/10.png",
-	L"../src/Images/11.png",
-	L"../src/Images/12.png",
-	L"../src/Images/13.png",
-	L"../src/Images/14.png",
-	L"../src/Images/15.png",
-	L"../src/Images/Background.jpg",
-	L"../src/Images/Table.jpg",
-	L"../src/Images/Cue.png",
-	L"../src/Images/Menu.jpg"
-};
-
-enum WTEXTS
-{
-	Continue = 0,
-	Start    = 1, 
-	Settings = 2,
-	Help     = 3,
-	Profile  = 4,
-	Exit     = 5
-};
-
-enum TEXTURES
-{
-	zero       =  0,
-	thirst     =  1,
-	second     =  2,
-	third      =  3,
-	fourth     =  4,
-	fifth      =  5,
-	sixth      =  6,
-	seventh    =  7,
-	eighth     =  8,
-	nineth     =  9,
-	tenth      = 10,
-	eleventh   = 11,
-	twelfth    = 12,
-	thirteenth = 13,
-	fourteenth = 14,
-	fifteenth  = 15,
-	background = 16,
-	table      = 17,
-	cue        = 18,
-	menu       = 19
-};
-
-//==========================================
 
 CONST float SCALE = 0.49f;
 
@@ -183,7 +105,7 @@ CONST double sizestenaRIGHT = 100 * SCALE;//32;//
 CONST double sizeXpol = 3550 * SCALE; // sizeX - sizestenaLEFT - sizestenaRIGHT
 CONST double sizeYpol = 1775 * SCALE; // sizeY - sizestenaUP - sizestenaDOWN
 
-CONST double sizeX = sizeXpol + sizestenaLEFT + sizestenaRIGHT; //1200;//сумма
+CONST double sizeX = sizeXpol + sizestenaLEFT + sizestenaRIGHT; //1200
 CONST double sizeY = sizestenaUP + sizestenaDOWN + sizeYpol; //800;
 
 CONST double cor3 = sqrt(static_cast<double>(3));

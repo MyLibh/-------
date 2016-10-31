@@ -1,8 +1,8 @@
-#include "Variables.hpp"
-
 #pragma once
 
-class Mouse final
+#include "Variables.hpp"
+
+class Mouse 
 {
 private:
     POINT mouse_;

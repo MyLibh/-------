@@ -1,10 +1,10 @@
+#pragma once
+
 #include "Variables.hpp"
 #include "Textures.hpp"
 #include "Mouse.hpp"
 
 using namespace Gdiplus;
-
-inline BOOL In(RECT, POINT);
 
 enum MouseButtons
 {
@@ -48,5 +48,5 @@ public:
 	VOID setOptions(Rect, wstring, bool = TRUE);
 	
 	VOID draw(Graphics*, Pen&, SolidBrush&, Font&) const;
-	inline BOOL pressed(Mouse mouse) const { return (in(mouse.getCoords()) && mouse.getButton() == MouseButtons::Left && active_)? TRUE : FALSE; }
+	inline BOOL pressed(POINT mouse, INT16 button) const { return (in(mouse) && button == MouseButtons::Left && active_)? TRUE : FALSE; }
 };

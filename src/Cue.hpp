@@ -6,7 +6,7 @@
 
 using namespace Gdiplus;
 
-class Cue final
+class Cue 
 {
 private:
 	//UPOINT  textureSize_;
@@ -30,6 +30,6 @@ public:
 	inline VOID activate()   { draw_ =  TRUE; }
 	inline VOID deactivate() { draw_ = FALSE; }
 
-	VOID draw(Graphics*, Pen&, Image*) const;
-	VOID rotate(POINT, Mouse);
+	VOID draw(Graphics*, Pen&, Image&) const;
+	VOID rotate(POINT, POINT);
 };

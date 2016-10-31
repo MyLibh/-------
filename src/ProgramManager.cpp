@@ -14,9 +14,8 @@ ProgramManager::ProgramManager(HWND hWnd, HINSTANCE hInstance) :
 	oldHbm_(nullptr),
 	hInstance_(hInstance),
 	textures_(new Textures()),
-	exit_(Rect(static_cast<INT>(sizeX), 0, 100, 100), TEXTS[WTEXTS::Exit], TRUE),
-	mouse_(),
-	log_("../src/Billiards.log", ios::ate | ios::out),
+	exit_(Rect(static_cast<INT>(sizeX), 0, 100, 100), TEXTS[Menu::ButtonTextsId::EXIT], TRUE),
+	log_("../src/Billiards.log"),
 	graphics_(nullptr),
 	pen_(new Pen(Color::Yellow, 10)),
 	font_(new Font(L"Times New Roman", 25, 0, Unit::UnitPoint)),
@@ -26,23 +25,16 @@ ProgramManager::ProgramManager(HWND hWnd, HINSTANCE hInstance) :
 	LoadStringW(hInstance_, IDC_BILLIARDS, wndClassName_, MAX_LOADSTRING);
 
 	if(!log_.is_open()) PostQuitMessage(EXITS::LOGFILECREATE_FAILED);
-	//HDC hDC = GetDC(hWnd_);
-
-	//initDubbleBuffering(hDC);
-	//graphics_ = new Graphics(memDC_);
-
-	//ReleaseDC(hWnd_, hDC);
 }
-
-//ProgramManager::ProgramManager(ProgramManager &manager) { $b PAUSE; }
 
 ProgramManager::~ProgramManager()
 {
+	createLog();
+
 	delete(graphics_); 
 	delete(pen_);
 	delete(font_);
 	delete(brush_);
-	delete(textures_);
 
 	DeleteObject(memHbm_);
 	DeleteObject(oldHbm_);
@@ -60,6 +52,10 @@ ProgramManager::~ProgramManager()
 
 VOID ProgramManager::drawTable() const
 {
+	//ImageAttributes imAttr;
+	//imAttr.SetColorKey(COLOR_KEY, COLOR_KEY);
+	//graphics_->DrawImage(&textures_->getTableTexture(), RectF(0, 0, static_cast<REAL>(sizeX), static_cast<REAL>(sizeY)), 0, 0, sizeX, sizeY, Unit::UnitPixel, &imAttr, 0); 
+
 	graphics_->DrawLine(pen_, Point(static_cast<INT>(sizeX - sizestenaRIGHT), static_cast<INT>(sizestenaUP + Ru + RDugLuz)), Point(static_cast<INT>(sizeX - sizestenaRIGHT), static_cast<INT>(sizestenaUP + sizeYpol - Ru - RDugLuz)));
 	graphics_->DrawLine(pen_, Point(static_cast<INT>(        sizestenaLEFT ), static_cast<INT>(sizestenaUP + Ru + RDugLuz)), Point(static_cast<INT>(        sizestenaLEFT ), static_cast<INT>(sizestenaUP + sizeYpol - Ru - RDugLuz)));
 
@@ -121,10 +117,31 @@ VOID ProgramManager::work()
 	//mouse_.dump();
 	//exit_.dump();
 	
-	if(menu_.isActive())
+	if(Menu::isActive())
 	{
 		drawMenu();
-		menu_.procedure(mouse_, &balls_);
+		switch(menuProcedure(Mouse::getCoords(), Mouse::getButton()))
+		{
+		case MenuActions::Nothing:
+			break;
+		case MenuActions::Continue:
+			Menu::deactivate();
+			break;
+		case MenuActions::Restart:
+			Menu::deactivate();
+			Balls::restart();
+		case MenuActions::Help:
+			//Help
+			break;
+		case MenuActions::Settings:
+			//Settings
+			break;
+		case MenuActions::Profile:
+			//Profile
+			break;
+
+		default: PostQuitMessage(EXITS::NONEBUTTON_PRESSED);
+		}
 	}
 	else
 	{
@@ -133,7 +150,7 @@ VOID ProgramManager::work()
 	drawCue();	
 	drawExit();
 
-	if(exit_.pressed(mouse_)) menu_.activate();
+	if(exit_.pressed(Mouse::getCoords(), Mouse::getButton())) Menu::activate();
 
 	moveBalls();
 	moveCue();
@@ -143,4 +160,15 @@ VOID ProgramManager::work()
 	clearDubbleBuffering();
 			
 	ReleaseDC(hWnd_, hDC); 
+}
+
+//=============================================================
+
+VOID ProgramManager::createLog()
+{
+	string log = "///LOG///\nhWnd = " + HWND2STRING() + "\n" +
+				 "hInstance = " + HINSTANCE2STRING() + "\n";
+
+	//log_ << "hrdjd";
+	log_.write(log.c_str(), log.length());
 }

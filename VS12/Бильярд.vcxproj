@@ -51,7 +51,9 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <UndefinePreprocessorDefinitions>
+      </UndefinePreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -79,6 +81,7 @@
     <ClInclude Include="..\src\Balls.hpp" />
     <ClInclude Include="..\src\Button.hpp" />
     <ClInclude Include="..\src\Cue.hpp" />
+    <ClInclude Include="..\src\Keyboard.hpp" />
     <ClInclude Include="..\src\Menu.hpp" />
     <ClInclude Include="..\src\Mouse.hpp" />
     <ClInclude Include="..\src\ProgramManager.hpp" />
@@ -92,6 +95,7 @@
     <ClCompile Include="..\src\Balls.cpp" />
     <ClCompile Include="..\src\Button.cpp" />
     <ClCompile Include="..\src\Cue.cpp" />
+    <ClCompile Include="..\src\Keyboard.cpp" />
     <ClCompile Include="..\src\Menu.cpp" />
     <ClCompile Include="..\src\Mouse.cpp" />
     <ClCompile Include="..\src\ProgramManager.cpp" />
