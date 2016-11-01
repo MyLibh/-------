@@ -56,6 +56,7 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
 
 	HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_BILLIARDS));
 	MSG msg = { };
+
     while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) 
     {
         if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
@@ -77,13 +78,13 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
 			//	programManager->work();
 			//}
 
-			while(!Key(Keyboard::Keys::SPACE)) programManager->work();
+			while(!Key(32)) programManager->work();
 
 			GetCursorPos(&cursor);			
 			programManager->nextMove(cursor);
 			//PostQuitMessage(EXITS::BALLS_STOPPED);
 		}
-		if(Key(Keyboard::Keys::ESCAPE)) return EXITS::ESCAPE;
+		if(Key(27)) return EXITS::ESCAPE;
     }
 
 	GdiplusShutdown(token);

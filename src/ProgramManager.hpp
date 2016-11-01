@@ -7,6 +7,7 @@
 #include "Menu.hpp"
 #include "Keyboard.hpp"
 #include "Config.hpp"
+#include "Exceptions.hpp"
  
 using namespace Gdiplus;
 
@@ -86,7 +87,7 @@ public:
 	inline VOID drawBalls() const { Balls::draw(graphics_, textures_->getBallsTexture()); }
 	inline VOID drawExit()  const { exit_.draw(graphics_, *pen_, *brush_, *font_); }
 
-	inline VOID moveCue() { Cue::rotate(Balls::getBallCoords(textures_->TEXTURES::zero), Mouse::getCoords()); } 
+	inline VOID moveCue() { if(Balls::stopped()) Cue::rotate(Balls::getBallCoords(textures_->TEXTURES::zero), Mouse::getCoords()); } 
 	inline VOID moveBalls() { Balls::move(); }
 	inline VOID nextMove(POINT mouse) { Balls::nextMove(mouse); }
 	inline MenuActions menuProcedure(POINT mouse, INT16 button) { return Menu::procedure(mouse, button); }

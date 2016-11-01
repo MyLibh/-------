@@ -11,7 +11,7 @@
 #define IDC_STATIC                      -1
 
 //#define __tagVERSION__ 
-#define __VERSION__    "0.185v"
+#define __VERSION__    "0.19v"
 
 //#define __tagAUTHOR__ "A&A"
 #define __AUTHOR__    "A&A"

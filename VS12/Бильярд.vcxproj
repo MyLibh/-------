@@ -82,6 +82,7 @@
     <ClInclude Include="..\src\Button.hpp" />
     <ClInclude Include="..\src\Config.hpp" />
     <ClInclude Include="..\src\Cue.hpp" />
+    <ClInclude Include="..\src\Exceptions.hpp" />
     <ClInclude Include="..\src\Keyboard.hpp" />
     <ClInclude Include="..\src\Menu.hpp" />
     <ClInclude Include="..\src\Mouse.hpp" />
@@ -97,6 +98,7 @@
     <ClCompile Include="..\src\Button.cpp" />
     <ClCompile Include="..\src\Config.cpp" />
     <ClCompile Include="..\src\Cue.cpp" />
+    <ClCompile Include="..\src\Exceptions.cpp" />
     <ClCompile Include="..\src\Keyboard.cpp" />
     <ClCompile Include="..\src\Menu.cpp" />
     <ClCompile Include="..\src\Mouse.cpp" />
