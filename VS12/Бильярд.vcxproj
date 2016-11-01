@@ -80,6 +80,7 @@
   <ItemGroup>
     <ClInclude Include="..\src\Balls.hpp" />
     <ClInclude Include="..\src\Button.hpp" />
+    <ClInclude Include="..\src\Config.hpp" />
     <ClInclude Include="..\src\Cue.hpp" />
     <ClInclude Include="..\src\Keyboard.hpp" />
     <ClInclude Include="..\src\Menu.hpp" />
@@ -94,6 +95,7 @@
   <ItemGroup>
     <ClCompile Include="..\src\Balls.cpp" />
     <ClCompile Include="..\src\Button.cpp" />
+    <ClCompile Include="..\src\Config.cpp" />
     <ClCompile Include="..\src\Cue.cpp" />
     <ClCompile Include="..\src\Keyboard.cpp" />
     <ClCompile Include="..\src\Menu.cpp" />
