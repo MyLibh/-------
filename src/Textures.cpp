@@ -16,6 +16,11 @@ Textures::Textures()
 	for(size_t i = 0; i < NUMBER_OF_BALLS; i++) balls_[i] = new Image(WAYS[i].c_str());	
 }
 
+Textures::Textures(Config &config)
+{
+	//background_ = new Image(config.getWString("Background").c_str());
+}
+
 Textures::~Textures()
 {
 	delete(background_);

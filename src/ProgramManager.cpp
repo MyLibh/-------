@@ -15,7 +15,6 @@ ProgramManager::ProgramManager(HWND hWnd, HINSTANCE hInstance) :
 	hInstance_(hInstance),
 	textures_(new Textures()),
 	exit_(Rect(static_cast<INT>(sizeX), 0, 100, 100), TEXTS[Menu::ButtonTextsId::EXIT], TRUE),
-	log_("../src/Billiards.log"),
 	graphics_(nullptr),
 	pen_(new Pen(Color::Yellow, 10)),
 	font_(new Font(L"Times New Roman", 25, 0, Unit::UnitPoint)),
@@ -23,14 +22,10 @@ ProgramManager::ProgramManager(HWND hWnd, HINSTANCE hInstance) :
 {
 	LoadStringW(hInstance_, IDS_APP_TITLE, title_, MAX_LOADSTRING);
 	LoadStringW(hInstance_, IDC_BILLIARDS, wndClassName_, MAX_LOADSTRING);
-
-	if(!log_.is_open()) PostQuitMessage(EXITS::LOGFILECREATE_FAILED);
 }
 
 ProgramManager::~ProgramManager()
 {
-	createLog();
-
 	delete(graphics_); 
 	delete(pen_);
 	delete(font_);
@@ -46,8 +41,6 @@ ProgramManager::~ProgramManager()
 	memDC_     = nullptr;
 	memHbm_    = nullptr;
 	oldHbm_    = nullptr;
-
-	log_.close();
 }
 
 VOID ProgramManager::drawTable() const
@@ -164,11 +157,3 @@ VOID ProgramManager::work()
 
 //=============================================================
 
-VOID ProgramManager::createLog()
-{
-	string log = "///LOG///\nhWnd = " + HWND2STRING() + "\n" +
-				 "hInstance = " + HINSTANCE2STRING() + "\n";
-
-	//log_ << "hrdjd";
-	log_.write(log.c_str(), log.length());
-}

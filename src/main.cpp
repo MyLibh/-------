@@ -52,6 +52,8 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
 
 	programManager = new ProgramManager(hWnd, hInstance);
 
+	Config config;
+
 	HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_BILLIARDS));
 	MSG msg = { };
     while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) 

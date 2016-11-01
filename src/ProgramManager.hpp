@@ -6,6 +6,7 @@
 #include "Textures.hpp"
 #include "Menu.hpp"
 #include "Keyboard.hpp"
+#include "Config.hpp"
  
 using namespace Gdiplus;
 
@@ -22,8 +23,6 @@ private:
 	WCHAR       title_[MAX_LOADSTRING];
 	WCHAR       wndClassName_[MAX_LOADSTRING];
 
-	ofstream    log_;
-
 	Graphics   *graphics_;
 	Pen        *pen_;
 	Font       *font_;
@@ -31,10 +30,9 @@ private:
 
 	Textures   *textures_;
 	Button      exit_;
+	Config      config_;
 	
 	UPOINT      window_; // Улучшить название(размеры memDC)
-
-	VOID createLog();
 
 	ProgramManager(CONST ProgramManager&) { $b PAUSE }
 	ProgramManager& operator=(ProgramManager&) { $b PAUSE return *this; }
@@ -83,7 +81,7 @@ public:
 	VOID clearDubbleBuffering();
 
 	VOID drawTable() const; // { graphics->DrawImage(textures_->getTableTexture(), RectF());); } 
-	inline VOID drawCue()   const { Cue::draw(graphics_, *pen_, textures_->getCueTexture()); }
+	inline VOID drawCue()   const { if(Balls::stopped()) Cue::draw(graphics_, *pen_, textures_->getCueTexture()); }
 	inline VOID drawMenu()  const { Menu::draw(graphics_, textures_->getMenuTexture(), window_, *pen_, *brush_, *font_); }
 	inline VOID drawBalls() const { Balls::draw(graphics_, textures_->getBallsTexture()); }
 	inline VOID drawExit()  const { exit_.draw(graphics_, *pen_, *brush_, *font_); }

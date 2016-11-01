@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include <sstream>
 #include <locale>
+#include <codecvt>
 
 #include "resource.h"
 #include "UPOINT.hpp"

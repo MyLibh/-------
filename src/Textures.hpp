@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Variables.hpp"
+#include "Config.hpp"
 
 using namespace Gdiplus;
 
@@ -40,7 +41,7 @@ private:
 
 public:      
 	Textures();
-	Textures(ifstream);
+	Textures(Config&);
 	~Textures();
 
 	enum TEXTURES

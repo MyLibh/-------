@@ -7,31 +7,25 @@ using namespace Gdiplus;
 Balls::Balls() : 
 	numScored_(0)
 {
-	t[Textures::TEXTURES::zero]       = vec(sizestenaLEFT + sizeXpol / 4                        , sizestenaUP + sizeYpol / 2             );
-	t[Textures::TEXTURES::thirst]     = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 2 * cor3 * RShari, sizestenaUP + sizeYpol / 2 + 2 * RShari);
-	t[Textures::TEXTURES::second]     = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 4 * cor3 * RShari, sizestenaUP + sizeYpol / 2 - 2 * RShari);
-	t[Textures::TEXTURES::third]      = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 3 * cor3 * RShari, sizestenaUP + sizeYpol / 2 + 1 * RShari);
-	t[Textures::TEXTURES::fourth]     = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 4 * cor3 * RShari, sizestenaUP + sizeYpol / 2 + 2 * RShari);
-	t[Textures::TEXTURES::fifth]      = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 4 * cor3 * RShari, sizestenaUP + sizeYpol / 2 + 4 * RShari);
-	t[Textures::TEXTURES::sixth]      = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 3 * cor3 * RShari, sizestenaUP + sizeYpol / 2 - 3 * RShari);
-	t[Textures::TEXTURES::seventh]    = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 1 * cor3 * RShari, sizestenaUP + sizeYpol / 2 - 1 * RShari);
-	t[Textures::TEXTURES::eighth]     = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 2 * cor3 * RShari, sizestenaUP + sizeYpol / 2             );
-	t[Textures::TEXTURES::nineth]     = vec(sizestenaLEFT + sizeXpol * 3 / 4                  , sizestenaUP + sizeYpol / 2             );
-	t[Textures::TEXTURES::tenth]      = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 3 * cor3 * RShari, sizestenaUP + sizeYpol / 2 - 1 * RShari);
-	t[Textures::TEXTURES::eleventh]   = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 4 * cor3 * RShari, sizestenaUP + sizeYpol / 2 - 4 * RShari);
-	t[Textures::TEXTURES::twelfth]    = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 1 * cor3 * RShari, sizestenaUP + sizeYpol / 2 + 1 * RShari);
-	t[Textures::TEXTURES::thirteenth] = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 4 * cor3 * RShari, sizestenaUP + sizeYpol / 2             );
-	t[Textures::TEXTURES::fourteenth] = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 3 * cor3 * RShari, sizestenaUP + sizeYpol / 2 + 3 * RShari);
-	t[Textures::TEXTURES::fifteenth]  = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 2 * cor3 * RShari, sizestenaUP + sizeYpol / 2 - 2 * RShari);
+	points_[Textures::TEXTURES::zero]       = vec(sizestenaLEFT + sizeXpol / 4                        , sizestenaUP + sizeYpol / 2             );
+	points_[Textures::TEXTURES::thirst]     = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 2 * cor3 * RShari, sizestenaUP + sizeYpol / 2 + 2 * RShari);
+	points_[Textures::TEXTURES::second]     = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 4 * cor3 * RShari, sizestenaUP + sizeYpol / 2 - 2 * RShari);
+	points_[Textures::TEXTURES::third]      = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 3 * cor3 * RShari, sizestenaUP + sizeYpol / 2 + 1 * RShari);
+	points_[Textures::TEXTURES::fourth]     = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 4 * cor3 * RShari, sizestenaUP + sizeYpol / 2 + 2 * RShari);
+	points_[Textures::TEXTURES::fifth]      = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 4 * cor3 * RShari, sizestenaUP + sizeYpol / 2 + 4 * RShari);
+	points_[Textures::TEXTURES::sixth]      = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 3 * cor3 * RShari, sizestenaUP + sizeYpol / 2 - 3 * RShari);
+	points_[Textures::TEXTURES::seventh]    = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 1 * cor3 * RShari, sizestenaUP + sizeYpol / 2 - 1 * RShari);
+	points_[Textures::TEXTURES::eighth]     = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 2 * cor3 * RShari, sizestenaUP + sizeYpol / 2             );
+	points_[Textures::TEXTURES::nineth]     = vec(sizestenaLEFT + sizeXpol * 3 / 4                  , sizestenaUP + sizeYpol / 2             );
+	points_[Textures::TEXTURES::tenth]      = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 3 * cor3 * RShari, sizestenaUP + sizeYpol / 2 - 1 * RShari);
+	points_[Textures::TEXTURES::eleventh]   = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 4 * cor3 * RShari, sizestenaUP + sizeYpol / 2 - 4 * RShari);
+	points_[Textures::TEXTURES::twelfth]    = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 1 * cor3 * RShari, sizestenaUP + sizeYpol / 2 + 1 * RShari);
+	points_[Textures::TEXTURES::thirteenth] = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 4 * cor3 * RShari, sizestenaUP + sizeYpol / 2             );
+	points_[Textures::TEXTURES::fourteenth] = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 3 * cor3 * RShari, sizestenaUP + sizeYpol / 2 + 3 * RShari);
+	points_[Textures::TEXTURES::fifteenth]  = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 2 * cor3 * RShari, sizestenaUP + sizeYpol / 2 - 2 * RShari);
 
-	//for (size_t i = 1; i < NUMBER_OF_BALLS; i++) v[i] = vec(0, 0); 
-	memset(&v,0, sizeof(v));
+	memset(&speeds_,0, sizeof(speeds_));
 	memset(&scored_, FALSE, sizeof(scored_));
-	//v[0] = vec(5, -3.7);
-	//v[0] = vec(15, 1.7);
-	//v[0] = vec(15, -4.2);
-	//v[0] = vec(5, -3.74);
-	//v[0] = vec(19, 1);
 }
 
 Balls::~Balls()
@@ -39,7 +33,7 @@ Balls::~Balls()
 
 BOOL Balls::stopped() const
 {
-	for (size_t i = 0; i < NUMBER_OF_BALLS; i++) if (v[i].getL() != 0) return false;
+	for (size_t i = 0; i < NUMBER_OF_BALLS; i++) if (speeds_[i].getL() != 0) return false;
 
 	return true;
 }
@@ -50,9 +44,9 @@ VOID Balls::repulsion()
 	{
 		for (size_t j = i + 1; j < NUMBER_OF_BALLS; j++)
 		{
-			if ((pow(t[i].getX() - t[j].getX(), 2) + pow(t[i].getY() - t[j].getY(), 2) <= 4 * RShari * RShari)
-				&& (pow(t[i].getX() - t[j].getX(), 2) + pow(t[i].getY() - t[j].getY(), 2))        //надо сделать чтобы после синкосов они удал€лись
-				>= (pow((t[i].getX() + v[i].getX()) - (t[j].getX() + v[j].getX()), 2) + pow((t[i].getY() + v[i].getY()) - (t[j].getY() + v[j].getY()), 2)))
+			if ((pow(points_[i].getX() - points_[j].getX(), 2) + pow(points_[i].getY() - points_[j].getY(), 2) <= 4 * RShari * RShari)
+				&& (pow(points_[i].getX() - points_[j].getX(), 2) + pow(points_[i].getY() - points_[j].getY(), 2))        //надо сделать чтобы после синкосов они удал€лись
+				>= (pow((points_[i].getX() + speeds_[i].getX()) - (points_[j].getX() + speeds_[j].getX()), 2) + pow((points_[i].getY() + speeds_[i].getY()) - (points_[j].getY() + speeds_[j].getY()), 2)))
 			{
 
 				double tmp_xi = 0, tmp_yi = 0;
@@ -60,18 +54,18 @@ VOID Balls::repulsion()
 
 				double ug = 10000000;
 				double phi = M_PI_4;
-				if (t[i].getX() != t[j].getX())
+				if (points_[i].getX() != points_[j].getX())
 				{
-					ug = (t[i].getY() - t[j].getY()) / (t[i].getX() - t[j].getX());
+					ug = (points_[i].getY() - points_[j].getY()) / (points_[i].getX() - points_[j].getX());
 
 					phi = atan(ug);
 				}
 
-				double vx_j = ( v[i].getX() * cos(phi) + v[i].getY() * sin(phi));
-				double vy_i = (-v[i].getX() * sin(phi) + v[i].getY() * cos(phi));
+				double vx_j = ( speeds_[i].getX() * cos(phi) + speeds_[i].getY() * sin(phi));
+				double vy_i = (-speeds_[i].getX() * sin(phi) + speeds_[i].getY() * cos(phi));
 
-				double vx_i = ( v[j].getX() * cos(phi) + v[j].getY() * sin(phi));
-				double vy_j = (-v[j].getX() * sin(phi) + v[j].getY() * cos(phi));
+				double vx_i = ( speeds_[j].getX() * cos(phi) + speeds_[j].getY() * sin(phi));
+				double vy_j = (-speeds_[j].getX() * sin(phi) + speeds_[j].getY() * cos(phi));
 
 				tmp_xi = ( vx_i * cos(-phi) + vy_i * sin(-phi));
 				tmp_yi = (-vx_i * sin(-phi) + vy_i * cos(-phi));
@@ -82,8 +76,8 @@ VOID Balls::repulsion()
 				//double slg_car = 0;
 				//double slg_new = 0;
 
-				if (sqrt(pow(t[i].getX() - t[j].getX(), 2) + pow(t[i].getY() - t[j].getY(), 2))
-					>= sqrt(pow((t[i].getX() + 25 * tmp_xi) - (t[j].getX() + 25 * tmp_xj), 2) + pow((t[i].getY() + 25 * tmp_yi) - (t[j].getY() + 25 * tmp_yj), 2)))
+				if (sqrt(pow(points_[i].getX() - points_[j].getX(), 2) + pow(points_[i].getY() - points_[j].getY(), 2))
+					>= sqrt(pow((points_[i].getX() + 25 * tmp_xi) - (points_[j].getX() + 25 * tmp_xj), 2) + pow((points_[i].getY() + 25 * tmp_yi) - (points_[j].getY() + 25 * tmp_yj), 2)))
 				{
 					//slg_car = sqrt(pow(t[i].x - t[j].x, 2) + pow(t[i].y - t[j].y, 2));
 
@@ -91,11 +85,11 @@ VOID Balls::repulsion()
 				}
 				else
 				{
-					v[j].setX(tmp_xj);
-					v[j].setY(tmp_yj);
+					speeds_[j].setX(tmp_xj);
+					speeds_[j].setY(tmp_yj);
 
-					v[i].setX(tmp_xi);
-					v[i].setY(tmp_yi);
+					speeds_[i].setX(tmp_xi);
+					speeds_[i].setY(tmp_yi);
 				}
 
 			}
@@ -110,9 +104,9 @@ VOID Balls::repulsionFrom()
 	{
 		for (size_t j = 0; j < ColvoCenterDugLuz; j++)
 		{
-			if ((pow(t[i].getX() - CenterDugLuz[j].getX(), 2) + pow(t[i].getY() - CenterDugLuz[j].getY(), 2) <= (RShari + RDugLuz)*(RShari + RDugLuz))
-				&& (pow(t[i].getX() - CenterDugLuz[j].getX(), 2) + pow(t[i].getY() - CenterDugLuz[j].getY(), 2))        //надо сделать чтобы после синкосов они уддал€лись
-				>= (pow((t[i].getX() + v[i].getX()) - (CenterDugLuz[j].getX()), 2) + pow((t[i].getY() + v[i].getY()) - (CenterDugLuz[j].getY()), 2)))
+			if ((pow(points_[i].getX() - CenterDugLuz[j].getX(), 2) + pow(points_[i].getY() - CenterDugLuz[j].getY(), 2) <= (RShari + RDugLuz) * (RShari + RDugLuz))
+				&& (pow(points_[i].getX() - CenterDugLuz[j].getX(), 2) + pow(points_[i].getY() - CenterDugLuz[j].getY(), 2))        //надо сделать чтобы после синкосов они уддал€лись
+				>= (pow((points_[i].getX() + speeds_[i].getX()) - (CenterDugLuz[j].getX()), 2) + pow((points_[i].getY() + speeds_[i].getY()) - (CenterDugLuz[j].getY()), 2)))
 			{
 
 				double tmp_xi = 0;
@@ -122,27 +116,27 @@ VOID Balls::repulsionFrom()
 
 				double ug = 10000000;
 				double phi = M_PI_4;
-				if (t[i].getX() != CenterDugLuz[j].getX())
+				if (points_[i].getX() != CenterDugLuz[j].getX())
 				{
-					ug = (t[i].getY() - CenterDugLuz[j].getY()) / (t[i].getX() - CenterDugLuz[j].getX());
+					ug = (points_[i].getY() - CenterDugLuz[j].getY()) / (points_[i].getX() - CenterDugLuz[j].getX());
 
 					phi = atan(ug);
 				}
 
-				double vx_i = -(v[i].getX() * cos(phi) + v[i].getY() * sin(phi));
-				double vy_i = (-v[i].getX() * sin(phi) + v[i].getY() * cos(phi));
+				double vx_i = -(speeds_[i].getX() * cos(phi) + speeds_[i].getY() * sin(phi));
+				double vy_i = (-speeds_[i].getX() * sin(phi) + speeds_[i].getY() * cos(phi));
 
 				tmp_xi = ( vx_i * cos(-phi) + vy_i * sin(-phi));
 				tmp_yi = (-vx_i * sin(-phi) + vy_i * cos(-phi));
 				 
-				if (sqrt(pow(t[i].getX() - CenterDugLuz[j].getX(), 2) + pow(t[i].getY() - CenterDugLuz[j].getY(), 2))
-					>= sqrt(pow((t[i].getX() + 25 * tmp_xi) - (CenterDugLuz[j].getX()), 2) + pow((t[i].getY() + 25 * tmp_yi) - (CenterDugLuz[j].getY()), 2)))
+				if (sqrt(pow(points_[i].getX() - CenterDugLuz[j].getX(), 2) + pow(points_[i].getY() - CenterDugLuz[j].getY(), 2))
+					>= sqrt(pow((points_[i].getX() + 25 * tmp_xi) - (CenterDugLuz[j].getX()), 2) + pow((points_[i].getY() + 25 * tmp_yi) - (CenterDugLuz[j].getY()), 2)))
 				{
 				}
 				else
 				{
-					v[i].setX(tmp_xi);
-					v[i].setY(tmp_yi);
+					speeds_[i].setX(tmp_xi);
+					speeds_[i].setY(tmp_yi);
 				}
 
 			}
@@ -154,24 +148,24 @@ VOID Balls::restart()
 {
 	numScored_ = 0;
 
-	t[ 0] = vec(sizestenaLEFT + sizeXpol / 4                        , sizestenaUP + sizeYpol / 2             );
-	t[ 1] = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 2 * cor3 * RShari, sizestenaUP + sizeYpol / 2 + 2 * RShari);
-	t[ 2] = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 4 * cor3 * RShari, sizestenaUP + sizeYpol / 2 - 2 * RShari);
-	t[ 3] = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 3 * cor3 * RShari, sizestenaUP + sizeYpol / 2 + 1 * RShari);
-	t[ 4] = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 4 * cor3 * RShari, sizestenaUP + sizeYpol / 2 + 2 * RShari);
-	t[ 5] = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 4 * cor3 * RShari, sizestenaUP + sizeYpol / 2 + 4 * RShari);
-	t[ 6] = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 3 * cor3 * RShari, sizestenaUP + sizeYpol / 2 - 3 * RShari);
-	t[ 7] = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 1 * cor3 * RShari, sizestenaUP + sizeYpol / 2 - 1 * RShari);
-	t[ 8] = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 2 * cor3 * RShari, sizestenaUP + sizeYpol / 2             );
-	t[ 9] = vec(sizestenaLEFT + sizeXpol * 3 / 4                  , sizestenaUP + sizeYpol / 2             );
-	t[10] = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 3 * cor3 * RShari, sizestenaUP + sizeYpol / 2 - 1 * RShari);
-	t[11] = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 4 * cor3 * RShari, sizestenaUP + sizeYpol / 2 - 4 * RShari);
-	t[12] = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 1 * cor3 * RShari, sizestenaUP + sizeYpol / 2 + 1 * RShari);
-	t[13] = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 4 * cor3 * RShari, sizestenaUP + sizeYpol / 2             );
-	t[14] = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 3 * cor3 * RShari, sizestenaUP + sizeYpol / 2 + 3 * RShari);
-	t[15] = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 2 * cor3 * RShari, sizestenaUP + sizeYpol / 2 - 2 * RShari);
+	points_[ 0] = vec(sizestenaLEFT + sizeXpol / 4                        , sizestenaUP + sizeYpol / 2             );
+	points_[ 1] = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 2 * cor3 * RShari, sizestenaUP + sizeYpol / 2 + 2 * RShari);
+	points_[ 2] = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 4 * cor3 * RShari, sizestenaUP + sizeYpol / 2 - 2 * RShari);
+	points_[ 3] = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 3 * cor3 * RShari, sizestenaUP + sizeYpol / 2 + 1 * RShari);
+	points_[ 4] = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 4 * cor3 * RShari, sizestenaUP + sizeYpol / 2 + 2 * RShari);
+	points_[ 5] = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 4 * cor3 * RShari, sizestenaUP + sizeYpol / 2 + 4 * RShari);
+	points_[ 6] = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 3 * cor3 * RShari, sizestenaUP + sizeYpol / 2 - 3 * RShari);
+	points_[ 7] = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 1 * cor3 * RShari, sizestenaUP + sizeYpol / 2 - 1 * RShari);
+	points_[ 8] = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 2 * cor3 * RShari, sizestenaUP + sizeYpol / 2             );
+	points_[ 9] = vec(sizestenaLEFT + sizeXpol * 3 / 4                  , sizestenaUP + sizeYpol / 2             );
+	points_[10] = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 3 * cor3 * RShari, sizestenaUP + sizeYpol / 2 - 1 * RShari);
+	points_[11] = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 4 * cor3 * RShari, sizestenaUP + sizeYpol / 2 - 4 * RShari);
+	points_[12] = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 1 * cor3 * RShari, sizestenaUP + sizeYpol / 2 + 1 * RShari);
+	points_[13] = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 4 * cor3 * RShari, sizestenaUP + sizeYpol / 2             );
+	points_[14] = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 3 * cor3 * RShari, sizestenaUP + sizeYpol / 2 + 3 * RShari);
+	points_[15] = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 2 * cor3 * RShari, sizestenaUP + sizeYpol / 2 - 2 * RShari);
 
-	memset(&v,0, sizeof(v));
+	memset(&speeds_,0, sizeof(speeds_));
 	memset(&scored_, FALSE, sizeof(scored_));
 }
 
@@ -181,100 +175,116 @@ VOID Balls::move()
 	
 	while (nat < NUMBER_OF_BALLS)
 	{
-		t[nat].setX(t[nat].getX() + v[nat].getX());
+		points_[nat].setX(points_[nat].getX() + speeds_[nat].getX());
 
-		if (t[nat].getX() >= sizeX - RShari - sizestenaRIGHT && t[nat].getX() <= sizeX - RShari - sizestenaRIGHT + 2 * RDugLuz &&
-			(((t[nat].getY() > sizestenaUP + (Ru + RDugLuz)) && (t[nat].getY() < sizestenaUP + sizeYpol - (Ru + RDugLuz)))/* ||
+		if (points_[nat].getX() >= sizeX - RShari - sizestenaRIGHT && points_[nat].getX() <= sizeX - RShari - sizestenaRIGHT + 2 * RDugLuz &&
+			(((points_[nat].getY() > sizestenaUP + (Ru + RDugLuz)) && (points_[nat].getY() < sizestenaUP + sizeYpol - (Ru + RDugLuz)))/* ||
 																												(( t[nat].y < sizestenaUP + sizeYpol - (RLuz + RDugLuz)) && (t[nat].y > sizestenaUP + sizeYpol/2 + (RLuz + RDugLuz)))*/))
 		{
-			t[nat].setX(sizeX - RShari - sizestenaRIGHT);
-			v[nat].setX(-v[nat].getX());
+			points_[nat].setX(sizeX - RShari - sizestenaRIGHT);
+			speeds_[nat].setX(-speeds_[nat].getX());
 		}
 		
-		if (t[nat].getX() <= RShari + sizestenaLEFT && t[nat].getX() >= RShari + sizestenaLEFT - 2 * RDugLuz &&
-			(((t[nat].getY() > sizestenaUP + (Ru + RDugLuz)) && (t[nat].getY() < sizestenaUP + sizeYpol - (Ru + RDugLuz))))) // || (( t[nat].y < sizestenaUP + sizeYpol - (RLuz + RDugLuz)) && (t[nat].y > sizestenaUP + sizeYpol/2 + (RLuz + RDugLuz)))))
+		if (points_[nat].getX() <= RShari + sizestenaLEFT && points_[nat].getX() >= RShari + sizestenaLEFT - 2 * RDugLuz &&
+			(((points_[nat].getY() > sizestenaUP + (Ru + RDugLuz)) && (points_[nat].getY() < sizestenaUP + sizeYpol - (Ru + RDugLuz))))) // || (( t[nat].y < sizestenaUP + sizeYpol - (RLuz + RDugLuz)) && (t[nat].y > sizestenaUP + sizeYpol/2 + (RLuz + RDugLuz)))))
 		{
-			t[nat].setX(RShari + sizestenaLEFT);
-			v[nat].setX(-v[nat].getX());
+			points_[nat].setX(RShari + sizestenaLEFT);
+			speeds_[nat].setX(-speeds_[nat].getX());
 		}
 
-		t[nat].setY(t[nat].getY() + v[nat].getY());
+		points_[nat].setY(points_[nat].getY() + speeds_[nat].getY());
 
-		if (t[nat].getY() >= sizeY - RShari - sizestenaDOWN && t[nat].getY() <= sizeY - RShari - sizestenaDOWN + 2 * RDugLuz &&
-			(((t[nat].getX() > sizestenaLEFT + (Ru + RDugLuz)) && (t[nat].getX() < sizestenaLEFT + sizeXpol / 2 - (RLuz + RDugLuz))) ||
-			((t[nat].getX() < sizestenaLEFT + sizeXpol - (Ru + RDugLuz)) && (t[nat].getX() > sizestenaLEFT + sizeXpol / 2 + (RLuz + RDugLuz)))))
+		if (points_[nat].getY() >= sizeY - RShari - sizestenaDOWN && points_[nat].getY() <= sizeY - RShari - sizestenaDOWN + 2 * RDugLuz &&
+			(((points_[nat].getX() > sizestenaLEFT + (Ru + RDugLuz)) && (points_[nat].getX() < sizestenaLEFT + sizeXpol / 2 - (RLuz + RDugLuz))) ||
+			((points_[nat].getX() < sizestenaLEFT + sizeXpol - (Ru + RDugLuz)) && (points_[nat].getX() > sizestenaLEFT + sizeXpol / 2 + (RLuz + RDugLuz)))))
 		{
-			t[nat].setY(sizeY - RShari - sizestenaDOWN);
-			v[nat].setY(-v[nat].getY());
+			points_[nat].setY(sizeY - RShari - sizestenaDOWN);
+			speeds_[nat].setY(-speeds_[nat].getY());
 		}
 
-		if (t[nat].getY() <= RShari + sizestenaUP && t[nat].getY() >= RShari + sizestenaUP - 2 * RDugLuz &&
-			(((t[nat].getX() > sizestenaLEFT + (Ru + RDugLuz)) && (t[nat].getX() < sizestenaLEFT + sizeXpol / 2 - (RLuz + RDugLuz))) ||
-			((t[nat].getX() < sizestenaLEFT + sizeXpol - (Ru + RDugLuz)) && (t[nat].getX() > sizestenaLEFT + sizeXpol / 2 + (RLuz + RDugLuz)))))
+		if (points_[nat].getY() <= RShari + sizestenaUP && points_[nat].getY() >= RShari + sizestenaUP - 2 * RDugLuz &&
+			(((points_[nat].getX() > sizestenaLEFT + (Ru + RDugLuz)) && (points_[nat].getX() < sizestenaLEFT + sizeXpol / 2 - (RLuz + RDugLuz))) ||
+			((points_[nat].getX() < sizestenaLEFT + sizeXpol - (Ru + RDugLuz)) && (points_[nat].getX() > sizestenaLEFT + sizeXpol / 2 + (RLuz + RDugLuz)))))
 		{
-			t[nat].setY(RShari + sizestenaUP);
-			v[nat].setY(-v[nat].getY());
+			points_[nat].setY(RShari + sizestenaUP);
+			speeds_[nat].setY(-speeds_[nat].getY());
 		}
 
-		v[nat].setLK();
+		speeds_[nat].setLK();
 
-		if (fabs(v[nat].getL()) >= 0.004) v[nat] -= 0.004;
-		else v[nat] = vec(0, 0);
+		if (fabs(speeds_[nat].getL()) >= 0.004) speeds_[nat] -= 0.004;
+		else speeds_[nat] = vec(0, 0);
 
 		//{   проверки попадани€ в лузы
 
-		if ((t[nat].getX() - sizestenaLEFT + RDugLuz)*(t[nat].getX() - sizestenaLEFT + RDugLuz) +
-			(t[nat].getY() - sizestenaUP + RDugLuz) * (t[nat].getY() - sizestenaUP + RDugLuz) <= (RLuz + 1)*(RLuz + 1))
+		if ((points_[nat].getX() - sizestenaLEFT + RDugLuz) * (points_[nat].getX() - sizestenaLEFT + RDugLuz) +
+			(points_[nat].getY() - sizestenaUP + RDugLuz) * (points_[nat].getY() - sizestenaUP + RDugLuz) <= (RLuz + 1)*(RLuz + 1))
 		{
-			t[nat] = vec(numScored_ * 2 * (RShari + 1) + sizestenaLEFT * 2, sizestenaUP / 2 - 3);
-			v[nat] = vec(0, 0);
+			points_[nat] = vec(numScored_ * 2 * (RShari + 1) + sizestenaLEFT * 2, sizestenaUP / 2 - 3);
+			speeds_[nat] = vec(0, 0);
 			numScored_++;
+			scored_[nat] = TRUE;
 		}
 
-		if ((t[nat].getY() - sizeY + sizestenaDOWN - RDugLuz) * (t[nat].getY() - sizeY + sizestenaDOWN - RDugLuz) +
-			(t[nat].getX() - sizestenaLEFT + RDugLuz) * (t[nat].getX() - sizestenaLEFT + RDugLuz) <= (RLuz + 1)*(RLuz + 1))
+		if ((points_[nat].getY() - sizeY + sizestenaDOWN - RDugLuz) * (points_[nat].getY() - sizeY + sizestenaDOWN - RDugLuz) +
+			(points_[nat].getX() - sizestenaLEFT + RDugLuz) * (points_[nat].getX() - sizestenaLEFT + RDugLuz) <= (RLuz + 1)*(RLuz + 1))
 		{
-			t[nat] = vec(numScored_ * 2 * (RShari + 1) + sizestenaLEFT * 2, sizestenaUP / 2 - 3);
-			v[nat] = vec(0, 0);
+			points_[nat] = vec(numScored_ * 2 * (RShari + 1) + sizestenaLEFT * 2, sizestenaUP / 2 - 3);
+			speeds_[nat] = vec(0, 0);
 			numScored_++;
+			scored_[nat] = TRUE;
 		}
 
-		if ((t[nat].getY() - sizeY + sizestenaDOWN - RDugLuz) * (t[nat].getY() - sizeY + sizestenaDOWN - RDugLuz) +
-			(t[nat].getX() - sizeX + sizestenaRIGHT - RDugLuz) * (t[nat].getX() - sizeX + sizestenaRIGHT - RDugLuz) <= (RLuz + 1)*(RLuz + 1))
+		if ((points_[nat].getY() - sizeY + sizestenaDOWN - RDugLuz) * (points_[nat].getY() - sizeY + sizestenaDOWN - RDugLuz) +
+			(points_[nat].getX() - sizeX + sizestenaRIGHT - RDugLuz) * (points_[nat].getX() - sizeX + sizestenaRIGHT - RDugLuz) <= (RLuz + 1)*(RLuz + 1))
 		{
-			t[nat] = vec(numScored_ * 2 * (RShari + 1) + sizestenaLEFT * 2, sizestenaUP / 2 - 3);
-			v[nat] = vec(0, 0);
+			points_[nat] = vec(numScored_ * 2 * (RShari + 1) + sizestenaLEFT * 2, sizestenaUP / 2 - 3);
+			speeds_[nat] = vec(0, 0);
 			numScored_++;
+			scored_[nat] = TRUE;
 		}
 
-		if ((t[nat].getY() - sizestenaUP + RDugLuz) * (t[nat].getY() - sizestenaUP + RDugLuz) +
-			(t[nat].getX() - sizeX + sizestenaRIGHT - RDugLuz) * (t[nat].getX() - sizeX + sizestenaRIGHT - RDugLuz) <= (RLuz + 1)*(RLuz + 1))
+		if ((points_[nat].getY() - sizestenaUP + RDugLuz) * (points_[nat].getY() - sizestenaUP + RDugLuz) +
+			(points_[nat].getX() - sizeX + sizestenaRIGHT - RDugLuz) * (points_[nat].getX() - sizeX + sizestenaRIGHT - RDugLuz) <= (RLuz + 1)*(RLuz + 1))
 		{
-			t[nat] = vec(numScored_ * 2 * (RShari + 1) + sizestenaLEFT * 2, sizestenaUP / 2 - 3);
-			v[nat] = vec(0, 0);
+			points_[nat] = vec(numScored_ * 2 * (RShari + 1) + sizestenaLEFT * 2, sizestenaUP / 2 - 3);
+			speeds_[nat] = vec(0, 0);
 			numScored_++;
+			scored_[nat] = TRUE;
 		}
 
-		if ((t[nat].getX() - sizestenaLEFT - sizeXpol / 2) * (t[nat].getX() - sizestenaLEFT - sizeXpol / 2) +
-			(t[nat].getY() + sizestenaDOWN - sizeY - RDugLuz) * (t[nat].getY() + sizestenaDOWN - sizeY - RDugLuz) <= (RLuz + 1)*(RLuz + 1))
+		if ((points_[nat].getX() - sizestenaLEFT - sizeXpol / 2) * (points_[nat].getX() - sizestenaLEFT - sizeXpol / 2) +
+			(points_[nat].getY() + sizestenaDOWN - sizeY - RDugLuz) * (points_[nat].getY() + sizestenaDOWN - sizeY - RDugLuz) <= (RLuz + 1)*(RLuz + 1))
 		{
-			t[nat] = vec(numScored_ * 2 * (RShari + 1) + sizestenaLEFT * 2, sizestenaUP / 2 - 3);
-			v[nat] = vec(0, 0);
+			points_[nat] = vec(numScored_ * 2 * (RShari + 1) + sizestenaLEFT * 2, sizestenaUP / 2 - 3);
+			speeds_[nat] = vec(0, 0);
 			numScored_++;
+			scored_[nat] = TRUE;
 		}
 
-		if ((t[nat].getX() - sizestenaLEFT - sizeXpol / 2) * (t[nat].getX() - sizestenaLEFT - sizeXpol / 2) +
-			(t[nat].getY() - sizestenaUP + RDugLuz) * (t[nat].getY()- sizestenaUP + RDugLuz) <= (RLuz + 1)*(RLuz + 1))
+		if ((points_[nat].getX() - sizestenaLEFT - sizeXpol / 2) * (points_[nat].getX() - sizestenaLEFT - sizeXpol / 2) +
+			(points_[nat].getY() - sizestenaUP + RDugLuz) * (points_[nat].getY()- sizestenaUP + RDugLuz) <= (RLuz + 1)*(RLuz + 1))
 		{
-			t[nat] = vec(numScored_ * 2 * (RShari + 1) + sizestenaLEFT * 2, sizestenaUP / 2 - 3);
-			v[nat] = vec(0, 0);
+			points_[nat] = vec(numScored_ * 2 * (RShari + 1) + sizestenaLEFT * 2, sizestenaUP / 2 - 3);
+			speeds_[nat] = vec(0, 0);
 			numScored_++;
+			scored_[nat] = TRUE;
 		}
 		
 		//}
-
-
 		nat++;
+	}
+
+	if(scored_[0]) 
+	{
+		$y cout << "«абит белый шар. –естартинг..." << endl;
+		restart();
+	}
+
+	if(scored_[8]) 
+	{
+		$y cout << "«абита восьмерка. –естартинг..." << endl;
+		restart();
 	}
 
 	repulsionFrom();
@@ -286,7 +296,7 @@ VOID Balls::draw(Graphics *graphics, Image *images[]) const
 	ImageAttributes imAttr;
 	imAttr.SetColorKey(COLOR_KEY, COLOR_KEY);
 	for(size_t i = 0; i < NUMBER_OF_BALLS; i++)
-		graphics->DrawImage(images[i], Rect(static_cast<INT>(t[i].getX()) - RShari, static_cast<INT>(t[i].getY()) - RShari, 2 * RShari, 2 * RShari), 0, 0, 2 * RShari, 2 * RShari, Unit::UnitPixel, &imAttr, 0); 
+		graphics->DrawImage(images[i], Rect(static_cast<INT>(points_[i].getX()) - RShari, static_cast<INT>(points_[i].getY()) - RShari, 2 * RShari, 2 * RShari), 0, 0, 2 * RShari, 2 * RShari, Unit::UnitPixel, &imAttr, 0); 
 }
 
 

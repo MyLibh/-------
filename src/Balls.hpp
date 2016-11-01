@@ -25,8 +25,8 @@ CONST vec CenterDugLuz[ColvoCenterDugLuz] =
 class Balls 
 {
 private:
-	vec t[NUMBER_OF_BALLS];
-	vec v[NUMBER_OF_BALLS];
+	vec  points_[NUMBER_OF_BALLS];
+	vec  speeds_[NUMBER_OF_BALLS];
 	bool scored_[NUMBER_OF_BALLS];
 	WORD numScored_;
 
@@ -34,8 +34,9 @@ private:
 	VOID repulsionFrom();
 
 protected:
-	inline VOID setZeroBallCoords(POINT coords) { t[0] = vec(coords.x, coords.y); }
-	inline vec impactDirection(POINT mouse) const { return vec(static_cast<double>(static_cast<INT>((mouse.x - v[0].getX()))%20), static_cast<double>(static_cast<INT>((mouse.y - v[0].getY()))%20)); }
+	inline VOID setZeroBallCoords(POINT coords) { points_[0] = vec(coords.x, coords.y); }
+	inline vec impactDirection(POINT mouse) const { return vec(static_cast<double>((mouse.x - points_[0].getX()) / 40), static_cast<double>((mouse.y - points_[0].getY()) / 40)); }
+	inline BOOL ballStopped(Textures::TEXTURES index) const { return !(speeds_[index].getX() && speeds_[index].getY()); }
 
 public:	
 	Balls();
@@ -43,14 +44,14 @@ public:
 
 	BOOL stopped() const;	
 
-	inline POINT getBallCoords(Textures::TEXTURES index) const { POINT point = { static_cast<LONG>(t[index].getX()), static_cast<LONG>(t[index].getY()) }; return point; }
+	inline POINT getBallCoords(Textures::TEXTURES index) const { POINT point = { static_cast<LONG>(points_[index].getX()), static_cast<LONG>(points_[index].getY()) }; return point; }
 	
 	VOID restart();
 	VOID move();
 	VOID draw(Graphics*, Image*[]) const;
 
 	
-	inline VOID nextMove(POINT mouse) { v[0] = impactDirection(mouse); }
+	inline VOID nextMove(POINT mouse) { speeds_[0] = impactDirection(mouse); }
 };
 
 
