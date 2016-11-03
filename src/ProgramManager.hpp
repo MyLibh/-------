@@ -41,6 +41,23 @@ private:
 	inline string HWND2STRING() const { char text[32] = ""; ; return string(_itoa(reinterpret_cast<INT>(hWnd_), text, 10)); }
 	inline string HINSTANCE2STRING() const { char text[32] = ""; ; return string(_itoa(reinterpret_cast<INT>(hInstance_), text, 10)); }
 
+	inline CONST VOID loadBackgroundIntoCanvas(HDC canvas) const { graphics_->DrawImage(&textures_->getBackgroundTexture(), RectF(0, 0, static_cast<REAL>(window_.width), static_cast<REAL>(window_.height))); }
+	inline CONST VOID loadBufferIntoCanvas(HDC canvas)     const { BitBlt(canvas, 0, 0, window_.width, window_.height, memDC_, 0, 0, SRCCOPY); }
+
+	VOID initDubbleBuffering(HDC);
+	VOID clearDubbleBuffering();
+
+	VOID drawTable() const; // { graphics->DrawImage(textures_->getTableTexture(), RectF());); } 
+	inline VOID drawCue()   const { if(Balls::stopped()) Cue::draw(graphics_, *pen_, textures_->getCueTexture()); }
+	inline VOID drawMenu()  const { Menu::draw(graphics_, textures_->getMenuTexture(), window_, *pen_, *brush_, *font_); }
+	inline VOID drawBalls() const { Balls::draw(graphics_, textures_->getBallsTexture()); }
+	inline VOID drawExit()  const { exit_.draw(graphics_, *pen_, *brush_, *font_); }
+
+	inline VOID moveCue() { if(Balls::stopped()) Cue::rotate(Balls::getBallCoords(Balls::Ball::zero), Mouse::getCoords()); } 
+	inline VOID moveBalls() { Balls::move(); }
+	
+	inline MenuActions menuProcedure(POINT mouse, INT16 button) { return Menu::procedure(mouse, button); }
+
 public:
 	explicit ProgramManager(HWND, HINSTANCE);
 	~ProgramManager();
@@ -76,25 +93,10 @@ public:
 	inline VOID setBrushColor(Color color = Color::Black) { brush_->SetColor(color); }
 	inline VOID setZeroBallCoords(POINT coords)           { Balls::setZeroBallCoords(coords); }
 
-	inline CONST VOID loadBackgroundIntoCanvas(HDC canvas) const { graphics_->DrawImage(&textures_->getBackgroundTexture(), RectF(0, 0, static_cast<REAL>(window_.width), static_cast<REAL>(window_.height))); }
-	inline CONST VOID loadBufferIntoCanvas(HDC canvas)     const { BitBlt(canvas, 0, 0, window_.width, window_.height, memDC_, 0, 0, SRCCOPY); }
-
-	VOID initDubbleBuffering(HDC);
-	VOID clearDubbleBuffering();
-
-	VOID drawTable() const; // { graphics->DrawImage(textures_->getTableTexture(), RectF());); } 
-	inline VOID drawCue()   const { if(Balls::stopped()) Cue::draw(graphics_, *pen_, textures_->getCueTexture()); }
-	inline VOID drawMenu()  const { Menu::draw(graphics_, textures_->getMenuTexture(), window_, *pen_, *brush_, *font_); }
-	inline VOID drawBalls() const { Balls::draw(graphics_, textures_->getBallsTexture()); }
-	inline VOID drawExit()  const { exit_.draw(graphics_, *pen_, *brush_, *font_); }
-
-	inline VOID moveCue() { if(Balls::stopped()) Cue::rotate(Balls::getBallCoords(textures_->TEXTURES::zero), Mouse::getCoords()); } 
-	inline VOID moveBalls() { Balls::move(); }
-	inline VOID nextMove() { Balls::nextMove(15, Cue::getAngleInRadians()); }
-	inline MenuActions menuProcedure(POINT mouse, INT16 button) { return Menu::procedure(mouse, button); }
-
     VOID onPAINT(); 
 	VOID work(wstring, PointF, Color);
+	VOID endGame(string winnerMsg){ MessageBoxA(hWnd_, winnerMsg.c_str(), "»√–¿ Œ ŒÕ◊≈Õ¿", MB_OK | MB_ICONINFORMATION); Menu::activate(); }
+	inline VOID nextMove() { Balls::nextMove(15, Cue::getAngleInRadians()); }
 
 	inline BOOL stopBalls() const { return Balls::stopped(); }
 };

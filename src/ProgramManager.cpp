@@ -149,8 +149,8 @@ VOID ProgramManager::work(wstring text, PointF point, Color color)
 	moveCue();
 	}
 
-	//setBrushColor(color);
-	//graphics_->DrawString(text.c_str(), text.length(), font_, point, brush_);
+	setBrushColor(color);
+	graphics_->DrawString(text.c_str(), text.length(), font_, point, brush_);
 
 	loadBufferIntoCanvas(hDC);	
 	clearDubbleBuffering();

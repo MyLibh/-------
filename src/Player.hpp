@@ -29,7 +29,7 @@ private:
 
 	string   name_;
 	WORD     score_;
-	
+	BOOL     lose_;
 	BallType ballType_;
 
 	inline VOID updateScore(WORD score) { score_ += score; }
@@ -38,14 +38,17 @@ protected:
 	BOOL tmpBalls_[NUMBER_OF_BALLS];
 	BOOL copied_;
 
-	WORD checkScored(CONST BOOL[]);
+	WORD checkScored(ProgramManager&);
 	VOID resetValues(TURN&);
+
+	inline string getScoreStr() const { CHAR text[10] = ""; return string(_itoa(score_, text, 10)); }
+	inline VOID reset() { score_ = 0; lose_ = FALSE; }
 
 	Player &operator=(Player&);
 	Player operator!();
 
 public:
-	Player(string = " ŒÃœ‹ﬁ“≈–", BallType = static_cast<BallType>(rand() % 2 + 1)); 
+	Player(string = " ŒÃœ‹ﬁ“≈–"); 
 	Player(string, Player&); // ¬ÚÓÓÈ Ë„ÓÍ
 	~Player();
 
@@ -55,7 +58,7 @@ public:
 
 	inline VOID setName(string name) { name_ = name; }
 	
-	VOID turn(ProgramManager&, TURN&, Turns);
+	BOOL turn(ProgramManager&, TURN&, Turns, BOOL);
 	inline wstring textToDraw() const;
 };
 

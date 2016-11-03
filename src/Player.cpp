@@ -1,9 +1,10 @@
 #include "Player.hpp"
 
-Player::Player(string name /* = "КОМПЬЮТЕР" */, BallType type /* = rand() % 2 + 1*/) :
+Player::Player(string name /* = "КОМПЬЮТЕР" */) :
 	name_(name),
+	lose_(FALSE),
 	score_(0),
-	ballType_(type),
+	ballType_(BallType::Zero),
 	copied_(FALSE)
 {
 	memset(tmpBalls_, FALSE, sizeof(tmpBalls_));
@@ -18,8 +19,9 @@ Player::Player(string name, Player &first)
 Player::~Player()
 {}
 
-VOID Player::turn(ProgramManager &programManager, TURN &is, Turns turn)
+BOOL Player::turn(ProgramManager &programManager, TURN &is, Turns turn, BOOL lose)
 {
+	if(lose) programManager.endGame(name_ + " выиграл со счётом: " + getScoreStr());
 	if(turn < 0) turn = static_cast<Turns>(abs(turn));
 
 	if(!copied_) 
@@ -34,7 +36,7 @@ VOID Player::turn(ProgramManager &programManager, TURN &is, Turns turn)
 		if(!programManager.stopBalls()) programManager.work(textToDraw(), PointF(0, 0), Color::LightGreen);
 		else
 		{
-			updateScore(checkScored(programManager.getScored()));
+			updateScore(checkScored(programManager));
 			resetValues(is);
 		}
 	}
@@ -45,13 +47,14 @@ VOID Player::turn(ProgramManager &programManager, TURN &is, Turns turn)
 			POINT cursor = { 0, 0 };
 			GetCursorPos(&cursor);		
 
-			//programManager.moveCue();
 			programManager.nextMove();
 			is = -is;
 		}
 		else programManager.work(textToDraw(), PointF(0, 0), Color::LightGreen);
 	}
 	else programManager.work(textToDraw(), PointF(0, 100), Color::Red);
+
+	return lose_;
 }
 
 VOID Player::resetValues(TURN &is)
@@ -60,14 +63,23 @@ VOID Player::resetValues(TURN &is)
 	is = (is == Turns::FirstStep)? Turns::SecondBlow : Turns::FirstBlow;
 }
 
-WORD Player::checkScored(CONST BOOL following[])
+WORD Player::checkScored(ProgramManager &programManager)
 {
 	WORD ret_val = 0;
 	for(size_t i = 0; i < NUMBER_OF_BALLS; i++)
-		if(tmpBalls_[i] != following[i])
+		if(tmpBalls_[i] != programManager.getScored()[i])
 		{
-			ret_val++;
-			//Проверки забития не того
+			if(i == Balls::Ball::zero)
+			{
+			}
+			else if(i == Balls::Ball::eighth)
+			{
+				lose_ = true;
+				score_ = 0;
+
+				return FALSE;
+			}
+			else ret_val++;
 		}
 	
 	return ret_val;
@@ -75,10 +87,11 @@ WORD Player::checkScored(CONST BOOL following[])
 
 Player & Player::operator=(Player &player)
 {
-	name_ = player.getName();
-	score_ = player.getScore();
+	name_     = player.getName();
+	score_    = player.getScore();
 	ballType_ = player.getBallType();
 
+	lose_   = FALSE;
 	copied_ = FALSE;
 	memset(tmpBalls_, FALSE, sizeof(tmpBalls_));
 
@@ -87,7 +100,7 @@ Player & Player::operator=(Player &player)
 
 Player Player::operator!()
 {
-	return Player(name_, static_cast<BallType>(-ballType_));
+	return Player(name_);
 }
 
 inline wstring Player::textToDraw() const

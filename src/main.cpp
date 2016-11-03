@@ -61,8 +61,9 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
 	srand(static_cast< unsigned >(time(NULL)));
 
 	Player player1("Aleksei");
-	Player player2("Pituh", player1);
+	Player player2("Pituh");
 	TURN turn = 1; // { 1 - ход первого, -1 - незаконченный }
+	BOOL firstLose = FALSE;
     while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) 
     {
         if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
@@ -72,18 +73,17 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
         }		
 		//$r programManager->dump();
 
-		player1.turn(*programManager, turn, Turns::FirstBlow);
-		player2.turn(*programManager, turn, Turns::SecondBlow);
-		//if(programManager->stopBalls()) 
+		firstLose = player1.turn(*programManager, turn, Turns::FirstBlow, firstLose);
+		firstLose = player2.turn(*programManager, turn, Turns::SecondBlow, firstLose);
+
+		//POINT cursor;
+		//while(!Key(VK_UP))
 		//{
-			//POINT cursor;
-			//while(!Key(VK_UP))
-			//{
-			//	GetCursorPos(&cursor);
-			//	
-			//	programManager->setZeroBallCoords(cursor);
-			//	programManager->work();
-			//}
+		//	GetCursorPos(&cursor);
+		//	
+		//	programManager->setZeroBallCoords(cursor);
+		//	programManager->work();
+		//}
 
 		if(Key(27)) return EXITS::ESCAPE;
     }

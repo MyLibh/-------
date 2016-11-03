@@ -33,10 +33,32 @@ private:
 	VOID repulsion();
 	VOID repulsionFrom();
 
+public:
+	enum Ball
+	{
+		zero       =  0,
+		thirst     =  1,
+		second     =  2,
+		third      =  3,
+		fourth     =  4,
+		fifth      =  5,
+		sixth      =  6,
+		seventh    =  7,
+		eighth     =  8,
+		nineth     =  9,
+		tenth      = 10,
+		eleventh   = 11,
+		twelfth    = 12,
+		thirteenth = 13,
+		fourteenth = 14,
+		fifteenth  = 15,
+	};
+
 protected:
+	//friend WORD Player::checkScored(CONST BOOL[]);	
 	inline VOID setZeroBallCoords(POINT coords) { points_[0] = vec(coords.x, coords.y); }
-	inline vec impactDirection(double force, double angle) const { return vec(force, angle, FALSE); }//static_cast<double>((mouse.x - points_[0].getX()) / 40), static_cast<double>((mouse.y - points_[0].getY()) / 40)); }
-	inline BOOL ballStopped(Textures::TEXTURES index) const { return !(speeds_[index].getX() && speeds_[index].getY()); }
+	inline vec impactDirection(double force, double angle) const { return vec(force, angle, FALSE); }
+	inline BOOL ballStopped(Ball index) const { return !(speeds_[index].getX() && speeds_[index].getY()); }
 
 public:	
 	Balls();
@@ -44,7 +66,7 @@ public:
 
 	BOOL stopped() const;	
 
-	inline POINT  getBallCoords(Textures::TEXTURES index) const { POINT point = { static_cast<LONG>(points_[index].getX()), static_cast<LONG>(points_[index].getY()) }; return point; }
+	inline POINT  getBallCoords(Ball index) const { POINT point = { static_cast<LONG>(points_[index].getX()), static_cast<LONG>(points_[index].getY()) }; return point; }
 	BOOL CONST *getScored() const { return scored_; }
 
 	VOID restart();
