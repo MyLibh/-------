@@ -1,4 +1,5 @@
 #include "ProgramManager.hpp"
+#include "Player.hpp"
 
 #define __DEBUG
 
@@ -8,7 +9,7 @@ using namespace Gdiplus;
 
 ProgramManager *programManager = nullptr;
 
-class Exception {};
+//class Exception {};
 
 ATOM                MyRegisterClass(HINSTANCE, WCHAR[]);
 HWND                InitInstance(HINSTANCE, INT, WCHAR[], WCHAR[]);
@@ -57,6 +58,11 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
 	HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_BILLIARDS));
 	MSG msg = { };
 
+	srand(static_cast< unsigned >(time(NULL)));
+
+	Player player1("Aleksei");
+	Player player2("Pituh", player1);
+	TURN turn = 1; // { 1 - ход первого, -1 - незаконченный }
     while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) 
     {
         if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
@@ -65,11 +71,12 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
             DispatchMessage(&msg);
         }		
 		//$r programManager->dump();
-	    programManager->work();	
 
-		if(programManager->stopBalls()) 
-		{
-			POINT cursor;
+		player1.turn(*programManager, turn, Turns::FirstBlow);
+		player2.turn(*programManager, turn, Turns::SecondBlow);
+		//if(programManager->stopBalls()) 
+		//{
+			//POINT cursor;
 			//while(!Key(VK_UP))
 			//{
 			//	GetCursorPos(&cursor);
@@ -78,12 +85,6 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
 			//	programManager->work();
 			//}
 
-			while(!Key(32)) programManager->work();
-
-			GetCursorPos(&cursor);			
-			programManager->nextMove(cursor);
-			//PostQuitMessage(EXITS::BALLS_STOPPED);
-		}
 		if(Key(27)) return EXITS::ESCAPE;
     }
 
@@ -138,7 +139,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             switch (wmId)
             {
             case IDM_ABOUT:
-				//DialogBox(programManager.getHINSTANCE(), MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
+				//DialogBox(programManager->getHINSTANCE(), MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
                 break;
             case IDM_EXIT:
                 DestroyWindow(hWnd);
@@ -209,7 +210,7 @@ HWND EnableConsole()
 		*stderr = *_fdopen(hCrt, "w");
 		setvbuf(stderr, NULL, _IONBF, 0);
 
-		std::ios::sync_with_stdio();
+		ios::sync_with_stdio();
 	}
 	
 	HWND console = GetConsoleWindow();

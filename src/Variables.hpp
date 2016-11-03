@@ -1,12 +1,12 @@
 #pragma once
 
 #define _USE_MATH_DEFINES
-#include <math.h>
+#include <cmath>
 #include <windows.h>
 #include <gdiplus.h>
 #include <Istream>
 #include <vector>
-#include <stdio.h>
+#include <cstdio>
 #include <iostream>
 #include <fstream>
 #include <io.h>
@@ -15,10 +15,12 @@
 #include <string>
 #include <map>
 #include <list>
-#include <stdlib.h>
+#include <cstdlib>
 #include <sstream>
 #include <locale>
 #include <codecvt>
+#include <process.h>
+#include <ctime>
 
 #include "resource.h"
 #include "UPOINT.hpp"

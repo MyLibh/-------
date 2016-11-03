@@ -59,6 +59,7 @@ public:
 	//Стандартные функции для шрифта
 	inline CONST WCHAR *getTitle()        const { return title_; }
 	inline CONST WCHAR *getWndClassName() const { return wndClassName_; }
+	inline CONST BOOL  *getScored() const { return Balls::getScored(); }
 	
 	VOID setDefaults();
 
@@ -89,11 +90,11 @@ public:
 
 	inline VOID moveCue() { if(Balls::stopped()) Cue::rotate(Balls::getBallCoords(textures_->TEXTURES::zero), Mouse::getCoords()); } 
 	inline VOID moveBalls() { Balls::move(); }
-	inline VOID nextMove(POINT mouse) { Balls::nextMove(mouse); }
+	inline VOID nextMove() { Balls::nextMove(15, Cue::getAngleInRadians()); }
 	inline MenuActions menuProcedure(POINT mouse, INT16 button) { return Menu::procedure(mouse, button); }
 
     VOID onPAINT(); 
-	VOID work();
+	VOID work(wstring, PointF, Color);
 
 	inline BOOL stopBalls() const { return Balls::stopped(); }
 };

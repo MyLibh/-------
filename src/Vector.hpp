@@ -16,7 +16,7 @@ private:
 
 public:
     vec();
-    vec(double, double);
+    vec(double, double, BOOL = TRUE);
 
 	VOID dump() const { cout << x_ << y_ << k_ << l_ << l_ * cos(k_) << l_ * sin(k_) << endl << endl; }
 
@@ -31,6 +31,8 @@ public:
 	inline double getK() const { return k_; }
 	inline double getX() const { return x_; }
 	inline double getY() const { return y_; }  
+
+	inline REAL toDegrees() const { return static_cast<REAL>(k_ * 180 / M_PI); }
 
     VOID draw(double, double, Graphics*, Pen*, Color = Color::Yellow) const;
 

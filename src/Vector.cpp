@@ -24,12 +24,21 @@ vec::vec() :
     l_(0)
 {}
 
-vec::vec(double x, double y) :
-	x_(x),
-    y_(y),
-    k_(sqrt(x_ * x_ + y_ * y_)),
-    l_(atan_(x_, y_))
-{}
+vec::vec(double a, double b, BOOL xy /* = TRUE */) 
+{
+	if(xy)
+	{
+		x_ = a;
+		y_ = b;
+		setLK();
+	}
+	else
+	{
+		l_ = a;
+		k_ = b;
+		setXY();
+	}
+}
 
 VOID vec::draw(double x0, double y0, Graphics *graphics, Pen *pen, Color color /* = Color::Yellow */) const
 {

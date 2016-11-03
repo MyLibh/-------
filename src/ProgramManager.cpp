@@ -100,7 +100,7 @@ VOID ProgramManager::setDefaults()
 VOID ProgramManager::onPAINT()
 {}
 
-VOID ProgramManager::work()
+VOID ProgramManager::work(wstring text, PointF point, Color color)
 {
     HDC hDC = GetDC(hWnd_);
 
@@ -109,7 +109,7 @@ VOID ProgramManager::work()
 			
 	//mouse_.dump();
 	//exit_.dump();
-	
+
 	if(Menu::isActive())
 	{
 		drawMenu();
@@ -148,6 +148,9 @@ VOID ProgramManager::work()
 	moveBalls();
 	moveCue();
 	}
+
+	//setBrushColor(color);
+	//graphics_->DrawString(text.c_str(), text.length(), font_, point, brush_);
 
 	loadBufferIntoCanvas(hDC);	
 	clearDubbleBuffering();
