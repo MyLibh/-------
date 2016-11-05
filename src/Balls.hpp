@@ -36,6 +36,7 @@ private:
 public:
 	enum Ball
 	{
+		wrong      = -1,
 		zero       =  0,
 		thirst     =  1,
 		second     =  2,
@@ -56,7 +57,7 @@ public:
 
 protected:
 	//friend WORD Player::checkScored(CONST BOOL[]);	
-	inline VOID setZeroBallCoords(POINT coords) { points_[0] = vec(coords.x, coords.y); }
+	inline VOID setBallCoords(POINT coords, size_t index = 0) { points_[index] = vec(coords.x, coords.y); }
 	inline vec impactDirection(double force, double angle) const { return vec(force, angle, FALSE); }
 	inline BOOL ballStopped(Ball index) const { return !(speeds_[index].getX() && speeds_[index].getY()); }
 

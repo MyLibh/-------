@@ -73,11 +73,13 @@ public:
 	inline Color     getPenColor()    const { Color *retColor = NULL; pen_->GetColor(retColor); return *retColor; }
 	inline REAL      getPenWidth()    const { return pen_->GetWidth(); }
 	inline UPOINT    getMemDCWindow() const { return window_; }
+	inline POINT     getMousePos()    const { return Mouse::getCoords(); }
 	//—Ú‡Ì‰‡ÚÌ˚Â ÙÛÌÍˆËË ‰Îˇ ¯ËÙÚ‡
 	inline CONST WCHAR *getTitle()        const { return title_; }
 	inline CONST WCHAR *getWndClassName() const { return wndClassName_; }
 	inline CONST BOOL  *getScored() const { return Balls::getScored(); }
 	
+
 	VOID setDefaults();
 
 	inline VOID setMemDC(HDC hDC)                   { memDC_     = hDC; }
@@ -91,11 +93,11 @@ public:
 	inline VOID setPenColor(Color color = Color::Yellow)  { pen_->SetColor(color); }
 	inline VOID setPenWidth(REAL width = 10)              { pen_->SetWidth(width); }	
 	inline VOID setBrushColor(Color color = Color::Black) { brush_->SetColor(color); }
-	inline VOID setZeroBallCoords(POINT coords)           { Balls::setZeroBallCoords(coords); }
+	inline VOID setBallCoords(POINT coords, size_t index = 0) { Balls::setBallCoords(coords, index); }
 
     VOID onPAINT(); 
-	VOID work(wstring, PointF, Color);
-	VOID endGame(string winnerMsg){ MessageBoxA(hWnd_, winnerMsg.c_str(), "»√–¿ Œ ŒÕ◊≈Õ¿", MB_OK | MB_ICONINFORMATION); Menu::activate(); }
+	VOID work(wstring, PointF = PointF(0, 0), Color = Color::LightGreen, BOOL = TRUE);
+	VOID endGame(wstring winnerMsg){ MessageBox(hWnd_, winnerMsg.c_str(), L"»√–¿ Œ ŒÕ◊≈Õ¿", MB_OK | MB_ICONINFORMATION); Menu::activate(); }
 	inline VOID nextMove() { Balls::nextMove(15, Cue::getAngleInRadians()); }
 
 	inline BOOL stopBalls() const { return Balls::stopped(); }

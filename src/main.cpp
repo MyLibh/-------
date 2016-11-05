@@ -60,10 +60,9 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
 
 	srand(static_cast< unsigned >(time(NULL)));
 
-	Player player1("Aleksei");
-	Player player2("Pituh");
-	TURN turn = 1; // { 1 - ход первого, -1 - незаконченный }
-	BOOL firstLose = FALSE;
+	Player player1(TRUE, L"Алексий");
+	Player player2(FALSE);
+	GameInfo gameInfo; gameInfo.turn = Turns::Blow;
     while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) 
     {
         if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
@@ -73,17 +72,10 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
         }		
 		//$r programManager->dump();
 
-		firstLose = player1.turn(*programManager, turn, Turns::FirstBlow, firstLose);
-		firstLose = player2.turn(*programManager, turn, Turns::SecondBlow, firstLose);
+		player1.turn(*programManager, gameInfo);
+		player2.turn(*programManager, gameInfo);
 
-		//POINT cursor;
-		//while(!Key(VK_UP))
-		//{
-		//	GetCursorPos(&cursor);
-		//	
-		//	programManager->setZeroBallCoords(cursor);
-		//	programManager->work();
-		//}
+		cout << gameInfo.firstScore << endl;
 
 		if(Key(27)) return EXITS::ESCAPE;
     }

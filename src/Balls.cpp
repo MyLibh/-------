@@ -212,7 +212,7 @@ VOID Balls::move()
 
 		speeds_[nat].setLK();
 
-		if (fabs(speeds_[nat].getL()) >= 0.04) speeds_[nat] -= 0.04;
+		if (fabs(speeds_[nat].getL()) >= 0.08) speeds_[nat] -= 0.08;
 		else speeds_[nat] = vec(0, 0);
 
 		//{   проверки попадания в лузы
@@ -274,6 +274,9 @@ VOID Balls::move()
 		//}
 		nat++;
 	}
+
+	if(scored_[0]) numScored_--;
+	if(scored_[8]) numScored_--;
 
 	repulsionFrom();
 	repulsion();

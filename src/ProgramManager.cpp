@@ -100,7 +100,7 @@ VOID ProgramManager::setDefaults()
 VOID ProgramManager::onPAINT()
 {}
 
-VOID ProgramManager::work(wstring text, PointF point, Color color)
+VOID ProgramManager::work(wstring text, PointF point /* = PointF(0, 0) */, Color color /* = Color::lightGreen */, BOOL drawCue /* = TRUE */)
 {
     HDC hDC = GetDC(hWnd_);
 
@@ -138,19 +138,21 @@ VOID ProgramManager::work(wstring text, PointF point, Color color)
 	}
 	else
 	{
-	drawTable();
-	drawBalls();
-	drawCue();	
-	drawExit();
+		drawTable();
+		drawBalls();
+		if(drawCue) this->drawCue();	
+		drawExit();
 
-	if(exit_.pressed(Mouse::getCoords(), Mouse::getButton())) Menu::activate();
+		setBrushColor(color);
+		graphics_->DrawString(text.c_str(), text.length(), font_, point, brush_);
 
-	moveBalls();
-	moveCue();
+		if(exit_.pressed(Mouse::getCoords(), Mouse::getButton())) Menu::activate();
+
+		moveBalls();
+		moveCue();
 	}
 
-	setBrushColor(color);
-	graphics_->DrawString(text.c_str(), text.length(), font_, point, brush_);
+	
 
 	loadBufferIntoCanvas(hDC);	
 	clearDubbleBuffering();

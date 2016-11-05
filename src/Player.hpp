@@ -7,30 +7,57 @@ typedef int TURN;
 
 enum Turns
 {
-	FirstBlow =  1,
-	FirstStep = -1,
-
-	SecondBlow =  2,
-	SecondStep = -2
+	None       = 0,
+	Blow       = 1,
+	Step       = 2,
+	SetZeroPos = 3,
+	SetPos     = 4
 };
 
 enum BallType
 {
+	NoType  = -1,
 	Zero    =  0,
 
 	Solid   =  1,
-	Striped = -1
+	Striped =  2
 };
+
+struct GameInfo
+{
+	Turns turn;
+	BOOL  scoredEight;
+	BOOL  scoredWrong;
+	BOOL  scoredZero;
+	BOOL  touchNobody;
+	BOOL  first;
+	BOOL  drawCue;
+	BOOL  firstScore;
+
+	BallType    ballType2;
+	Balls::Ball wrongBall;
+
+	explicit GameInfo();
+	~GameInfo();
+
+	inline VOID dump() const { cout << __FUNCTION__ << endl; 
+							     cout << "Step: " << turn << ", 9: " << scoredEight << ", -: " << scoredWrong <<
+									 ", 0: " << scoredZero << ", nbdy:" << touchNobody << endl << endl; }
+
+	VOID resetToNext() { turn = Turns::Blow; first = !first; }
+};
+
+BallType getBallType(Balls::Ball);
 
 class Player final
 {
 private:
 	//Player(CONST Player&) {}
 
-	string   name_;
+	wstring   name_;
 	WORD     score_;
-	BOOL     lose_;
 	BallType ballType_;
+	BOOL     first_;
 
 	inline VOID updateScore(WORD score) { score_ += score; }
 
@@ -38,28 +65,30 @@ protected:
 	BOOL tmpBalls_[NUMBER_OF_BALLS];
 	BOOL copied_;
 
-	WORD checkScored(ProgramManager&);
-	VOID resetValues(TURN&);
+	WORD checkScored(ProgramManager&, GameInfo&);
+	inline VOID resetValues() { copied_ = !copied_; }
 
-	inline string getScoreStr() const { CHAR text[10] = ""; return string(_itoa(score_, text, 10)); }
-	inline VOID reset() { score_ = 0; lose_ = FALSE; }
+	inline string getScoreStr() const { return to_string(score_); }
+	inline wstring getScoreWStr() const { return to_wstring(score_); }
+	inline VOID reset() { score_ = 0; }
 
 	Player &operator=(Player&);
 	Player operator!();
 
 public:
-	Player(string = "ÊÎÌÏÜÞÒÅÐ"); 
+	Player(BOOL, wstring = L"ÊÎÌÏÜÞÒÅÐ"); 
 	Player(string, Player&); // Âòîðîé èãðîê
 	~Player();
 
-	inline string getName() const { return name_; }
+	inline wstring getName() const { return name_; }
 	inline WORD getScore() const { return score_; }
-	inline BallType getBallType() const { return ballType_; }
+	inline BallType getType() const { return ballType_; }
 
-	inline VOID setName(string name) { name_ = name; }
+	inline VOID setName(string name) { wstring_convert<codecvt_utf8_utf16<WCHAR>> converter; CHAR text[10] = ""; name_ = converter.from_bytes(name); }
 	
-	BOOL turn(ProgramManager&, TURN&, Turns, BOOL);
-	inline wstring textToDraw() const;
+	VOID turn(ProgramManager&, GameInfo&);
+
+	inline wstring textToDraw() const { return wstring(name_ + L": " + to_wstring(score_)); }
 };
 
 extern Player player1;
