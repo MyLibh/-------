@@ -35,6 +35,10 @@ private:
 	
 	UPOINT      window_; // Улучшить название(размеры memDC)
 
+	wstring anotherPlayerText_;
+	PointF  anotherPlayerPoint_;
+	Color   anotherPlayerColor_;
+
 	ProgramManager(CONST ProgramManager&) { $b PAUSE }
 	ProgramManager& operator=(ProgramManager&) { $b PAUSE return *this; }
 
@@ -81,6 +85,7 @@ public:
 	
 
 	VOID setDefaults();
+	inline VOID updateZero() { Balls::setBallStatus(); }
 
 	inline VOID setMemDC(HDC hDC)                   { memDC_     = hDC; }
 	inline VOID setMemHbm(HBITMAP memHbm)           { memHbm_    = memHbm; }

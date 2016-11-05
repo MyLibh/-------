@@ -58,6 +58,5 @@ VOID Button::draw(Graphics *graphics, Pen &pen, SolidBrush &brush, Font &font) c
 	
 
 	graphics->DrawRectangle(&pen, RECT2Rect());
-	StringFormat sf;
-	graphics->DrawString(text_.c_str(), text_.length(), &font, RECT2RectF(), &sf, &brush);
+	//graphics->DrawString(text_.c_str(), text_.length(), &font, PointF(RECT2RectF().GetLeft(), RECT2RectF().GetTop()), &brush);
 }

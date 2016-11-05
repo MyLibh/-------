@@ -173,6 +173,8 @@ VOID Balls::move()
 {
 	int nat = 0;
 	
+	//if(scored_[0]) scored_[0] = !scored_[0]; 
+
 	while (nat < NUMBER_OF_BALLS)
 	{
 		points_[nat].setX(points_[nat].getX() + speeds_[nat].getX());
@@ -275,7 +277,7 @@ VOID Balls::move()
 		nat++;
 	}
 
-	if(scored_[0]) numScored_--;
+	if(scored_[0]) if(numScored_ != 0) numScored_--;
 	if(scored_[8]) numScored_--;
 
 	repulsionFrom();

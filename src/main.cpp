@@ -75,7 +75,7 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
 		player1.turn(*programManager, gameInfo);
 		player2.turn(*programManager, gameInfo);
 
-		cout << gameInfo.firstScore << endl;
+		//cout << gameInfo.firstScore << endl;
 
 		if(Key(27)) return EXITS::ESCAPE;
     }

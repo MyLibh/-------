@@ -22,6 +22,10 @@ ProgramManager::ProgramManager(HWND hWnd, HINSTANCE hInstance) :
 {
 	LoadStringW(hInstance_, IDS_APP_TITLE, title_, MAX_LOADSTRING);
 	LoadStringW(hInstance_, IDC_BILLIARDS, wndClassName_, MAX_LOADSTRING);
+
+	anotherPlayerText_ = L"ÊÎÌÏÓÊÒÅÐ: 0";
+	anotherPlayerPoint_ = PointF(0, 100);
+	anotherPlayerColor_ = Color::Red; 
 }
 
 ProgramManager::~ProgramManager()
@@ -100,7 +104,7 @@ VOID ProgramManager::setDefaults()
 VOID ProgramManager::onPAINT()
 {}
 
-VOID ProgramManager::work(wstring text, PointF point /* = PointF(0, 0) */, Color color /* = Color::lightGreen */, BOOL drawCue /* = TRUE */)
+VOID ProgramManager::work(wstring text, PointF point /* = PointF(0, 0) */, Color color /* = Color::LightGreen */, BOOL drawCue /* = TRUE */)
 {
     HDC hDC = GetDC(hWnd_);
 
@@ -145,11 +149,17 @@ VOID ProgramManager::work(wstring text, PointF point /* = PointF(0, 0) */, Color
 
 		setBrushColor(color);
 		graphics_->DrawString(text.c_str(), text.length(), font_, point, brush_);
+		setBrushColor(anotherPlayerColor_);
+		graphics_->DrawString(anotherPlayerText_.c_str(), text.length(), font_, anotherPlayerPoint_, brush_);
+
+		anotherPlayerText_  = text;
+		anotherPlayerPoint_ = point;
+		anotherPlayerColor_ = color; 
 
 		if(exit_.pressed(Mouse::getCoords(), Mouse::getButton())) Menu::activate();
 
 		moveBalls();
-		moveCue();
+		if(drawCue) moveCue();
 	}
 
 	

@@ -64,7 +64,7 @@ VOID Player::turn(ProgramManager &programManager, GameInfo &gameInfo)
 	{
 		if(gameInfo.scoredEight) programManager.endGame(name_ + L" выиграл со счётом: " + getScoreWStr());
 		if(gameInfo.scoredZero)
-		{
+		{ 
 			gameInfo.scoredZero = FALSE;
 			gameInfo.drawCue    = FALSE;
 			gameInfo.turn       = Turns::SetZeroPos;
@@ -84,8 +84,9 @@ VOID Player::turn(ProgramManager &programManager, GameInfo &gameInfo)
 		}
 
 		if(gameInfo.turn == Turns::SetZeroPos)
-		{
-			programManager.setBallCoords(programManager.getMousePos(), gameInfo.wrongBall);
+		{ 
+			programManager.setBallCoords(programManager.getMousePos());
+
 			programManager.work(textToDraw(), PointF(0, 0), Color::LightGreen, FALSE);
 
 			if(Key(VK_END)) 
@@ -99,7 +100,7 @@ VOID Player::turn(ProgramManager &programManager, GameInfo &gameInfo)
 		{
 			programManager.setBallCoords(programManager.getMousePos());
 			programManager.work(textToDraw(), PointF(0, 0), Color::LightGreen, FALSE);
-
+			
 			if(Key(VK_END)) 
 			{
 				gameInfo.turn = Turns::Blow;
@@ -153,6 +154,7 @@ WORD Player::checkScored(ProgramManager &programManager, GameInfo &gameInfo)
 			switch(ballType)
 			{
 			case BallType::Zero:
+				programManager.updateZero();
 				gameInfo.scoredZero = TRUE;
 				if(score_ != 0) score_--;
 				break;
