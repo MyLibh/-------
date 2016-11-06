@@ -45,7 +45,6 @@ ProgramManager::~ProgramManager()
 	delete(pFont_);
 	delete(pBrush_);
 	
-
 	DeleteObject(memHbm_);
 	DeleteObject(oldHbm_);
 
@@ -120,9 +119,6 @@ VOID ProgramManager::work(CONST wstring &rWext, CONST PointF &rPointf /* = Point
 
 	initDubbleBuffering(hDC); 
 	loadBackgroundIntoCanvas(hDC);
-			
-	//mouse_.dump();
-	//exit_.dump();
 
 	if(Menu::isActive())
 	{

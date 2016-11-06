@@ -7,7 +7,7 @@ using namespace Gdiplus;
 //=============================================================================================================================
 
 Textures::Textures() :
-	pBackground_(new Image(WAYS[Texture::background].c_str())),
+	pBackground_(nullptr),//new Image(WAYS[Texture::background].c_str())),
 	pTable_(new Image(WAYS[Texture::table].c_str())),
 	pCue_(new Image(WAYS[Texture::cue].c_str())),
 	pMenu_(new Image(WAYS[Texture::menu].c_str()))

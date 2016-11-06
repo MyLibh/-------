@@ -68,13 +68,15 @@ VOID Player::turn(ProgramManager &rProgramManager, GameInfo &rGameInfo)
 	if(rGameInfo.first == first_)
 	{
 		if(rGameInfo.scoredEight) rProgramManager.endGame(name_ + L" выиграл со счётом: " + getScoreWStr());
-		if(rGameInfo.scoredZero)
+		else if(rGameInfo.scoredZero)
 		{ 
 			rGameInfo.scoredZero = FALSE;
 			rGameInfo.drawCue    = FALSE;
 			rGameInfo.turn       = Turns::SetZeroPos;
+
+			rProgramManager.updateZero();
 		}
-		if(rGameInfo.scoredWrong)
+		else if(rGameInfo.scoredWrong)
 		{
 			rGameInfo.scoredWrong = FALSE;
 			rGameInfo.drawCue     = FALSE;
@@ -132,7 +134,7 @@ VOID Player::turn(ProgramManager &rProgramManager, GameInfo &rGameInfo)
 			{
 				updateScore(checkScored(rProgramManager, rGameInfo));
 				resetValues();
-				rGameInfo.resetToNext();
+				rGameInfo.resetToNext(); 
 			}		
 		}
 	}
@@ -154,7 +156,7 @@ WORD Player::checkScored(ProgramManager &rProgramManager, GameInfo &rGameInfo)
 
 				rGameInfo.ballType2 = (ballType_ == BallType::Solid)? BallType::Striped : BallType::Solid;
 			}
-			else if(ballType_ == BallType::NoType) ballType_ = rGameInfo.ballType2;
+			else if(ballType_ == BallType::NoType && rGameInfo.firstScore) ballType_ = rGameInfo.ballType2;
 				 
 			switch(ballType)
 			{
@@ -182,7 +184,7 @@ WORD Player::checkScored(ProgramManager &rProgramManager, GameInfo &rGameInfo)
 				}
 				break;
 			case BallType::Striped: 
-				if(ballType_ == BallType::Solid) ret_val++;
+				if(ballType_ == BallType::Striped) ret_val++;
 				else 
 				{
 					rGameInfo.scoredWrong = TRUE;

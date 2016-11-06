@@ -68,12 +68,9 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }		
-		//$r programManager->dump();
 
 		player1.turn(*programManager, gameInfo);
 		player2.turn(*programManager, gameInfo);
-
-		//cout << gameInfo.firstScore << endl;
 
 		if(Key(27)) return EXITS::ESCAPE;
     }

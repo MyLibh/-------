@@ -46,10 +46,10 @@ public:
 	~GameInfo();
 
 	inline VOID dump() const { cout << __FUNCTION__ << endl; 
-							     cout << "Step: " << turn << ", 9: " << scoredEight << ", -: " << scoredWrong <<
-									 ", 0: " << scoredZero << ", nbdy:" << touchNobody << endl << endl; }
+							     cout << "Step: " << turn << ", nine: " << scoredEight << ", wrong: " << scoredWrong <<
+									 ", zero: " << scoredZero << ", nbdy:" << touchNobody << endl << endl; }
 
-	VOID resetToNext() { turn = Turns::Blow; first = !first; }
+	VOID resetToNext() { dump(); turn = Turns::Blow; first = !first; dump(); }
 };
 
 BallType getBallType(Balls::Ball);
@@ -57,12 +57,10 @@ BallType getBallType(Balls::Ball);
 class Player final
 {
 private:
-	wstring   name_;
+	wstring  name_;
 	WORD     score_;
 	BallType ballType_;
 	BOOL     first_;
-
-	Player(CONST Player&) {}
 
 	inline VOID updateScore(CONST WORD &rScore) { score_ += rScore; }
 
@@ -91,7 +89,7 @@ public:
 	inline CONST BallType &getType()  const { return ballType_; }
 	inline CONST BOOL     &getFirst() const { return first_; }
 
-	inline VOID setName(CONST string &rName) { wstring_convert<codecvt_utf8_utf16<WCHAR>> converter; CHAR text[10] = ""; name_ = converter.from_bytes(rName); }
+	inline VOID setName(CONST string &rName) { wstring_convert<codecvt_utf8_utf16<WCHAR>> converter; name_ = converter.from_bytes(rName); }
 	
 	VOID turn(ProgramManager&, GameInfo&);
 
