@@ -110,7 +110,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance, WCHAR wndClassName[])
 HWND InitInstance(HINSTANCE hInstance, INT nCmdShow, WCHAR title[], WCHAR wndClassName[])
 {
    HWND hWnd = CreateWindowW(wndClassName, title, WS_OVERLAPPEDWINDOW,
-      0, 0, static_cast<INT>(sizeX) + 100, static_cast<INT>(sizeY) + 100, nullptr, nullptr, hInstance, nullptr);
+      0, 0, static_cast<INT>(sizeX), static_cast<INT>(sizeY) + 100, nullptr, nullptr, hInstance, nullptr);
 
    return hWnd;
 }

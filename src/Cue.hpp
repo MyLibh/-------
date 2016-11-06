@@ -8,7 +8,7 @@ using namespace Gdiplus;
 
 //=============================================================================================================================
 
-class Cue 
+class Cue : private Uncopyable
 {
 private:
 	vec mouse_;
@@ -16,11 +16,8 @@ private:
 	vec auxiliaryLine_;
 
 	REAL angle_;
-
 	BOOL draw_;
 
-	Cue(CONST Cue&) {}
-	Cue& operator=(CONST Cue&) {}
 
 public:
 	explicit Cue();

@@ -41,8 +41,8 @@ private:
 	PointF  anotherPlayerPoint_;
 	Color   anotherPlayerColor_;
 
-	ProgramManager(CONST ProgramManager&) {}
-	ProgramManager& operator=(CONST ProgramManager&) {}
+	ProgramManager(CONST ProgramManager&);
+	ProgramManager& operator=(CONST ProgramManager&);
 
 	inline string HWND2STRING() const { char text[32] = ""; ; return string(_itoa(reinterpret_cast<INT>(hWnd_), text, 10)); }
 	inline string HINSTANCE2STRING() const { char text[32] = ""; ; return string(_itoa(reinterpret_cast<INT>(hInstance_), text, 10)); }

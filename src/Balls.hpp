@@ -24,7 +24,7 @@ CONST vec CenterDugLuz[ColvoCenterDugLuz] =
 	vec(sizeXpol / 2 + sizestenaLEFT + RLuz + RDugLuz,            sizestenaUP - RDugLuz),
 };
 
-class Balls 
+class Balls : private Uncopyable
 {
 private:
 	vec  points_[NUMBER_OF_BALLS];

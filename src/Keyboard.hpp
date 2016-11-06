@@ -6,7 +6,7 @@
 
 #define Key(param) GetAsyncKeyState(param)
 
-class Keyboard
+class Keyboard : private Uncopyable
 {
 private:
 	static CONST WORD NUMBER_OF_KEYS = 256;

@@ -24,6 +24,7 @@
 
 #include "resource.h"
 #include "UPOINT.hpp"
+#include "Uncopyable.hpp"
 
 using namespace std;
 

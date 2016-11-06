@@ -29,11 +29,12 @@ ProgramManager::ProgramManager(HWND hWnd, HINSTANCE hInstance) :
 	LoadStringW(hInstance_, IDC_BILLIARDS, wndClassName_, MAX_LOADSTRING);
 
 	HDC hDC = GetDC(hWnd_);
+
 	setMemDC(CreateCompatibleDC(hDC));
 	setMemHbm(CreateCompatibleBitmap(hDC, window_.width, window_.height));
 	setOldHbm(static_cast<HBITMAP>(SelectObject(memDC_, memHbm_)));	
-	//setDefaults();
 	pGraphics_ = new Graphics(memDC_);
+
 	ReleaseDC(hWnd_, hDC);
 }
 
@@ -98,7 +99,7 @@ VOID ProgramManager::clearDubbleBuffering()
 	//SelectObject(getMemDC(), getOldHbm());
 	//DeleteObject(getMemHbm());
 	//DeleteDC(getMemDC());
-	PatBlt(memDC_, 0, 0, sizeX, sizeY, WHITENESS);
+	PatBlt(memDC_, 0, 0, window_.width, window_.height, WHITENESS);
 	//delete(pGraphics_);
 }
 

@@ -12,7 +12,7 @@ inline VOID RectEquateRECT(CONST Rect&, RECT&);
 
 //=============================================================================================================================
 
-class Button final
+class Button final : private Uncopyable
 {
 private:
     static CONST SIZE_T TEXT_SIZE = 16;
@@ -20,9 +20,6 @@ private:
     RECT    rect_;
     wstring text_; // Change to image
     BOOL    active_;
-
-	Button(CONST Button&) {}
-	Button& operator=(CONST Button&) {}
 
 	inline BOOL in(CONST LONG& rCoord, CONST LONG& rLess, CONST LONG& rMore) const { return rMore >= rCoord && rLess <= rCoord; }
 	inline BOOL in(CONST POINT& rPoint) const { return in(rPoint.x, rect_.left, rect_.right) && in(rPoint.y, rect_.top, rect_.bottom); }

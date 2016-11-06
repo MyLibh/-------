@@ -32,7 +32,7 @@ CONST wstring WAYS[NUMBER_OF_TEXTURES] =
 	L"../src/Images/Menu.jpg"
 };
 
-class Textures final
+class Textures final  : private Uncopyable
 {
 private:
 	Image *pBackground_;
@@ -40,9 +40,6 @@ private:
 	Image *pCue_;
 	Image *pMenu_;
 	mutable Image *pBalls_[NUMBER_OF_BALLS];
-
-	Textures(CONST Textures&) {}
-	Textures& operator=(CONST Textures&) {}
 
 public:      
 	Textures();

@@ -19,7 +19,7 @@ CONST wstring TEXTS[NUMBER_OF_WTEXTS] =
 
 };
 
-class Menu 
+class Menu : private Uncopyable
 {
 private:
     static CONST SIZE_T NUMBER_OF_BUTTONS = 4;
@@ -27,9 +27,6 @@ private:
     Button buttons_[NUMBER_OF_BUTTONS];
     
 	BOOL inMenu_;
-
-	Menu(CONST Menu&) {}
-	Menu& operator=(CONST Menu&) {}
 
 public:
     explicit Menu();

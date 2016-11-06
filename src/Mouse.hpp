@@ -2,14 +2,11 @@
 
 #include "Variables.hpp"
 
-class Mouse 
+class Mouse : private Uncopyable
 {
 private:
     POINT mouse_;
     INT16 button_;
-
-	Mouse(CONST Mouse&) {}
-	Mouse& operator=(CONST Mouse&) {}
 
     inline VOID setMouseCoords(CONST LPARAM &rLParam) { mouse_.x = LOWORD(rLParam); mouse_.y = HIWORD(rLParam); }
     inline VOID setButton(CONST INT16 &rButton) { button_ = rButton; }
