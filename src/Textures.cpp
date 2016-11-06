@@ -4,30 +4,30 @@
 
 using namespace Gdiplus;
 
-//==============================================================================================================
+//=============================================================================================================================
 
-Textures::Textures()
+Textures::Textures() :
+	pBackground_(new Image(WAYS[Texture::background].c_str())),
+	pTable_(new Image(WAYS[Texture::table].c_str())),
+	pCue_(new Image(WAYS[Texture::cue].c_str())),
+	pMenu_(new Image(WAYS[Texture::menu].c_str()))
+	//pBalls_()
 {
-	background_ = new Image(WAYS[TEXTURES::background].c_str());
-	table_      = new Image(WAYS[TEXTURES::table].c_str());
-	cue_        = new Image(WAYS[TEXTURES::cue].c_str());
-	menu_       = new Image(WAYS[TEXTURES::menu].c_str());
-
-	for(size_t i = 0; i < NUMBER_OF_BALLS; i++) balls_[i] = new Image(WAYS[i].c_str());	
+	for(size_t i = 0; i < NUMBER_OF_BALLS; i++) pBalls_[i] = new Image(WAYS[i].c_str());	
 }
 
-Textures::Textures(Config &config)
+Textures::Textures(CONST Config &config)
 {
 	//background_ = new Image(config.getWString("Background").c_str());
 }
 
 Textures::~Textures()
 {
-	delete(background_);
-	delete(table_);
-	delete(cue_);
-	delete(menu_);
+	delete(pBackground_);
+	delete(pTable_);
+	delete(pCue_);
+	delete(pMenu_);
 
-	for(size_t i = 0; i < NUMBER_OF_BALLS; i++) delete(balls_[i]);
+	for(size_t i = 0; i < NUMBER_OF_BALLS; i++) delete(pBalls_[i]);
 }
 

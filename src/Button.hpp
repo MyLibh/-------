@@ -6,14 +6,11 @@
 
 using namespace Gdiplus;
 
-enum MouseButtons
-{
-	Null  = 0,
-	Left  = 1,
-	Right = 2
-};
+//=============================================================================================================================
 
-//======================================================================================================================
+inline VOID RectEquateRECT(CONST Rect&, RECT&);
+
+//=============================================================================================================================
 
 class Button final
 {
@@ -22,31 +19,34 @@ private:
 
     RECT    rect_;
     wstring text_; // Change to image
-    bool    active_;
+    BOOL    active_;
 
-	inline BOOL in(long coord, long less, long more) const { return more >= coord && less <= coord; }
-	inline BOOL in(POINT point) const { return in(point.x, rect_.left, rect_.right) && in(point.y, rect_.top, rect_.bottom); }
+	Button(CONST Button&) {}
+	Button& operator=(CONST Button&) {}
+
+	inline BOOL in(CONST LONG& rCoord, CONST LONG& rLess, CONST LONG& rMore) const { return rMore >= rCoord && rLess <= rCoord; }
+	inline BOOL in(CONST POINT& rPoint) const { return in(rPoint.x, rect_.left, rect_.right) && in(rPoint.y, rect_.top, rect_.bottom); }
 	inline Rect RECT2Rect() const { return Rect(rect_.left, rect_.top, rect_.right - rect_.left, rect_.bottom - rect_.top); }
 	inline RectF RECT2RectF() const { return RectF(static_cast<REAL>(rect_.left), static_cast<REAL>(rect_.top), static_cast<REAL>(rect_.right - rect_.left), static_cast<REAL>(rect_.bottom - rect_.top)); }
 
 public:
     Button();
-    Button(RECT, wstring, bool = FALSE);
-	Button(Rect, wstring, bool = FALSE);
+    Button(CONST RECT&, CONST wstring&, CONST BOOL& = FALSE);
+	Button(CONST Rect&, CONST wstring&, CONST BOOL& = FALSE);
     ~Button();   
 
 	inline VOID dump() const { $b cout << __FUNCTION__ << endl; 
 								  cout << "rect: { " << rect_.left << ", " << rect_.top << ", " << rect_.right << ", " << rect_.bottom << " }" <<
 									      " , text_: " << text_.c_str() << " , active: " << active_ << endl << endl; }
 
-	inline RECT getRECT() const { return rect_; }
+	inline CONST RECT &getRECT() const { return rect_; }
 
     inline VOID deactivate() { active_ =  TRUE; }
     inline VOID activate()   { active_ = FALSE; }
 
-	inline VOID setText(wstring wstr) { text_ = wstr; }
-	VOID setOptions(Rect, wstring, bool = TRUE);
+	inline VOID setText(CONST wstring& rWstr) { text_ = rWstr; }
+	VOID setOptions(CONST Rect&, CONST wstring&, CONST BOOL& = TRUE);
 	
-	VOID draw(Graphics*, Pen&, SolidBrush&, Font&) const;
-	inline BOOL pressed(POINT mouse, INT16 button) const { return (in(mouse) && button == MouseButtons::Left && active_)? TRUE : FALSE; }
+	VOID draw(Graphics*, Pen&, SolidBrush&, CONST Font&) const;
+	inline BOOL pressed(CONST POINT& rMouse, CONST INT16& rButton) const { return (in(rMouse) && rButton == Mouse::MouseButtons::Left && active_)? TRUE : FALSE; }
 };

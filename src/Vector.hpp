@@ -16,32 +16,17 @@ private:
 
 public:
     vec();
+	vec(CONST vec&);
     vec(double, double, BOOL = TRUE);
 
 	VOID dump() const { cout << x_ << y_ << k_ << l_ << l_ * cos(k_) << l_ * sin(k_) << endl << endl; }
 
-	inline VOID setL(double l) { l_ = l; }
-	inline VOID setK(double k) { k_ = k; }
-	inline VOID setX(double x) { x_ = x; }
-	inline VOID setY(double y) { y_ = y; }
-	VOID setLK();
-    VOID setXY();
-
-	inline double getL() const { return l_; }
-	inline double getK() const { return k_; }
-	inline double getX() const { return x_; }
-	inline double getY() const { return y_; }  
-
-	inline REAL toDegrees() const { return static_cast<REAL>(k_ * 180 / M_PI); }
-
-    VOID draw(double, double, Graphics*, Pen*, Color = Color::Yellow) const;
-
-    vec operator=(vec);
+	vec& operator=(CONST vec&);
     vec operator=(POINT);
-    vec operator+(vec) const;
-	vec operator-(vec) const;
-	vec operator+=(vec);
-	vec operator-=(vec);
+    vec operator+(CONST vec&) const;
+	vec operator-(CONST vec&) const;
+	vec& operator+=(CONST vec&);
+	vec& operator-=(CONST vec&);
 
     vec operator-=(double);
     vec operator+=(double); 
@@ -52,6 +37,24 @@ public:
     vec operator*(double) const;
     vec operator/(double) const;
     vec operator^(double) const;
+
+	inline double getL() const { return l_; }
+	inline double getK() const { return k_; }
+	inline double getX() const { return x_; }
+	inline double getY() const { return y_; }
+
+	inline VOID setL(double l) { l_ = l; }
+	inline VOID setK(double k) { k_ = k; }
+	inline VOID setX(double x) { x_ = x; }
+	inline VOID setY(double y) { y_ = y; }
+	VOID setLK();
+    VOID setXY();
+
+	inline REAL toDegrees() const { return static_cast<REAL>(k_ * 180 / M_PI); }
+
+    VOID draw(double, double, Graphics*, Pen&, CONST Color& = Color::Yellow) const;
+
+    
     };
 
 vec xy_vec(double, double);

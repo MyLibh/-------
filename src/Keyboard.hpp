@@ -2,6 +2,8 @@
 
 #include "Variables.hpp"
 
+//=============================================================================================================================
+
 #define Key(param) GetAsyncKeyState(param)
 
 class Keyboard

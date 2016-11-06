@@ -11,6 +11,8 @@
  
 using namespace Gdiplus;
 
+//=============================================================================================================================
+
 class ProgramManager final : private Menu, private Balls, private Cue, private Mouse
 {
 private:
@@ -24,14 +26,14 @@ private:
 	WCHAR       title_[MAX_LOADSTRING];
 	WCHAR       wndClassName_[MAX_LOADSTRING];
 
-	Graphics   *graphics_;
-	Pen        *pen_;
-	Font       *font_;
-	SolidBrush *brush_;
+	Graphics   *pGraphics_;
+	Pen        *pPen_;
+	Font       *pFont_;
+	SolidBrush *pBrush_;
 
-	Textures   *textures_;
+	Textures   *pTextures_;
 	Button      exit_;
-	Config      config_;
+	//Config      config_;
 	
 	UPOINT      window_; // Улучшить название(размеры memDC)
 
@@ -39,23 +41,23 @@ private:
 	PointF  anotherPlayerPoint_;
 	Color   anotherPlayerColor_;
 
-	ProgramManager(CONST ProgramManager&) { $b PAUSE }
-	ProgramManager& operator=(ProgramManager&) { $b PAUSE return *this; }
+	ProgramManager(CONST ProgramManager&) {}
+	ProgramManager& operator=(CONST ProgramManager&) {}
 
 	inline string HWND2STRING() const { char text[32] = ""; ; return string(_itoa(reinterpret_cast<INT>(hWnd_), text, 10)); }
 	inline string HINSTANCE2STRING() const { char text[32] = ""; ; return string(_itoa(reinterpret_cast<INT>(hInstance_), text, 10)); }
 
-	inline CONST VOID loadBackgroundIntoCanvas(HDC canvas) const { graphics_->DrawImage(&textures_->getBackgroundTexture(), RectF(0, 0, static_cast<REAL>(window_.width), static_cast<REAL>(window_.height))); }
+	inline CONST VOID loadBackgroundIntoCanvas(HDC canvas) const { pGraphics_->DrawImage(&pTextures_->getBackgroundTexture(), RectF(0, 0, static_cast<REAL>(window_.width), static_cast<REAL>(window_.height))); }
 	inline CONST VOID loadBufferIntoCanvas(HDC canvas)     const { BitBlt(canvas, 0, 0, window_.width, window_.height, memDC_, 0, 0, SRCCOPY); }
 
 	VOID initDubbleBuffering(HDC);
 	VOID clearDubbleBuffering();
 
 	VOID drawTable() const; // { graphics->DrawImage(textures_->getTableTexture(), RectF());); } 
-	inline VOID drawCue()   const { if(Balls::stopped()) Cue::draw(graphics_, *pen_, textures_->getCueTexture()); }
-	inline VOID drawMenu()  const { Menu::draw(graphics_, textures_->getMenuTexture(), window_, *pen_, *brush_, *font_); }
-	inline VOID drawBalls() const { Balls::draw(graphics_, textures_->getBallsTexture()); }
-	inline VOID drawExit()  const { exit_.draw(graphics_, *pen_, *brush_, *font_); }
+	inline VOID drawCue()   const { if(Balls::stopped()) Cue::draw(pGraphics_, *pPen_, pTextures_->getCueTexture()); }
+	inline VOID drawMenu()  const { Menu::draw(pGraphics_, pTextures_->getMenuTexture(), window_, *pPen_, *pBrush_, *pFont_); }
+	inline VOID drawBalls() const { Balls::draw(pGraphics_, pTextures_->getBallsTexture()); }
+	inline VOID drawExit()  const { exit_.draw(pGraphics_, *pPen_, *pBrush_, *pFont_); }
 
 	inline VOID moveCue() { if(Balls::stopped()) Cue::rotate(Balls::getBallCoords(Balls::Ball::zero), Mouse::getCoords()); } 
 	inline VOID moveBalls() { Balls::move(); }
@@ -74,8 +76,8 @@ public:
 	inline HBITMAP   getOldHbm()      const { return oldHbm_; }
 	inline HWND      getHWND()		  const { return hWnd_; }
 	inline HINSTANCE getHINSTANCE()   const { return hInstance_; }
-	inline Color     getPenColor()    const { Color *retColor = NULL; pen_->GetColor(retColor); return *retColor; }
-	inline REAL      getPenWidth()    const { return pen_->GetWidth(); }
+	inline Color     getPenColor()    const { Color *retColor = NULL; pPen_->GetColor(retColor); return *retColor; }
+	inline REAL      getPenWidth()    const { return pPen_->GetWidth(); }
 	inline UPOINT    getMemDCWindow() const { return window_; }
 	inline POINT     getMousePos()    const { return Mouse::getCoords(); }
 	//Стандартные функции для шрифта
@@ -95,13 +97,13 @@ public:
 	inline VOID setMemDCWindow(RECT rect)           { window_ = rect; }
 	inline VOID setMouse(LPARAM lParam, int button) { Mouse::update(lParam, button); }
 	//Стандартные функции для шрифта 
-	inline VOID setPenColor(Color color = Color::Yellow)  { pen_->SetColor(color); }
-	inline VOID setPenWidth(REAL width = 10)              { pen_->SetWidth(width); }	
-	inline VOID setBrushColor(Color color = Color::Black) { brush_->SetColor(color); }
+	inline VOID setPenColor(Color color = Color::Yellow)  { pPen_->SetColor(color); }
+	inline VOID setPenWidth(REAL width = 10)              { pPen_->SetWidth(width); }	
+	inline VOID setBrushColor(Color color = Color::Black) { pBrush_->SetColor(color); }
 	inline VOID setBallCoords(POINT coords, size_t index = 0) { Balls::setBallCoords(coords, index); }
 
     VOID onPAINT(); 
-	VOID work(wstring, PointF = PointF(0, 0), Color = Color::LightGreen, BOOL = TRUE);
+	VOID work(CONST wstring&, CONST PointF& = PointF(0, 0), CONST Color& = Color::LightGreen, CONST BOOL& = TRUE);
 	VOID endGame(wstring winnerMsg){ MessageBox(hWnd_, winnerMsg.c_str(), L"ИГРА ОКОНЧЕНА", MB_OK | MB_ICONINFORMATION); Menu::activate(); }
 	inline VOID nextMove() { Balls::nextMove(15, Cue::getAngleInRadians()); }
 

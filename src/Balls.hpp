@@ -6,6 +6,8 @@
 
 using namespace Gdiplus;
 
+//=============================================================================================================================
+
 CONST vec CenterDugLuz[ColvoCenterDugLuz] =
 { 
 	vec(sizeX - sizestenaRIGHT + RDugLuz,            sizestenaUP + Ru + RDugLuz),
@@ -56,7 +58,6 @@ public:
 	};
 
 protected:
-	//friend WORD Player::checkScored(CONST BOOL[]);	
 	inline VOID setBallCoords(POINT coords, size_t index = 0) { points_[index] = vec(coords.x, coords.y); }
 	inline vec impactDirection(double force, double angle) const { return vec(force, angle, FALSE); }
 	inline BOOL ballStopped(Ball index) const { return !(speeds_[index].getX() && speeds_[index].getY()); }

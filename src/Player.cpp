@@ -38,130 +38,135 @@ BallType getBallType(Balls::Ball ball)
 }
 
 //=========================================================================================
-Player::Player(BOOL first, wstring name /* = "ÊÎÌÏÜÞÒÅÐ" */) :
-	name_(name),
+Player::Player(CONST BOOL &rFirst, CONST wstring &rName /* = "ÊÎÌÏÜÞÒÅÐ" */) :
+	name_(rName),
 	score_(0),
 	ballType_(BallType::NoType),
-	first_(first),
+	first_(rFirst),
+	//tmpBalls_(),
 	copied_(FALSE)
 {
-	//setName(name);
 	memset(tmpBalls_, FALSE, sizeof(tmpBalls_));
 }
 
-Player::Player(string name, Player &first)
+Player::Player(CONST string &rName, CONST Player &rPlayer)
 {
-	*this = !first;
-	//setName(name);
+	setName(rName);
+	score_    = rPlayer.getScore();
+	ballType_ = rPlayer.getType();
+	first_    = rPlayer.getFirst();
+	copied_   = FALSE;
+
+	memset(tmpBalls_, FALSE, sizeof(tmpBalls_));
 }
 
 Player::~Player()
 {}
 
-VOID Player::turn(ProgramManager &programManager, GameInfo &gameInfo)
+VOID Player::turn(ProgramManager &rProgramManager, GameInfo &rGameInfo)
 {
-	if(gameInfo.first == first_)
+	if(rGameInfo.first == first_)
 	{
-		if(gameInfo.scoredEight) programManager.endGame(name_ + L" âûèãðàë ñî ñ÷¸òîì: " + getScoreWStr());
-		if(gameInfo.scoredZero)
+		if(rGameInfo.scoredEight) rProgramManager.endGame(name_ + L" âûèãðàë ñî ñ÷¸òîì: " + getScoreWStr());
+		if(rGameInfo.scoredZero)
 		{ 
-			gameInfo.scoredZero = FALSE;
-			gameInfo.drawCue    = FALSE;
-			gameInfo.turn       = Turns::SetZeroPos;
+			rGameInfo.scoredZero = FALSE;
+			rGameInfo.drawCue    = FALSE;
+			rGameInfo.turn       = Turns::SetZeroPos;
 		}
-		if(gameInfo.scoredWrong)
+		if(rGameInfo.scoredWrong)
 		{
-			gameInfo.scoredWrong = FALSE;
-			gameInfo.drawCue     = FALSE;
-			gameInfo.turn        = Turns::SetPos;
+			rGameInfo.scoredWrong = FALSE;
+			rGameInfo.drawCue     = FALSE;
+			rGameInfo.turn        = Turns::SetPos;
 		}
 
 		if(!copied_) 
 		{
-			memcpy(tmpBalls_, programManager.getScored(), sizeof(tmpBalls_));
+			memcpy(tmpBalls_, rProgramManager.getScored(), sizeof(tmpBalls_));
 
 			copied_ = !copied_;
 		}
 
-		if(gameInfo.turn == Turns::SetZeroPos)
+		if(rGameInfo.turn == Turns::SetZeroPos)
 		{ 
-			programManager.setBallCoords(programManager.getMousePos());
+			rProgramManager.setBallCoords(rProgramManager.getMousePos());
 
-			programManager.work(textToDraw(), PointF(0, 0), Color::LightGreen, FALSE);
+			rProgramManager.work(textToDraw(), PointF(0, 0), Color::LightGreen, FALSE);
 
 			if(Key(VK_END)) 
 			{
-				gameInfo.turn = Turns::Blow;
+				rGameInfo.turn = Turns::Blow;
 
-				gameInfo.drawCue = TRUE;
+				rGameInfo.drawCue = TRUE;
 			}
 		}
-		else if(gameInfo.turn == Turns::SetPos)
+		else if(rGameInfo.turn == Turns::SetPos)
 		{
-			programManager.setBallCoords(programManager.getMousePos());
-			programManager.work(textToDraw(), PointF(0, 0), Color::LightGreen, FALSE);
+			rProgramManager.setBallCoords(rProgramManager.getMousePos());
+			rProgramManager.work(textToDraw(), PointF(0, 0), Color::LightGreen, FALSE);
 			
 			if(Key(VK_END)) 
 			{
-				gameInfo.turn = Turns::Blow;
+				rGameInfo.turn = Turns::Blow;
 
-				gameInfo.drawCue = TRUE;
+				rGameInfo.drawCue = TRUE;
 			}
 		}
-		else if(gameInfo.turn == Turns::Blow) 
+		else if(rGameInfo.turn == Turns::Blow) 
 		{	
 			if(Key(VK_SPACE))
 			{
 				POINT cursor = { 0, 0 };
 				GetCursorPos(&cursor);		
 
-				programManager.nextMove();
-				gameInfo.turn = Turns::Step;
+				rProgramManager.nextMove();
+				rGameInfo.turn = Turns::Step;
 			}
-			else programManager.work(textToDraw());
+			else rProgramManager.work(textToDraw());
 		}
-		else if(gameInfo.turn == Turns::Step)
+		else if(rGameInfo.turn == Turns::Step)
 		{
-			if(!programManager.stopBalls()) programManager.work(textToDraw());
+			if(!rProgramManager.stopBalls()) rProgramManager.work(textToDraw());
 			else
 			{
-				updateScore(checkScored(programManager, gameInfo));
+				updateScore(checkScored(rProgramManager, rGameInfo));
 				resetValues();
-				gameInfo.resetToNext();
+				rGameInfo.resetToNext();
 			}		
 		}
 	}
-	else programManager.work(textToDraw(), PointF(0, 100), Color::Red, gameInfo.drawCue);
+	else rProgramManager.work(textToDraw(), PointF(0, 100), Color::Red, rGameInfo.drawCue);
 }
 
-WORD Player::checkScored(ProgramManager &programManager, GameInfo &gameInfo)
+WORD Player::checkScored(ProgramManager &rProgramManager, GameInfo &rGameInfo)
 {
 	WORD ret_val = 0;
 	for(size_t i = 0; i < NUMBER_OF_BALLS; i++)
-		if(tmpBalls_[i] != programManager.getScored()[i])
+		if(tmpBalls_[i] != rProgramManager.getScored()[i])
 		{
 			BallType ballType = getBallType(static_cast<Balls::Ball>(i));
 			
-			if(!gameInfo.firstScore && ballType != BallType::Zero) 
+			if(!rGameInfo.firstScore && ballType != BallType::Zero) 
 			{
-				gameInfo.firstScore = !gameInfo.firstScore;
+				rGameInfo.firstScore = !rGameInfo.firstScore;
 				ballType_ = ballType;
 
-				gameInfo.ballType2 = (ballType_ == BallType::Solid)? BallType::Striped : BallType::Solid;
+				rGameInfo.ballType2 = (ballType_ == BallType::Solid)? BallType::Striped : BallType::Solid;
 			}
-			else if(ballType_ == BallType::NoType) ballType_ = gameInfo.ballType2;
+			else if(ballType_ == BallType::NoType) ballType_ = rGameInfo.ballType2;
 				 
 			switch(ballType)
 			{
 			case BallType::Zero:
-				programManager.updateZero();
-				gameInfo.scoredZero = TRUE;
+				rProgramManager.updateZero();
+				rGameInfo.scoredZero = TRUE;
 				if(score_ != 0) score_--;
 				break;
 			case BallType::Solid: 
 				if(i == Balls::Ball::eighth)
 				{
-					gameInfo.scoredEight = TRUE;
+					rGameInfo.scoredEight = TRUE;
 					score_ = 0;
 
 					return FALSE;
@@ -171,7 +176,7 @@ WORD Player::checkScored(ProgramManager &programManager, GameInfo &gameInfo)
 					if(ballType_ == BallType::Solid) ret_val++;
 					else 
 					{
-						gameInfo.scoredWrong = TRUE;
+						rGameInfo.scoredWrong = TRUE;
 						if(score_ != 0) score_--;
 					}
 				}
@@ -180,8 +185,8 @@ WORD Player::checkScored(ProgramManager &programManager, GameInfo &gameInfo)
 				if(ballType_ == BallType::Solid) ret_val++;
 				else 
 				{
-					gameInfo.scoredWrong = TRUE;
-					gameInfo.wrongBall = static_cast<Balls::Ball>(i);
+					rGameInfo.scoredWrong = TRUE;
+					rGameInfo.wrongBall = static_cast<Balls::Ball>(i);
 					if(score_ != 0) score_--;
 				}
 				break;
@@ -192,14 +197,13 @@ WORD Player::checkScored(ProgramManager &programManager, GameInfo &gameInfo)
 	return ret_val;
 }
 
-Player & Player::operator=(Player &player)
+Player& Player::operator=(CONST Player &rPlayer)
 {
-	name_     = player.getName();
-	score_    = player.getScore();
-	ballType_ = player.getType();
-
-	first_  = first_;
-	copied_ = FALSE;
+	name_     = rPlayer.getName();
+	score_    = rPlayer.getScore();
+	ballType_ = rPlayer.getType();
+	first_    = rPlayer.getFirst();
+	copied_   = FALSE;
 
 	memset(tmpBalls_, FALSE, sizeof(tmpBalls_));
 

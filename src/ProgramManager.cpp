@@ -7,33 +7,43 @@ using namespace Gdiplus;
 //=============================================================================================================================
 
 ProgramManager::ProgramManager(HWND hWnd, HINSTANCE hInstance) : 
-	window_(static_cast<SIZE_T>(sizeX + 100), static_cast<SIZE_T>(sizeY + 100)),
 	hWnd_(hWnd),
 	memDC_(nullptr), 
 	memHbm_(nullptr), 
 	oldHbm_(nullptr),
 	hInstance_(hInstance),
-	textures_(new Textures()),
+	//title_(),
+	//wndClassName_(),
+	pGraphics_(nullptr),
+	pPen_(new Pen(Color::Yellow, 10)),
+	pFont_(new Font(L"Times New Roman", 25, 0, Unit::UnitPoint)),
+	pBrush_(new SolidBrush(Color::Black)),
+	pTextures_(new Textures()),
 	exit_(Rect(static_cast<INT>(sizeX), 0, 100, 100), TEXTS[Menu::ButtonTextsId::EXIT], TRUE),
-	graphics_(nullptr),
-	pen_(new Pen(Color::Yellow, 10)),
-	font_(new Font(L"Times New Roman", 25, 0, Unit::UnitPoint)),
-	brush_(new SolidBrush(Color::Black))	
+	window_(static_cast<SIZE_T>(sizeX), static_cast<SIZE_T>(sizeY)),
+	anotherPlayerText_(L" ŒÃœ” “≈–: 0"),
+	anotherPlayerPoint_(PointF(0, 100)),
+	anotherPlayerColor_(Color::Red)
 {
 	LoadStringW(hInstance_, IDS_APP_TITLE, title_, MAX_LOADSTRING);
 	LoadStringW(hInstance_, IDC_BILLIARDS, wndClassName_, MAX_LOADSTRING);
 
-	anotherPlayerText_ = L" ŒÃœ” “≈–: 0";
-	anotherPlayerPoint_ = PointF(0, 100);
-	anotherPlayerColor_ = Color::Red; 
+	HDC hDC = GetDC(hWnd_);
+	setMemDC(CreateCompatibleDC(hDC));
+	setMemHbm(CreateCompatibleBitmap(hDC, window_.width, window_.height));
+	setOldHbm(static_cast<HBITMAP>(SelectObject(memDC_, memHbm_)));	
+	//setDefaults();
+	pGraphics_ = new Graphics(memDC_);
+	ReleaseDC(hWnd_, hDC);
 }
 
 ProgramManager::~ProgramManager()
 {
-	delete(graphics_); 
-	delete(pen_);
-	delete(font_);
-	delete(brush_);
+	delete(pGraphics_); 
+	delete(pPen_);
+	delete(pFont_);
+	delete(pBrush_);
+	
 
 	DeleteObject(memHbm_);
 	DeleteObject(oldHbm_);
@@ -53,44 +63,43 @@ VOID ProgramManager::drawTable() const
 	//imAttr.SetColorKey(COLOR_KEY, COLOR_KEY);
 	//graphics_->DrawImage(&textures_->getTableTexture(), RectF(0, 0, static_cast<REAL>(sizeX), static_cast<REAL>(sizeY)), 0, 0, sizeX, sizeY, Unit::UnitPixel, &imAttr, 0); 
 
-	graphics_->DrawLine(pen_, Point(static_cast<INT>(sizeX - sizestenaRIGHT), static_cast<INT>(sizestenaUP + Ru + RDugLuz)), Point(static_cast<INT>(sizeX - sizestenaRIGHT), static_cast<INT>(sizestenaUP + sizeYpol - Ru - RDugLuz)));
-	graphics_->DrawLine(pen_, Point(static_cast<INT>(        sizestenaLEFT ), static_cast<INT>(sizestenaUP + Ru + RDugLuz)), Point(static_cast<INT>(        sizestenaLEFT ), static_cast<INT>(sizestenaUP + sizeYpol - Ru - RDugLuz)));
+	pGraphics_->DrawLine(pPen_, Point(static_cast<INT>(sizeX - sizestenaRIGHT), static_cast<INT>(sizestenaUP + Ru + RDugLuz)), Point(static_cast<INT>(sizeX - sizestenaRIGHT), static_cast<INT>(sizestenaUP + sizeYpol - Ru - RDugLuz)));
+	pGraphics_->DrawLine(pPen_, Point(static_cast<INT>(        sizestenaLEFT ), static_cast<INT>(sizestenaUP + Ru + RDugLuz)), Point(static_cast<INT>(        sizestenaLEFT ), static_cast<INT>(sizestenaUP + sizeYpol - Ru - RDugLuz)));
 
-	graphics_->DrawLine(pen_, Point(static_cast<INT>(sizestenaLEFT +            (Ru + RDugLuz)), static_cast<INT>(sizeY - sizestenaDOWN)), Point(static_cast<INT>(sizestenaLEFT + sizeXpol / 2 - (RLuz + RDugLuz)), static_cast<INT>(sizeY - sizestenaDOWN)));
-	graphics_->DrawLine(pen_, Point(static_cast<INT>(sizestenaLEFT + sizeXpol - (Ru + RDugLuz)), static_cast<INT>(sizeY - sizestenaDOWN)), Point(static_cast<INT>(sizestenaLEFT + sizeXpol / 2 + (RLuz + RDugLuz)), static_cast<INT>(sizeY - sizestenaDOWN)));
+	pGraphics_->DrawLine(pPen_, Point(static_cast<INT>(sizestenaLEFT +            (Ru + RDugLuz)), static_cast<INT>(sizeY - sizestenaDOWN)), Point(static_cast<INT>(sizestenaLEFT + sizeXpol / 2 - (RLuz + RDugLuz)), static_cast<INT>(sizeY - sizestenaDOWN)));
+	pGraphics_->DrawLine(pPen_, Point(static_cast<INT>(sizestenaLEFT + sizeXpol - (Ru + RDugLuz)), static_cast<INT>(sizeY - sizestenaDOWN)), Point(static_cast<INT>(sizestenaLEFT + sizeXpol / 2 + (RLuz + RDugLuz)), static_cast<INT>(sizeY - sizestenaDOWN)));
 
-	graphics_->DrawLine(pen_, Point(static_cast<INT>(sizestenaLEFT +            (Ru + RDugLuz)), static_cast<INT>(sizestenaUP)), Point(static_cast<INT>(sizestenaLEFT + sizeXpol / 2 - (RLuz + RDugLuz)), static_cast<INT>(sizestenaUP)));
-	graphics_->DrawLine(pen_, Point(static_cast<INT>(sizestenaLEFT + sizeXpol - (Ru + RDugLuz)), static_cast<INT>(sizestenaUP)), Point(static_cast<INT>(sizestenaLEFT + sizeXpol / 2 + (RLuz + RDugLuz)), static_cast<INT>(sizestenaUP)));
+	pGraphics_->DrawLine(pPen_, Point(static_cast<INT>(sizestenaLEFT +            (Ru + RDugLuz)), static_cast<INT>(sizestenaUP)), Point(static_cast<INT>(sizestenaLEFT + sizeXpol / 2 - (RLuz + RDugLuz)), static_cast<INT>(sizestenaUP)));
+	pGraphics_->DrawLine(pPen_, Point(static_cast<INT>(sizestenaLEFT + sizeXpol - (Ru + RDugLuz)), static_cast<INT>(sizestenaUP)), Point(static_cast<INT>(sizestenaLEFT + sizeXpol / 2 + (RLuz + RDugLuz)), static_cast<INT>(sizestenaUP)));
 
-	
-	graphics_->DrawEllipse(pen_, static_cast<INT>(        sizestenaLEFT  - RDugLuz - (RLuz + 1) / 2), static_cast<INT>(sizeY - sizestenaDOWN + RDugLuz - (RLuz + 1) / 2), RLuz + 1, RLuz + 1);
-	graphics_->DrawEllipse(pen_, static_cast<INT>(sizeX - sizestenaRIGHT + RDugLuz - (RLuz + 1) / 2), static_cast<INT>(sizeY - sizestenaDOWN + RDugLuz - (RLuz + 1) / 2), RLuz + 1, RLuz + 1);
-	graphics_->DrawEllipse(pen_, static_cast<INT>(sizeX - sizestenaRIGHT + RDugLuz - (RLuz + 1) / 2), static_cast<INT>(        sizestenaUP   - RDugLuz - (RLuz + 1) / 2), RLuz + 1, RLuz + 1);
-	graphics_->DrawEllipse(pen_, static_cast<INT>(        sizestenaLEFT  - RDugLuz - (RLuz + 1) / 2), static_cast<INT>(        sizestenaUP   - RDugLuz - (RLuz + 1) / 2), RLuz + 1, RLuz + 1);
+	pGraphics_->DrawEllipse(pPen_, static_cast<INT>(        sizestenaLEFT  - RDugLuz - (RLuz + 1) / 2), static_cast<INT>(sizeY - sizestenaDOWN + RDugLuz - (RLuz + 1) / 2), RLuz + 1, RLuz + 1);
+	pGraphics_->DrawEllipse(pPen_, static_cast<INT>(sizeX - sizestenaRIGHT + RDugLuz - (RLuz + 1) / 2), static_cast<INT>(sizeY - sizestenaDOWN + RDugLuz - (RLuz + 1) / 2), RLuz + 1, RLuz + 1);
+	pGraphics_->DrawEllipse(pPen_, static_cast<INT>(sizeX - sizestenaRIGHT + RDugLuz - (RLuz + 1) / 2), static_cast<INT>(        sizestenaUP   - RDugLuz - (RLuz + 1) / 2), RLuz + 1, RLuz + 1);
+	pGraphics_->DrawEllipse(pPen_, static_cast<INT>(        sizestenaLEFT  - RDugLuz - (RLuz + 1) / 2), static_cast<INT>(        sizestenaUP   - RDugLuz - (RLuz + 1) / 2), RLuz + 1, RLuz + 1);
 
-	graphics_->DrawEllipse(pen_, static_cast<INT>(sizestenaLEFT + sizeXpol / 2 - (RLuz + 1) / 2), static_cast<INT>(sizeY - sizestenaDOWN + RDugLuz - (RLuz + 1) / 2), RLuz + 1, RLuz + 1);
-	graphics_->DrawEllipse(pen_, static_cast<INT>(sizestenaLEFT + sizeXpol / 2 - (RLuz + 1) / 2), static_cast<INT>(        sizestenaUP   - RDugLuz - (RLuz + 1) / 2), RLuz + 1, RLuz + 1);
+	pGraphics_->DrawEllipse(pPen_, static_cast<INT>(sizestenaLEFT + sizeXpol / 2 - (RLuz + 1) / 2), static_cast<INT>(sizeY - sizestenaDOWN + RDugLuz - (RLuz + 1) / 2), RLuz + 1, RLuz + 1);
+	pGraphics_->DrawEllipse(pPen_, static_cast<INT>(sizestenaLEFT + sizeXpol / 2 - (RLuz + 1) / 2), static_cast<INT>(        sizestenaUP   - RDugLuz - (RLuz + 1) / 2), RLuz + 1, RLuz + 1);
 
-	for (int i = 0; i < ColvoCenterDugLuz; i++) graphics_->DrawEllipse(pen_, static_cast<INT>(CenterDugLuz[i].getX() - RDugLuz  / 2), static_cast<INT>(CenterDugLuz[i].getY() - RDugLuz / 2), RDugLuz, RDugLuz);
+	for (int i = 0; i < ColvoCenterDugLuz; i++) pGraphics_->DrawEllipse(pPen_, static_cast<INT>(CenterDugLuz[i].getX() - RDugLuz  / 2), static_cast<INT>(CenterDugLuz[i].getY() - RDugLuz / 2), RDugLuz, RDugLuz);
 }
 
 VOID ProgramManager::initDubbleBuffering(HDC hDC)
 {
-	setMemDC(CreateCompatibleDC(hDC));
-	setMemHbm(CreateCompatibleBitmap(GetDC(hWnd_), window_.width, window_.height));
-	setOldHbm((HBITMAP)SelectObject(getMemDC(), getMemHbm()));	
+	//setMemDC(CreateCompatibleDC(hDC));
+	//setMemHbm(CreateCompatibleBitmap(hDC, window_.width, window_.height));
+	//setOldHbm(static_cast<HBITMAP>(SelectObject(memDC_, memHbm_)));	
 	setDefaults();
 
-	graphics_ = new Graphics(memDC_);
+	//pGraphics_ = new Graphics(memDC_);
 }
 
 VOID ProgramManager::clearDubbleBuffering()
 {
-	SelectObject(getMemDC(), getOldHbm());
-	DeleteObject(getMemHbm());
-	DeleteDC(getMemDC());
-
-	delete(graphics_);
+	//SelectObject(getMemDC(), getOldHbm());
+	//DeleteObject(getMemHbm());
+	//DeleteDC(getMemDC());
+	PatBlt(memDC_, 0, 0, sizeX, sizeY, WHITENESS);
+	//delete(pGraphics_);
 }
 
 VOID ProgramManager::setDefaults()
@@ -104,7 +113,7 @@ VOID ProgramManager::setDefaults()
 VOID ProgramManager::onPAINT()
 {}
 
-VOID ProgramManager::work(wstring text, PointF point /* = PointF(0, 0) */, Color color /* = Color::LightGreen */, BOOL drawCue /* = TRUE */)
+VOID ProgramManager::work(CONST wstring &rWext, CONST PointF &rPointf /* = PointF(0, 0) */, CONST Color &rColor /* = Color::LightGreen */, CONST BOOL &rDrawCue /* = TRUE */)
 {
     HDC hDC = GetDC(hWnd_);
 
@@ -144,31 +153,27 @@ VOID ProgramManager::work(wstring text, PointF point /* = PointF(0, 0) */, Color
 	{
 		drawTable();
 		drawBalls();
-		if(drawCue) this->drawCue();	
+		if(rDrawCue) this->drawCue();	
 		drawExit();
 
-		setBrushColor(color);
-		graphics_->DrawString(text.c_str(), text.length(), font_, point, brush_);
+		setBrushColor(rColor);
+		pGraphics_->DrawString(rWext.c_str(), rWext.length(), pFont_, rPointf, pBrush_);
 		setBrushColor(anotherPlayerColor_);
-		graphics_->DrawString(anotherPlayerText_.c_str(), text.length(), font_, anotherPlayerPoint_, brush_);
+		pGraphics_->DrawString(anotherPlayerText_.c_str(), anotherPlayerText_.length(), pFont_, anotherPlayerPoint_, pBrush_);
 
-		anotherPlayerText_  = text;
-		anotherPlayerPoint_ = point;
-		anotherPlayerColor_ = color; 
+		anotherPlayerText_  = rWext;
+		anotherPlayerPoint_ = rPointf;
+		anotherPlayerColor_ = rColor; 
 
 		if(exit_.pressed(Mouse::getCoords(), Mouse::getButton())) Menu::activate();
 
 		moveBalls();
-		if(drawCue) moveCue();
+		if(rDrawCue) moveCue();
 	}
-
-	
 
 	loadBufferIntoCanvas(hDC);	
 	clearDubbleBuffering();
 			
 	ReleaseDC(hWnd_, hDC); 
 }
-
-//=============================================================
 

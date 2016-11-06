@@ -9,8 +9,6 @@ using namespace Gdiplus;
 
 ProgramManager *programManager = nullptr;
 
-//class Exception {};
-
 ATOM                MyRegisterClass(HINSTANCE, WCHAR[]);
 HWND                InitInstance(HINSTANCE, INT, WCHAR[], WCHAR[]);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
@@ -134,6 +132,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				//DialogBox(programManager->getHINSTANCE(), MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
                 break;
             case IDM_EXIT:
+				//programManager->~ProgramManager();
                 DestroyWindow(hWnd);
                 break;
             default:
@@ -161,6 +160,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         break;
     case WM_DESTROY:
+		//programManager->~ProgramManager();
         PostQuitMessage(0);
         break;
     default:

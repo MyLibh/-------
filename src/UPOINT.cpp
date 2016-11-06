@@ -10,10 +10,10 @@ UPOINT::UPOINT(SIZE_T width, SIZE_T height) :
 	height(height)
 {}
 
-UPOINT::UPOINT(const UPOINT &upoint)
+UPOINT::UPOINT(CONST UPOINT &rUpoint)
 {
-	width  = upoint.width;
-	height = upoint.height;
+	width  = rUpoint.width;
+	height = rUpoint.height;
 }
 
 UPOINT::~UPOINT()

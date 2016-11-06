@@ -20,9 +20,17 @@ double atan_(double x, double y)
 vec::vec() :        
     x_(0),
     y_(0),
-    k_(0),
-    l_(0)
+    l_(0),
+	k_(0)
 {}
+
+vec::vec(CONST vec &rVec)
+{
+	x_ = rVec.getX();
+    y_ = rVec.getY();
+    l_ = rVec.getL();
+    k_ = rVec.getK();
+}
 
 vec::vec(double a, double b, BOOL xy /* = TRUE */) 
 {
@@ -40,14 +48,14 @@ vec::vec(double a, double b, BOOL xy /* = TRUE */)
 	}
 }
 
-VOID vec::draw(double x0, double y0, Graphics *graphics, Pen *pen, Color color /* = Color::Yellow */) const
+VOID vec::draw(double x0, double y0, Graphics *graphics, Pen &rPen, CONST Color &rColor /* = Color::Yellow */) const
 {
-	pen->SetColor(color);
-	pen->SetWidth(2);
+	rPen.SetColor(rColor);
+	rPen.SetWidth(2);
 
-    graphics->DrawLine(pen, Point(static_cast<INT>(x0     ), static_cast<INT>(     y0)), Point(static_cast<INT>(x0 + x_), static_cast<INT>(y_ + y0)));
-    graphics->DrawLine(pen, Point(static_cast<INT>(x0 + x_), static_cast<INT>(y_ + y0)), Point(static_cast<INT>(x0 + x_ - ((l_ < 0)? -1 : 1) * 5 * cos(k_ + M_PI_4)), static_cast<INT>(y_ + y0 - ((l_ < 0)? -1 : 1) * 5 * sin(k_ + M_PI_4))));
-    graphics->DrawLine(pen, Point(static_cast<INT>(x0 + x_), static_cast<INT>(y_ + y0)), Point(static_cast<INT>(x0 + x_ - ((l_ < 0)? -1 : 1) * 5 * cos(k_ - M_PI_4)), static_cast<INT>(y_ + y0 - ((l_ < 0)? -1 : 1) * 5 * sin(k_ - M_PI_4))));
+    graphics->DrawLine(&rPen, Point(static_cast<INT>(x0     ), static_cast<INT>(     y0)), Point(static_cast<INT>(x0 + x_), static_cast<INT>(y_ + y0)));
+    graphics->DrawLine(&rPen, Point(static_cast<INT>(x0 + x_), static_cast<INT>(y_ + y0)), Point(static_cast<INT>(x0 + x_ - ((l_ < 0)? -1 : 1) * 5 * cos(k_ + M_PI_4)), static_cast<INT>(y_ + y0 - ((l_ < 0)? -1 : 1) * 5 * sin(k_ + M_PI_4))));
+    graphics->DrawLine(&rPen, Point(static_cast<INT>(x0 + x_), static_cast<INT>(y_ + y0)), Point(static_cast<INT>(x0 + x_ - ((l_ < 0)? -1 : 1) * 5 * cos(k_ - M_PI_4)), static_cast<INT>(y_ + y0 - ((l_ < 0)? -1 : 1) * 5 * sin(k_ - M_PI_4))));
 
     l_ = sqrt(x_ * x_ + y_ * y_);
     k_ = atan_(x_, y_);
@@ -65,14 +73,14 @@ VOID vec::setLK()
     k_ = atan_(x_, y_);
 }
 
-vec vec::operator=(vec vec1)
+vec& vec::operator=(CONST vec &rVec)
 {
-	if (this == &vec1) return *this;
+	if (this == &rVec) return *this;
 
-    x_ = vec1.getX();
-    y_ = vec1.getY();
-    l_ = vec1.getL();
-    k_ = vec1.getK();
+    x_ = rVec.getX();
+    y_ = rVec.getY();
+    l_ = rVec.getL();
+    k_ = rVec.getK();
 
     return *this;
 }
@@ -87,48 +95,48 @@ vec vec::operator=(POINT xy)
     return *this;
 }
 
-vec vec::operator+(vec vec1) const
+vec vec::operator+(CONST vec &rVec) const
 {
     vec returned;
 
-    returned.setX(x_ + vec1.getX());
-    returned.setY(y_ + vec1.getY());
+    returned.setX(x_ + rVec.getX());
+    returned.setY(y_ + rVec.getY());
     returned.setL(sqrt(returned.getX() * returned.getX() + returned.getY() * returned.getY()));
     returned.setK(atan_(returned.getX(), returned.getY()));
 
     return returned;
 }
 
-vec vec::operator+=(vec vec1)
+vec& vec::operator+=(CONST vec &rVec)
 {
     vec returned;
 
-    x_ += vec1.getX();
-    y_ += vec1.getY();
+    x_ += rVec.getX();
+    y_ += rVec.getY();
     l_ = sqrt(x_ * x_ + y_ * y_);
     k_ = atan_(x_, y_);
 
     return *this;
 }
 
-vec vec::operator-(vec vec1) const
+vec vec::operator-(CONST vec &rVec) const
 {
     vec returned;
 
-    returned.setX(x_ - vec1.getX());
-    returned.setY(y_ - vec1.getY());
+    returned.setX(x_ - rVec.getX());
+    returned.setY(y_ - rVec.getY());
     returned.setL(sqrt(returned.getX() * returned.getX() + returned.getY() * returned.getY()));
     returned.setK(atan_(returned.getX(), returned.getY()));
 
     return returned;
 }
 
-vec vec::operator-=(vec vec1)
+vec& vec::operator-=(CONST vec &rVec)
 {
     vec returned;
 
-    x_ = x_ - vec1.getX();
-    y_ = y_ - vec1.getY();
+    x_ = x_ - rVec.getX();
+    y_ = y_ - rVec.getY();
     l_ = sqrt(x_ * x_ + y_ * y_);
     k_ = atan_(x_, y_);
 

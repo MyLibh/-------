@@ -23,8 +23,13 @@ enum BallType
 	Striped =  2
 };
 
-struct GameInfo
+class GameInfo
 {
+private:
+	GameInfo(CONST GameInfo&) {}
+	GameInfo& operator=(CONST GameInfo&) {}
+
+public:
 	Turns turn;
 	BOOL  scoredEight;
 	BOOL  scoredWrong;
@@ -52,14 +57,14 @@ BallType getBallType(Balls::Ball);
 class Player final
 {
 private:
-	//Player(CONST Player&) {}
-
 	wstring   name_;
 	WORD     score_;
 	BallType ballType_;
 	BOOL     first_;
 
-	inline VOID updateScore(WORD score) { score_ += score; }
+	Player(CONST Player&) {}
+
+	inline VOID updateScore(CONST WORD &rScore) { score_ += rScore; }
 
 protected:
 	BOOL tmpBalls_[NUMBER_OF_BALLS];
@@ -68,23 +73,25 @@ protected:
 	WORD checkScored(ProgramManager&, GameInfo&);
 	inline VOID resetValues() { copied_ = !copied_; }
 
-	inline string getScoreStr() const { return to_string(score_); }
+	inline string getScoreStr()   const { return to_string(score_); }
 	inline wstring getScoreWStr() const { return to_wstring(score_); }
+
 	inline VOID reset() { score_ = 0; }
 
-	Player &operator=(Player&);
+	Player& operator=(CONST Player&);
 	Player operator!();
 
 public:
-	Player(BOOL, wstring = L"КОМПЬЮТЕР"); 
-	Player(string, Player&); // Второй игрок
+	Player(CONST BOOL&, CONST wstring& = L"КОМПЬЮТЕР"); 
+	Player(CONST string&, CONST Player&); // Второй игрок
 	~Player();
 
-	inline wstring getName() const { return name_; }
-	inline WORD getScore() const { return score_; }
-	inline BallType getType() const { return ballType_; }
+	inline CONST wstring  &getName()  const { return name_; }
+	inline CONST WORD     &getScore() const { return score_; }
+	inline CONST BallType &getType()  const { return ballType_; }
+	inline CONST BOOL     &getFirst() const { return first_; }
 
-	inline VOID setName(string name) { wstring_convert<codecvt_utf8_utf16<WCHAR>> converter; CHAR text[10] = ""; name_ = converter.from_bytes(name); }
+	inline VOID setName(CONST string &rName) { wstring_convert<codecvt_utf8_utf16<WCHAR>> converter; CHAR text[10] = ""; name_ = converter.from_bytes(rName); }
 	
 	VOID turn(ProgramManager&, GameInfo&);
 

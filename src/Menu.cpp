@@ -4,7 +4,9 @@
 
 using namespace Gdiplus;
 
-Menu::Menu() 
+Menu::Menu() :
+	buttons_(),
+	inMenu_(FALSE)
 {
 	CONST INT WIDTH  = 493;
 	CONST INT HEIGHT = 170;
@@ -17,23 +19,23 @@ Menu::Menu()
 	buttons_[ButtonTextsId::HELP].setOptions    (Rect(X, Y + STEP * 1, WIDTH, HEIGHT), TEXTS[ButtonTextsId::HELP]);
 	buttons_[ButtonTextsId::SETTINGS].setOptions(Rect(X, Y + STEP * 2, WIDTH, HEIGHT), TEXTS[ButtonTextsId::SETTINGS]);
 
-	buttons_[ButtonTextsId::PROFILE].setOptions(Rect(0, 0, 100, 100), TEXTS[ButtonTextsId::PROFILE]);
+	//buttons_[ButtonTextsId::PROFILE].setOptions(Rect(0, 0, 100, 100), TEXTS[ButtonTextsId::PROFILE]); exception
 }
 
 Menu::~Menu()
 {}
 
-VOID Menu::draw(Graphics *graphics, Image &image, UPOINT windowSize, Pen &pen, SolidBrush &brush, Font &font) const
+VOID Menu::draw(Graphics *graphics, Image &rImage, CONST UPOINT &rWindowSize, Pen &rPen, SolidBrush &rBrush, CONST Font &rFont) const
 {
-	graphics->DrawImage(&image, Rect(0, 0, windowSize.width, windowSize.height));
+	graphics->DrawImage(&rImage, Rect(0, 0, rWindowSize.width, rWindowSize.height));
 
-	for(SIZE_T i = 0; i < NUMBER_OF_BUTTONS; i++) buttons_[i].draw(graphics, pen, brush, font);
+	for(SIZE_T i = 0; i < NUMBER_OF_BUTTONS; i++) buttons_[i].draw(graphics, rPen, rBrush, rFont);
 }
 
-Menu::MenuActions Menu::procedure(POINT mouse, INT16 button) 
+Menu::MenuActions Menu::procedure(CONST POINT &rMouse, CONST INT16 &rButton) const
 {
 	for(size_t i = 0; i < NUMBER_OF_BUTTONS; i++)
-		if(buttons_[i].pressed(mouse, button))//!!
+		if(buttons_[i].pressed(rMouse, rButton))
 			switch(i)
 			{
 			case ButtonTextsId::CONTINUE: return MenuActions::Continue;

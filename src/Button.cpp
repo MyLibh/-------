@@ -4,9 +4,19 @@
 
 using namespace Gdiplus;
 
+//=============================================================================================================================
+
 inline BOOL In(RECT rect, POINT point)
 {
 	return(rect.left <= point.x && rect.right >= point.x && rect.bottom <= point.y && rect.top >= point.y)? TRUE : FALSE;
+}
+
+inline VOID RectEquateRECT(CONST Rect &rSource, RECT &rDest)
+{
+	rDest.left   = rSource.GetLeft();
+	rDest.top    = rSource.GetTop();
+	rDest.right  = rSource.GetRight();
+	rDest.bottom = rSource.GetBottom();
 }
 
 //=============================================================================================================================
@@ -17,46 +27,37 @@ Button::Button() :
 	active_(FALSE)
 {}
 
-Button::Button(RECT rect, wstring text, bool active /* = FALSE */) :
-	rect_(rect),
-	text_(text.begin(), text.end()),
-	active_(active)
+Button::Button(CONST RECT &rRect, CONST wstring &rText, CONST BOOL &rActive /* = FALSE */) :
+	rect_(rRect),
+	text_(rText),
+	active_(rActive)
 {}
 
-Button::Button(Rect rect, wstring text, bool active /* = FALSE */) :
-	text_(text.begin(), text.end()),
-	active_(active)
+Button::Button(CONST Rect &rRect, CONST wstring &rText, CONST BOOL &rActive /* = FALSE */) :
+	text_(rText),
+	active_(rActive)
 {
-	rect_.left   = rect.GetLeft();
-	rect_.top    = rect.GetTop();
-	rect_.right  = rect.GetRight();
-	rect_.bottom = rect.GetBottom();
+	RectEquateRECT(rRect, rect_);
 }
 
 Button::~Button()
 {}
 
-VOID Button::setOptions(Rect rect, wstring text, bool active /* = TRUE */)
+VOID Button::setOptions(CONST Rect &rRect, CONST wstring &rText, CONST BOOL &rActive /* = FALSE */)
 {
-	rect_.left   = rect.GetLeft();
-	rect_.top    = rect.GetTop();
-	rect_.right  = rect.GetRight();
-	rect_.bottom = rect.GetBottom();
+	RectEquateRECT(rRect, rect_);
 
-	//std::copy(text.begin(), text.end(), std::back_inserter(text_));
+	text_ = rText;
 
-	//text_ = text.substr();
-
-	active_ = active;
+	active_ = rActive;
 }
 
-VOID Button::draw(Graphics *graphics, Pen &pen, SolidBrush &brush, Font &font) const
+VOID Button::draw(Graphics *pGraphics, Pen &rPen, SolidBrush &rBrush, CONST Font &rFont) const
 {
-	pen.SetColor(Color(5, 159, 225));
-	pen.SetWidth(3);
-	brush.SetColor(Color(255, 125, 34));
+	rPen.SetColor(Color(5, 159, 225));
+	rPen.SetWidth(3);
+	rBrush.SetColor(Color(255, 125, 34));
 	
-
-	graphics->DrawRectangle(&pen, RECT2Rect());
+	pGraphics->DrawRectangle(&rPen, RECT2Rect());
 	//graphics->DrawString(text_.c_str(), text_.length(), &font, PointF(RECT2RectF().GetLeft(), RECT2RectF().GetTop()), &brush);
 }

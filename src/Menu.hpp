@@ -26,10 +26,13 @@ private:
 
     Button buttons_[NUMBER_OF_BUTTONS];
     
-	bool inMenu_;
+	BOOL inMenu_;
+
+	Menu(CONST Menu&) {}
+	Menu& operator=(CONST Menu&) {}
 
 public:
-    Menu();
+    explicit Menu();
     ~Menu();
 
 	enum ButtonTextsId
@@ -52,11 +55,11 @@ public:
 		Profile
 	};
 
-	inline BOOL isActive() const { return inMenu_; }
+	inline CONST BOOL &isActive() const { return inMenu_; }
 
 	inline VOID activate()   { inMenu_ =  true; }
 	inline VOID deactivate() { inMenu_ = false; }
 
-    VOID draw(Graphics*, Image&, UPOINT, Pen&, SolidBrush&, Font&) const;
-    MenuActions procedure(POINT, INT16);
+    VOID draw(Graphics*, Image&, CONST UPOINT&, Pen&, SolidBrush&, CONST Font&) const;
+    MenuActions procedure(CONST POINT&, CONST INT16&) const;
 };

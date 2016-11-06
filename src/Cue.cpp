@@ -4,46 +4,44 @@
 
 using namespace Gdiplus;
 
+//=============================================================================================================================
+
 Cue::Cue() :
 	mouse_(),
 	ball_(),
+	auxiliaryLine_(),
 	angle_(0),
-	auxiliaryLine_()
-{
-	//textureSize_.width  = 1100 / 5; // Çàãíàòü â êîíñòàíòû
-	//textureSize_.height = 360  / 5; //
-
-	//textureSize_ *= SCALE;
-}
+	draw_(TRUE)
+{}
 
 Cue::~Cue()
 {}
 
-VOID Cue::draw(Graphics *graphics, Pen &pen, Image &cue) const
+VOID Cue::draw(Graphics *pGraphics, Pen &rPen, Image &rCue) const
 {	
-	auxiliaryLine_.draw((ball_ - auxiliaryLine_).getX(), (ball_ - auxiliaryLine_).getY(), graphics, &pen, Color::Gray);
+	auxiliaryLine_.draw((ball_ - auxiliaryLine_).getX(), (ball_ - auxiliaryLine_).getY(), pGraphics, rPen, Color::Gray);
 
-	pen.SetColor(Color::Gray);
-	pen.SetWidth(3);
-	graphics->DrawEllipse(&pen, static_cast<INT>(mouse_.getX() - RShari), static_cast<INT>(mouse_.getY() - RShari), RShari * 2, RShari * 2);
+	rPen.SetColor(Color::Gray);
+	rPen.SetWidth(3);
+	pGraphics->DrawEllipse(&rPen, static_cast<INT>(mouse_.getX() - RShari), static_cast<INT>(mouse_.getY() - RShari), RShari * 2, RShari * 2);
 
-	graphics->TranslateTransform(static_cast<REAL>(ball_.getX()), static_cast<REAL>(ball_.getY()));
-	graphics->RotateTransform(angle_); 
+	pGraphics->TranslateTransform(static_cast<REAL>(ball_.getX()), static_cast<REAL>(ball_.getY()));
+	pGraphics->RotateTransform(angle_); 
 	
 	ImageAttributes imAttr;
 	imAttr.SetColorKey(COLOR_KEY, COLOR_KEY);		
-	graphics->DrawImage(&cue, Rect(-884, static_cast<INT>(-20 / 2), 884 * 2, 20), 0, 0, 884 * 2, 20, Unit::UnitPixel, &imAttr, 0);
+	pGraphics->DrawImage(&rCue, Rect(-884, static_cast<INT>(-20 / 2), 884 * 2, 20), 0, 0, 884 * 2, 20, Unit::UnitPixel, &imAttr, 0);
 
-	graphics->ResetTransform();
+	pGraphics->ResetTransform();
 }
 
-VOID Cue::rotate(POINT ball, POINT mouse)
+VOID Cue::rotate(CONST POINT &rBall, CONST POINT &rMouse)
 {
-	mouse_.setX(mouse.x);
-	mouse_.setY(mouse.y);
+	mouse_.setX(rMouse.x);
+	mouse_.setY(rMouse.y);
 
-	ball_.setX(ball.x);
-	ball_.setY(ball.y);
+	ball_.setX(rBall.x);
+	ball_.setY(rBall.y);
 
 	auxiliaryLine_ = ball_ - mouse_;
 	auxiliaryLine_.setXY();

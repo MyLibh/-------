@@ -6,6 +6,8 @@
 
 using namespace Gdiplus;
 
+//=============================================================================================================================
+
 class Cue 
 {
 private:
@@ -17,8 +19,11 @@ private:
 
 	BOOL draw_;
 
+	Cue(CONST Cue&) {}
+	Cue& operator=(CONST Cue&) {}
+
 public:
-	Cue();
+	explicit Cue();
 	~Cue();
 
 	inline VOID dump() const { $g cout << __FUNCTION__ << endl;
@@ -30,8 +35,6 @@ public:
 	inline VOID activate()   { draw_ =  TRUE; }
 	inline VOID deactivate() { draw_ = FALSE; }
 
-	
-
 	VOID draw(Graphics*, Pen&, Image&) const;
-	VOID rotate(POINT, POINT);
+	VOID rotate(CONST POINT&, CONST POINT&);
 };
