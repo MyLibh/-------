@@ -1,31 +1,64 @@
-﻿Построение начато 06.11.2016 21:20:47.
+﻿Построение начато 07.11.2016 17:41:20.
      1>Проект "C:\Users\Alex Golden\Documents\GitHub\-------\VS12\Бильярд.vcxproj" в узле 2 (целевые объекты Build).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt ..\src\Player.cpp ..\src\ProgramManager.cpp ..\src\main.cpp
-         main.cpp
-         ProgramManager.cpp
-         Player.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt ..\src\Balls.cpp ..\src\Button.cpp ..\src\Config.cpp ..\src\Cue.cpp ..\src\Exceptions.cpp ..\src\Keyboard.cpp ..\src\Menu.cpp ..\src\Mouse.cpp ..\src\Player.cpp ..\src\ProgramManager.cpp ..\src\Textures.cpp ..\src\Variables.cpp ..\src\Vector.cpp ..\src\main.cpp
+         Balls.cpp
+     1>c:\users\alex golden\documents\github\-------\src\boost_1_59_0\boost\asio\impl\src.hpp(16): fatal error C1083: Не удается открыть файл включение: boost/asio/detail/config.hpp: No such file or directory
          Создание кода...
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Alex Golden\Documents\GitHub\-------\VS12\Debug\Бильярд.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Alex Golden\Documents\GitHub\-------\VS12\Debug\Бильярд.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Alex Golden\Documents\GitHub\-------\VS12\Debug\Бильярд.lib" /MACHINE:X86 "Debug\Бильярд.res"
-         Debug\Balls.obj
-         Debug\Button.obj
-         Debug\Config.obj
-         Debug\Cue.obj
-         Debug\Exceptions.obj
-         Debug\Keyboard.obj
-         Debug\Menu.obj
-         Debug\Mouse.obj
-         Debug\Player.obj
-         Debug\ProgramManager.obj
-         Debug\main.obj
-         Debug\Textures.obj
-         Debug\UPOINT.obj
-         Debug\Variables.obj
-         Debug\Vector.obj
-         Бильярд.vcxproj -> C:\Users\Alex Golden\Documents\GitHub\-------\VS12\Debug\Бильярд.exe
-     1>Построение проекта "C:\Users\Alex Golden\Documents\GitHub\-------\VS12\Бильярд.vcxproj" завершено (целевые объекты Build).
+         Компиляция...
+         Button.cpp
+     1>c:\users\alex golden\documents\github\-------\src\boost_1_59_0\boost\asio\impl\src.hpp(16): fatal error C1083: Не удается открыть файл включение: boost/asio/detail/config.hpp: No such file or directory
+         Создание кода...
+         Компиляция...
+         Config.cpp
+     1>c:\users\alex golden\documents\github\-------\src\boost_1_59_0\boost\asio\impl\src.hpp(16): fatal error C1083: Не удается открыть файл включение: boost/asio/detail/config.hpp: No such file or directory
+         Создание кода...
+         Компиляция...
+         Cue.cpp
+     1>c:\users\alex golden\documents\github\-------\src\boost_1_59_0\boost\asio\impl\src.hpp(16): fatal error C1083: Не удается открыть файл включение: boost/asio/detail/config.hpp: No such file or directory
+         Создание кода...
+         Компиляция...
+         Exceptions.cpp
+     1>c:\users\alex golden\documents\github\-------\src\boost_1_59_0\boost\asio\impl\src.hpp(16): fatal error C1083: Не удается открыть файл включение: boost/asio/detail/config.hpp: No such file or directory
+         Создание кода...
+         Компиляция...
+         Keyboard.cpp
+     1>c:\users\alex golden\documents\github\-------\src\boost_1_59_0\boost\asio\impl\src.hpp(16): fatal error C1083: Не удается открыть файл включение: boost/asio/detail/config.hpp: No such file or directory
+         Создание кода...
+         Компиляция...
+         Menu.cpp
+     1>c:\users\alex golden\documents\github\-------\src\boost_1_59_0\boost\asio\impl\src.hpp(16): fatal error C1083: Не удается открыть файл включение: boost/asio/detail/config.hpp: No such file or directory
+         Создание кода...
+         Компиляция...
+         Mouse.cpp
+     1>c:\users\alex golden\documents\github\-------\src\boost_1_59_0\boost\asio\impl\src.hpp(16): fatal error C1083: Не удается открыть файл включение: boost/asio/detail/config.hpp: No such file or directory
+         Создание кода...
+         Компиляция...
+         Player.cpp
+     1>c:\users\alex golden\documents\github\-------\src\boost_1_59_0\boost\asio\impl\src.hpp(16): fatal error C1083: Не удается открыть файл включение: boost/asio/detail/config.hpp: No such file or directory
+         Создание кода...
+         Компиляция...
+         ProgramManager.cpp
+     1>c:\users\alex golden\documents\github\-------\src\boost_1_59_0\boost\asio\impl\src.hpp(16): fatal error C1083: Не удается открыть файл включение: boost/asio/detail/config.hpp: No such file or directory
+         Создание кода...
+         Компиляция...
+         Textures.cpp
+     1>c:\users\alex golden\documents\github\-------\src\boost_1_59_0\boost\asio\impl\src.hpp(16): fatal error C1083: Не удается открыть файл включение: boost/asio/detail/config.hpp: No such file or directory
+         Создание кода...
+         Компиляция...
+         Variables.cpp
+     1>c:\users\alex golden\documents\github\-------\src\boost_1_59_0\boost\asio\impl\src.hpp(16): fatal error C1083: Не удается открыть файл включение: boost/asio/detail/config.hpp: No such file or directory
+         Создание кода...
+         Компиляция...
+         Vector.cpp
+     1>c:\users\alex golden\documents\github\-------\src\boost_1_59_0\boost\asio\impl\src.hpp(16): fatal error C1083: Не удается открыть файл включение: boost/asio/detail/config.hpp: No such file or directory
+         Создание кода...
+         Компиляция...
+         main.cpp
+     1>c:\users\alex golden\documents\github\-------\src\boost_1_59_0\boost\asio\impl\src.hpp(16): fatal error C1083: Не удается открыть файл включение: boost/asio/detail/config.hpp: No such file or directory
+         Создание кода...
+     1>Построение проекта "C:\Users\Alex Golden\Documents\GitHub\-------\VS12\Бильярд.vcxproj" завершено (целевые объекты Build) с ошибкой.
 
-Построение успешно завершено.
+Сбой построения.
 
-Затраченное время: 00:00:04.90
+Затраченное время: 00:00:15.02

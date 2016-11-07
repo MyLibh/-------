@@ -113,7 +113,7 @@ VOID ProgramManager::setDefaults()
 VOID ProgramManager::onPAINT()
 {}
 
-VOID ProgramManager::work(CONST wstring &rWext, CONST PointF &rPointf /* = PointF(0, 0) */, CONST Color &rColor /* = Color::LightGreen */, CONST BOOL &rDrawCue /* = TRUE */)
+VOID ProgramManager::work(CONST wstring &rWext, CONST PointF &rPointf /* = PointF(0, 0) */, CONST Color &rColor /* = Color::LightGreen */, BOOL drawCue /* = TRUE */)
 {
     HDC hDC = GetDC(hWnd_);
 
@@ -150,7 +150,7 @@ VOID ProgramManager::work(CONST wstring &rWext, CONST PointF &rPointf /* = Point
 	{
 		drawTable();
 		drawBalls();
-		if(rDrawCue) this->drawCue();	
+		if(drawCue) this->drawCue();	
 		drawExit();
 
 		setBrushColor(rColor);
@@ -165,7 +165,7 @@ VOID ProgramManager::work(CONST wstring &rWext, CONST PointF &rPointf /* = Point
 		if(exit_.pressed(Mouse::getCoords(), Mouse::getButton())) Menu::activate();
 
 		moveBalls();
-		if(rDrawCue) moveCue();
+		if(drawCue) moveCue();
 	}
 
 	loadBufferIntoCanvas(hDC);	

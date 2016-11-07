@@ -86,7 +86,9 @@
     <ClInclude Include="..\src\Keyboard.hpp" />
     <ClInclude Include="..\src\Menu.hpp" />
     <ClInclude Include="..\src\Mouse.hpp" />
+    <ClInclude Include="..\src\Network.hpp" />
     <ClInclude Include="..\src\Player.hpp" />
+    <ClInclude Include="..\src\Profile.hpp" />
     <ClInclude Include="..\src\ProgramManager.hpp" />
     <ClInclude Include="..\src\resource.h" />
     <ClInclude Include="..\src\Textures.hpp" />

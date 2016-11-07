@@ -103,8 +103,8 @@ public:
 	inline VOID setBallCoords(POINT coords, size_t index = 0) { Balls::setBallCoords(coords, index); }
 
     VOID onPAINT(); 
-	VOID work(CONST wstring&, CONST PointF& = PointF(0, 0), CONST Color& = Color::LightGreen, CONST BOOL& = TRUE);
-	VOID endGame(wstring winnerMsg){ MessageBox(hWnd_, winnerMsg.c_str(), L"»√–¿ Œ ŒÕ◊≈Õ¿", MB_OK | MB_ICONINFORMATION); Menu::activate(); }
+	VOID work(CONST wstring&, CONST PointF& = PointF(0, 0), CONST Color& = Color::LightGreen, BOOL = TRUE);
+	VOID endGame(wstring winnerMsg){ MessageBoxW(NULL, winnerMsg.c_str(), L"»√–¿ Œ ŒÕ◊≈Õ¿", MB_OK | MB_ICONINFORMATION); Menu::activate(); }
 	inline VOID nextMove() { Balls::nextMove(15, Cue::getAngleInRadians()); }
 
 	inline BOOL stopBalls() const { return Balls::stopped(); }

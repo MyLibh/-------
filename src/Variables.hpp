@@ -22,9 +22,14 @@
 #include <process.h>
 #include <ctime>
 
+//#include <sys/types.h>
+//#include <sys/socket.h>
+
 #include "resource.h"
 #include "UPOINT.hpp"
 #include "Uncopyable.hpp"
+
+//#include "boost_1_59_0/boost/asio/impl/src.hpp"
 
 using namespace std;
 

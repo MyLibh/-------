@@ -56,7 +56,7 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
 	HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_BILLIARDS));
 	MSG msg = { };
 
-	srand(static_cast< unsigned >(time(NULL)));
+	srand(static_cast<unsigned>(time(NULL)));
 
 	Player player1(TRUE, L"Алексий");
 	Player player2(FALSE);
