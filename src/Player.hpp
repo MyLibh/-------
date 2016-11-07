@@ -34,10 +34,10 @@ public:
 	BOOL  scoredEight;
 	BOOL  scoredWrong;
 	BOOL  scoredZero;
-	BOOL  touchNobody;
 	BOOL  first;
 	BOOL  drawCue;
 	BOOL  firstScore;
+	BOOL  scored;
 
 	BallType    ballType2;
 	Balls::Ball wrongBall;
@@ -47,9 +47,16 @@ public:
 
 	inline VOID dump() const { cout << __FUNCTION__ << endl; 
 							     cout << "Step: " << turn << ", nine: " << scoredEight << ", wrong: " << scoredWrong <<
-									 ", zero: " << scoredZero << ", nbdy:" << touchNobody << endl << endl; }
+									 ", zero: " << scoredZero << endl << endl; }
 
-	VOID resetToNext() { dump(); turn = Turns::Blow; first = !first; dump(); }
+	VOID resetToNext() 
+	{  
+		turn = Turns::Blow; 
+		if(!scored) first = !first; 
+		scored = FALSE;
+	}
+
+	VOID restart();
 };
 
 BallType getBallType(Balls::Ball);
@@ -62,13 +69,15 @@ private:
 	BallType ballType_;
 	BOOL     first_;
 
-	inline VOID updateScore(CONST WORD &rScore) { score_ += rScore; }
-
-protected:
-	BOOL tmpBalls_[NUMBER_OF_BALLS];
+	BOOL tmpBallsStatus_[NUMBER_OF_BALLS];
+	vec  tmpBallsPos_[NUMBER_OF_BALLS];
 	BOOL copied_;
 
+	inline VOID updateScore(CONST WORD &rScore) { score_ += rScore; }
+
+protected:	
 	WORD checkScored(ProgramManager&, GameInfo&);
+	BOOL checkPoints(CONST ProgramManager&);
 	inline VOID resetValues() { copied_ = !copied_; }
 
 	inline string getScoreStr()   const { return to_string(score_); }
@@ -92,6 +101,7 @@ public:
 	inline VOID setName(CONST string &rName) { wstring_convert<codecvt_utf8_utf16<WCHAR>> converter; name_ = converter.from_bytes(rName); }
 	
 	VOID turn(ProgramManager&, GameInfo&);
+	VOID restart();
 
 	inline wstring textToDraw() const { return wstring(name_ + L": " + to_wstring(score_)); }
 };

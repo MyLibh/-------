@@ -18,7 +18,7 @@ protected:
 	VOID setDefaults();
 	VOID createLog();
 
-	inline VOID setBool(string name, bool value)     { properties_[name] = (value)? "true" : "false"; }
+	inline VOID setBool(string name, BOOL value)     { properties_[name] = (value)? "true" : "false"; }
 	inline VOID setInt(string name, INT value)       { properties_[name] = to_string(value); }
 	inline VOID setString(string name, string value) { properties_[name] = value; }
 public:

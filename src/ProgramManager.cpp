@@ -18,11 +18,12 @@ ProgramManager::ProgramManager(HWND hWnd, HINSTANCE hInstance) :
 	pPen_(new Pen(Color::Yellow, 10)),
 	pFont_(new Font(L"Times New Roman", 25, 0, Unit::UnitPoint)),
 	pBrush_(new SolidBrush(Color::Black)),
+	config_(),
 	pTextures_(new Textures()),
 	exit_(Rect(static_cast<INT>(sizeX), 0, 100, 100), TEXTS[Menu::ButtonTextsId::EXIT], TRUE),
 	window_(static_cast<SIZE_T>(sizeX), static_cast<SIZE_T>(sizeY)),
 	anotherPlayerText_(L"йнлосйреп: 0"),
-	anotherPlayerPoint_(PointF(0, 100)),
+	anotherPlayerPoint_(PointF(sizeX, 0)),
 	anotherPlayerColor_(Color::Red)
 {
 	LoadStringW(hInstance_, IDS_APP_TITLE, title_, MAX_LOADSTRING);

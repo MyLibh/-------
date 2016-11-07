@@ -3,11 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Бильярд", "Бильярд.vcxproj", "{CE05DA24-2117-4F25-85F4-C9C856F64672}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0F9E423D-8952-4EA5-B7C1-05FC7C7F8311}"
-	ProjectSection(SolutionItems) = preProject
-		..\src\Бильярд.rc = ..\src\Бильярд.rc
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32

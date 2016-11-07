@@ -5,10 +5,10 @@ GameInfo::GameInfo() :
 	scoredEight(FALSE),
 	scoredWrong(FALSE),
 	scoredZero(FALSE),
-	touchNobody(FALSE),
 	first(TRUE),
 	drawCue(TRUE),
 	firstScore(FALSE),
+	scored(FALSE),
 	ballType2(BallType::NoType),
 	wrongBall(Balls::Ball::wrong)
 {}
@@ -16,6 +16,21 @@ GameInfo::GameInfo() :
 GameInfo::~GameInfo()
 {}
 
+VOID GameInfo::restart()
+{
+	turn        = Turns::None;
+
+	scoredEight = FALSE;
+	scoredWrong = FALSE;
+	scoredZero  = FALSE;
+	first       = TRUE;
+	drawCue     = TRUE;
+	firstScore  = FALSE;
+	scored      = FALSE;
+
+	ballType2   = BallType::NoType;
+	wrongBall   = Balls::Ball::wrong;
+}
 //=========================================================================================
 
 BallType getBallType(Balls::Ball ball)
@@ -38,15 +53,18 @@ BallType getBallType(Balls::Ball ball)
 }
 
 //=========================================================================================
+
 Player::Player(CONST BOOL &rFirst, CONST wstring &rName /* = " ŒÃœ‹ﬁ“≈–" */) :
 	name_(rName),
 	score_(0),
 	ballType_(BallType::NoType),
 	first_(rFirst),
-	//tmpBalls_(),
+	//tmpBallsStatus_(),
+	//tmpBallsPos_(),
 	copied_(FALSE)
 {
-	memset(tmpBalls_, FALSE, sizeof(tmpBalls_));
+	memset(tmpBallsStatus_, FALSE, sizeof(tmpBallsStatus_));
+	memset(tmpBallsPos_, 0, sizeof(tmpBallsPos_));
 }
 
 Player::Player(CONST string &rName, CONST Player &rPlayer)
@@ -57,7 +75,8 @@ Player::Player(CONST string &rName, CONST Player &rPlayer)
 	first_    = rPlayer.getFirst();
 	copied_   = FALSE;
 
-	memset(tmpBalls_, FALSE, sizeof(tmpBalls_));
+	memset(tmpBallsStatus_, FALSE, sizeof(tmpBallsStatus_));
+	memset(tmpBallsPos_, 0, sizeof(tmpBallsPos_));
 }
 
 Player::~Player()
@@ -85,7 +104,8 @@ VOID Player::turn(ProgramManager &rProgramManager, GameInfo &rGameInfo)
 
 		if(!copied_) 
 		{
-			memcpy(tmpBalls_, rProgramManager.getScored(), sizeof(tmpBalls_));
+			memcpy(tmpBallsStatus_, rProgramManager.getScored(), sizeof(tmpBallsStatus_));
+			memcpy(tmpBallsPos_, rProgramManager.getPoints(), sizeof(tmpBallsPos_));
 
 			copied_ = !copied_;
 		}
@@ -105,7 +125,7 @@ VOID Player::turn(ProgramManager &rProgramManager, GameInfo &rGameInfo)
 		}
 		else if(rGameInfo.turn == Turns::SetPos)
 		{
-			rProgramManager.setBallCoords(rProgramManager.getMousePos());
+			rProgramManager.setBallCoords(rProgramManager.getMousePos(), rGameInfo.wrongBall);
 			rProgramManager.work(textToDraw(), PointF(0, 0), Color::LightGreen, FALSE);
 			
 			if(Key(VK_END)) 
@@ -133,19 +153,30 @@ VOID Player::turn(ProgramManager &rProgramManager, GameInfo &rGameInfo)
 			else
 			{
 				updateScore(checkScored(rProgramManager, rGameInfo));
+				if(!checkPoints(rProgramManager)) if(score_ != 0) score_--;
 				resetValues();
 				rGameInfo.resetToNext(); 
 			}		
 		}
 	}
-	else rProgramManager.work(textToDraw(), PointF(0, 100), Color::Red, rGameInfo.drawCue);
+	else rProgramManager.work(textToDraw(), PointF(static_cast<REAL>(rProgramManager.getMemDCWindow().width - 6 * sizestenaRIGHT), 0), Color::Red, rGameInfo.drawCue);
+}
+
+VOID Player::restart()
+{
+	score_    = 0;
+	ballType_ = BallType::NoType;
+	copied_   = FALSE;
+
+	memset(tmpBallsStatus_, FALSE, sizeof(tmpBallsStatus_));
+	memset(tmpBallsPos_, 0, sizeof(tmpBallsPos_));
 }
 
 WORD Player::checkScored(ProgramManager &rProgramManager, GameInfo &rGameInfo)
 {
 	WORD ret_val = 0;
 	for(size_t i = 0; i < NUMBER_OF_BALLS; i++)
-		if(tmpBalls_[i] != rProgramManager.getScored()[i])
+		if(tmpBallsStatus_[i] != rProgramManager.getScored()[i])
 		{
 			BallType ballType = getBallType(static_cast<Balls::Ball>(i));
 			
@@ -175,10 +206,15 @@ WORD Player::checkScored(ProgramManager &rProgramManager, GameInfo &rGameInfo)
 				}
 				else
 				{
-					if(ballType_ == BallType::Solid) ret_val++;
+					if(ballType_ == BallType::Solid) 
+					{
+						rGameInfo.scored = TRUE;
+						ret_val++;
+					}
 					else 
 					{
 						rGameInfo.scoredWrong = TRUE;
+						rGameInfo.wrongBall = static_cast<Balls::Ball>(i);
 						if(score_ != 0) score_--;
 					}
 				}
@@ -199,6 +235,14 @@ WORD Player::checkScored(ProgramManager &rProgramManager, GameInfo &rGameInfo)
 	return ret_val;
 }
 
+BOOL Player::checkPoints(CONST ProgramManager &rProgramManager)
+{
+	for(size_t i = 1; i < NUMBER_OF_BALLS; i++)
+		if(tmpBallsPos_[i] != rProgramManager.getPoints()[i]) return TRUE;
+
+	return FALSE;
+}
+
 Player& Player::operator=(CONST Player &rPlayer)
 {
 	name_     = rPlayer.getName();
@@ -207,7 +251,8 @@ Player& Player::operator=(CONST Player &rPlayer)
 	first_    = rPlayer.getFirst();
 	copied_   = FALSE;
 
-	memset(tmpBalls_, FALSE, sizeof(tmpBalls_));
+	memset(tmpBallsStatus_, FALSE, sizeof(tmpBallsStatus_));
+	memset(tmpBallsPos_, FALSE, sizeof(tmpBallsPos_));
 
 	return *this;
 }

@@ -109,7 +109,7 @@ CONST DistanceBetweenWallAndTable tagDISTANCE_BETWEEN_WALL_AND_TABLE = { CUE_LEN
 //=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=
 
 
-CONST double sizestenaUP = 100 * SCALE;//64;//сам
+CONST double sizestenaUP = 150 * SCALE;//64;
 CONST double sizestenaDOWN = 100 * SCALE;//40;//
 CONST double sizestenaLEFT = 100 * SCALE;//40;//
 CONST double sizestenaRIGHT = 100 * SCALE;//32;//

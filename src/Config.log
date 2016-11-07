@@ -1,5 +1,12 @@
-Бильярд 1.35v by A&A Copyright (C) 2016
-Дата построения: Nov  7 2016 - 16:24:59
+Бильярд 1.4v by A&A Copyright (C) 2016
+Дата построения: Nov  7 2016 - 20:56:55
 Программа использует следующий конфиг:
 
-Background = ../src/Background.jpg
+__AUTHOR__ = A&A
+__VERSION__ = 1.4
+background = ../src/Images/Background.jpg
+cue = ../src/Images/Cue.png
+menu = ../src/Images/Menu.jpg
+table = ../src/Images/Table.jpg
+windowHeight = 600
+windowWidth = 800

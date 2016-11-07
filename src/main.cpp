@@ -8,6 +8,9 @@
 using namespace Gdiplus;    
 
 ProgramManager *programManager = nullptr;
+Player player1(TRUE, L"Алексий");
+Player player2(FALSE);
+GameInfo gameInfo;
 
 ATOM                MyRegisterClass(HINSTANCE, WCHAR[]);
 HWND                InitInstance(HINSTANCE, INT, WCHAR[], WCHAR[]);
@@ -25,7 +28,7 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
-	system("chcp 1251");
+	//system("chcp 1251");
 
 #ifdef __DEBUG 
 	if(!EnableConsole()) return EXITS::CONSOLECREATE_FAILED;
@@ -58,9 +61,7 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
 
 	srand(static_cast<unsigned>(time(NULL)));
 
-	Player player1(TRUE, L"Алексий");
-	Player player2(FALSE);
-	GameInfo gameInfo; gameInfo.turn = Turns::Blow;
+	gameInfo.turn = Turns::Blow;
     while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) 
     {
         if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
@@ -126,8 +127,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             switch (wmId)
             {
             case IDM_ABOUT:
-				//DialogBox(programManager->getHINSTANCE(), MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
+				cout << DialogBox(programManager->getHINSTANCE(), MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About) << endl;
                 break;
+			case IDM_RESTART:
+				gameInfo.restart();
+				programManager->restart();
+				player1.restart();
+				player2.restart();
+				break;
+			case IDM_SAVE:
+				//programManager->save();
+				break;
             case IDM_EXIT:
 				//programManager->~ProgramManager();
                 DestroyWindow(hWnd);
@@ -172,7 +182,7 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 
     switch (message)
     {
-    case WM_INITDIALOG:
+	case WM_INITDIALOG:
         return static_cast<INT_PTR>(TRUE);
 
     case WM_COMMAND:

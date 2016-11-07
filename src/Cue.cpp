@@ -11,6 +11,7 @@ Cue::Cue() :
 	ball_(),
 	auxiliaryLine_(),
 	angle_(0),
+	force_(15),
 	draw_(TRUE)
 {}
 
@@ -30,7 +31,7 @@ VOID Cue::draw(Graphics *pGraphics, Pen &rPen, Image &rCue) const
 	
 	ImageAttributes imAttr;
 	imAttr.SetColorKey(COLOR_KEY, COLOR_KEY);		
-	pGraphics->DrawImage(&rCue, Rect(-884, static_cast<INT>(-20 / 2), 884 * 2, 20), 0, 0, 884 * 2, 20, Unit::UnitPixel, &imAttr, 0);
+	pGraphics->DrawImage(&rCue, Rect(static_cast<INT>(-884 - force_ * 8), static_cast<INT>(-20 / 2), 884 * 2, 20), 0, 0, 884 * 2, 20, Unit::UnitPixel, &imAttr, 0);
 
 	pGraphics->ResetTransform();
 }
@@ -47,4 +48,7 @@ VOID Cue::rotate(CONST POINT &rBall, CONST POINT &rMouse)
 	auxiliaryLine_.setXY();
 
 	angle_ = (mouse_ - ball_).toDegrees();
+
+	if(Key(VK_UP) && force_ <= 14) force_++;
+	else if(Key(VK_DOWN) && force_ >= 2) force_--;
 }

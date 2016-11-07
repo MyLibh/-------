@@ -3,6 +3,7 @@
 #include "Variables.hpp"
 #include "Vector.hpp"
 #include "Mouse.hpp"
+#include "Keyboard.hpp"
 
 using namespace Gdiplus;
 
@@ -16,8 +17,8 @@ private:
 	vec auxiliaryLine_;
 
 	REAL angle_;
+	REAL force_;
 	BOOL draw_;
-
 
 public:
 	explicit Cue();
@@ -28,6 +29,7 @@ public:
 
 	inline double getAngleInRadians() const { return static_cast<double>(angle_ * M_PI / 180); }
 	inline double getAngleInDegrees() const { return static_cast<double>(angle_); }
+	inline double getForce() const { return static_cast<double>(force_); }
 
 	inline VOID activate()   { draw_ =  TRUE; }
 	inline VOID deactivate() { draw_ = FALSE; }

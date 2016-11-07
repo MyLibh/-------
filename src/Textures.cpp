@@ -18,7 +18,10 @@ Textures::Textures() :
 
 Textures::Textures(CONST Config &config)
 {
-	//background_ = new Image(config.getWString("Background").c_str());
+	pBackground_ = new Image(config.getWString("background").c_str());
+	pTable_ = new Image(config.getWString("table").c_str());
+	pCue_ = new Image(config.getWString("cue").c_str());
+	pMenu_ = new Image(config.getWString("menu").c_str());
 }
 
 Textures::~Textures()

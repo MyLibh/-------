@@ -58,7 +58,7 @@ public:
 	};
 
 protected:
-	inline VOID setBallCoords(POINT coords, size_t index = 0) { points_[index] = vec(coords.x, coords.y); }
+	inline VOID setBallCoords(CONST POINT& rCoords, size_t index = 0) { points_[index] = vec(rCoords.x, rCoords.y); }
 	inline vec impactDirection(double force, double angle) const { return vec(force, angle, FALSE); }
 	inline BOOL ballStopped(Ball index) const { return !(speeds_[index].getX() && speeds_[index].getY()); }
 	inline VOID setBallStatus(Ball index = Ball::zero, BOOL status = FALSE) { scored_[index] = status; }
@@ -69,8 +69,9 @@ public:
 
 	BOOL stopped() const;	
 
-	inline POINT  getBallCoords(Ball index) const { POINT point = { static_cast<LONG>(points_[index].getX()), static_cast<LONG>(points_[index].getY()) }; return point; }
-	BOOL CONST *getScored() const { return scored_; }
+	inline POINT getBallCoords(Ball index) const { POINT point = { static_cast<LONG>(points_[index].getX()), static_cast<LONG>(points_[index].getY()) }; return point; }
+	CONST BOOL *getScored() const { return scored_; }
+	CONST vec *getPoints() const { return points_; }
 
 	VOID restart();
 	VOID move();

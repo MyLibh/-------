@@ -38,6 +38,9 @@ public:
     vec operator/(double) const;
     vec operator^(double) const;
 
+	inline BOOL operator==(CONST vec &rVec) const { if(x_ == rVec.getX() && y_ == rVec.getY() && k_ == rVec.getK() && l_ == rVec.getL()) return TRUE; return FALSE; }
+	inline BOOL operator!=(CONST vec &rVec) const { if(x_ == rVec.getX() && y_ == rVec.getY() && k_ == rVec.getK() && l_ == rVec.getL()) return FALSE; return TRUE; }
+
 	inline double getL() const { return l_; }
 	inline double getK() const { return k_; }
 	inline double getX() const { return x_; }

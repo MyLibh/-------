@@ -31,9 +31,9 @@ private:
 	Font       *pFont_;
 	SolidBrush *pBrush_;
 
+	Config      config_;
 	Textures   *pTextures_;
 	Button      exit_;
-	//Config      config_;
 	
 	UPOINT      window_; // Улучшить название(размеры memDC)
 
@@ -83,8 +83,8 @@ public:
 	//Стандартные функции для шрифта
 	inline CONST WCHAR *getTitle()        const { return title_; }
 	inline CONST WCHAR *getWndClassName() const { return wndClassName_; }
-	inline CONST BOOL  *getScored() const { return Balls::getScored(); }
-	
+	inline virtual CONST BOOL  *getScored() const { return Balls::getScored(); }
+	inline virtual CONST vec *getPoints() const { return Balls::getPoints(); }
 
 	VOID setDefaults();
 	inline VOID updateZero() { Balls::setBallStatus(); }
@@ -105,7 +105,8 @@ public:
     VOID onPAINT(); 
 	VOID work(CONST wstring&, CONST PointF& = PointF(0, 0), CONST Color& = Color::LightGreen, BOOL = TRUE);
 	VOID endGame(wstring winnerMsg){ MessageBoxW(NULL, winnerMsg.c_str(), L"ИГРА ОКОНЧЕНА", MB_OK | MB_ICONINFORMATION); Menu::activate(); }
-	inline VOID nextMove() { Balls::nextMove(15, Cue::getAngleInRadians()); }
+	inline virtual VOID nextMove() { Balls::nextMove(Cue::getForce(), Cue::getAngleInRadians()); }
+	inline VOID restart() { Balls::restart(); }
 
 	inline BOOL stopBalls() const { return Balls::stopped(); }
 };

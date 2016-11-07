@@ -2,8 +2,11 @@
 #define IDC_BILLIARDS_DIALOG            102
 #define IDS_APP_TITLE                   103
 #define IDD_ABOUTBOX                    103 
+#define IDD_PAUSE                       104
 #define IDM_ABOUT                       104
 #define IDM_EXIT                        105
+#define IDM_RESTART                     106
+#define IDM_SAVE                        107
 #define IDI_BILLIARDS                   107
 #define IDI_SMALL                       108
 #define IDC_BILLIARDS                   109
@@ -11,7 +14,7 @@
 #define IDC_STATIC                      -1
 
 //#define __tagVERSION__ 
-#define __VERSION__    "1.35v"
+#define __VERSION__    "1.4v"
 
 //#define __tagAUTHOR__ "A&A"
 #define __AUTHOR__    "A&A"
