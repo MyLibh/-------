@@ -22,9 +22,6 @@
 #include <process.h>
 #include <ctime>
 
-//#include <sys/types.h>
-//#include <sys/socket.h>
-
 #include "resource.h"
 #include "UPOINT.hpp"
 #include "Uncopyable.hpp"

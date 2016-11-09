@@ -49,7 +49,7 @@
     <ClCompile>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <UndefinePreprocessorDefinitions>
@@ -106,6 +106,7 @@
     <ClCompile Include="..\src\Keyboard.cpp" />
     <ClCompile Include="..\src\Menu.cpp" />
     <ClCompile Include="..\src\Mouse.cpp" />
+    <ClCompile Include="..\src\Network.cpp" />
     <ClCompile Include="..\src\Player.cpp" />
     <ClCompile Include="..\src\ProgramManager.cpp" />
     <ClCompile Include="..\src\main.cpp" />

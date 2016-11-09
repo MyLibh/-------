@@ -52,7 +52,7 @@ VOID Button::setOptions(CONST Rect &rRect, CONST wstring &rText, CONST BOOL &rAc
 	active_ = rActive;
 }
 
-VOID Button::draw(Graphics *pGraphics, Pen &rPen, SolidBrush &rBrush, CONST Font &rFont) const
+VOID Button::draw(Graphics *pGraphics, Pen &rPen, SolidBrush &rBrush, CONST Font &/*rFont*/) const
 {
 	rPen.SetColor(Color(5, 159, 225));
 	rPen.SetWidth(3);

@@ -1,8 +1,15 @@
-﻿Построение начато 07.11.2016 21:03:28.
+﻿Построение начато 09.11.2016 21:32:18.
      1>Проект "C:\Users\Alex Golden\Documents\GitHub\-------\VS12\Бильярд.vcxproj" в узле 2 (целевые объекты Build).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt ..\src\Player.cpp
-         Player.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W4 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt ..\src\main.cpp
+         main.cpp
+     1>c:\users\alex golden\documents\github\-------\src\vector.hpp(58): warning C4245: аргумент: преобразование "" в "Gdiplus::ARGB", несоответствие типов со знаком и без
+     1>c:\users\alex golden\documents\github\-------\src\programmanager.hpp(100): warning C4245: аргумент: преобразование "" в "Gdiplus::ARGB", несоответствие типов со знаком и без
+     1>c:\users\alex golden\documents\github\-------\src\programmanager.hpp(102): warning C4245: аргумент: преобразование "" в "Gdiplus::ARGB", несоответствие типов со знаком и без
+     1>c:\users\alex golden\documents\github\-------\src\programmanager.hpp(106): warning C4245: аргумент: преобразование "" в "Gdiplus::ARGB", несоответствие типов со знаком и без
+     1>c:\users\alex golden\documents\github\-------\src\programmanager.hpp(50): warning C4100: canvas: неиспользованный формальный параметр
+     1>c:\users\alex golden\documents\github\-------\src\main.cpp(202): warning C4100: nCmdShow: неиспользованный формальный параметр
+     1>c:\users\alex golden\documents\github\-------\src\main.cpp(56): warning C4706: назначение в пределах условного выражения
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Alex Golden\Documents\GitHub\-------\VS12\Debug\Бильярд.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Alex Golden\Documents\GitHub\-------\VS12\Debug\Бильярд.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Alex Golden\Documents\GitHub\-------\VS12\Debug\Бильярд.lib" /MACHINE:X86 "Debug\Бильярд.res"
          Debug\Balls.obj
@@ -13,6 +20,7 @@
          Debug\Keyboard.obj
          Debug\Menu.obj
          Debug\Mouse.obj
+         Debug\Network.obj
          Debug\Player.obj
          Debug\ProgramManager.obj
          Debug\main.obj
@@ -25,4 +33,4 @@
 
 Построение успешно завершено.
 
-Затраченное время: 00:00:03.02
+Затраченное время: 00:00:04.62

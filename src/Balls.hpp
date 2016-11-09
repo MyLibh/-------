@@ -65,7 +65,7 @@ protected:
 
 public:	
 	Balls();
-	~Balls();
+	virtual ~Balls();
 
 	BOOL stopped() const;	
 

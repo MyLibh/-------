@@ -13,7 +13,7 @@ private:
 
 public:
     explicit Mouse();
-    ~Mouse();
+    virtual ~Mouse();
 
 	enum MouseButtons
 	{

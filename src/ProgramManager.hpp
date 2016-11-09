@@ -95,7 +95,7 @@ public:
 	inline VOID setHWND(HWND hWnd)                  { hWnd_      = hWnd; }
 	inline VOID setHINSTANCE(HINSTANCE hInstance)   { hInstance_ = hInstance; }
 	inline VOID setMemDCWindow(RECT rect)           { window_ = rect; }
-	inline VOID setMouse(LPARAM lParam, int button) { Mouse::update(lParam, button); }
+	inline VOID setMouse(LPARAM lParam, INT16 button) { Mouse::update(lParam, button); }
 	//Стандартные функции для шрифта 
 	inline VOID setPenColor(Color color = Color::Yellow)  { pPen_->SetColor(color); }
 	inline VOID setPenWidth(REAL width = 10)              { pPen_->SetWidth(width); }	

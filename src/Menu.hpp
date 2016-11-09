@@ -30,7 +30,7 @@ private:
 
 public:
     explicit Menu();
-    ~Menu();
+    virtual ~Menu();
 
 	enum ButtonTextsId
 	{
