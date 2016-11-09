@@ -20,9 +20,9 @@ Cue::~Cue()
 
 VOID Cue::draw(Graphics *pGraphics, Pen &rPen, Image &rCue) const
 {	
-	auxiliaryLine_.draw((ball_ - auxiliaryLine_).getX(), (ball_ - auxiliaryLine_).getY(), pGraphics, rPen, Color::Gray);
+	auxiliaryLine_.draw((ball_ - auxiliaryLine_).getX(), (ball_ - auxiliaryLine_).getY(), pGraphics, rPen, static_cast<ARGB>(Color::Gray));
 
-	rPen.SetColor(Color::Gray);
+	rPen.SetColor(static_cast<ARGB>(Color::Gray));
 	rPen.SetWidth(3);
 	pGraphics->DrawEllipse(&rPen, static_cast<INT>(mouse_.getX() - RShari), static_cast<INT>(mouse_.getY() - RShari), RShari * 2, RShari * 2);
 

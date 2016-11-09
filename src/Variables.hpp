@@ -1,32 +1,112 @@
 #pragma once
 
-#define _USE_MATH_DEFINES
-#include <cmath>
+//====================================================================================================================
+
+#pragma warning(push)   
+#pragma warning(disable:4514)
+#pragma warning(disable:4668)
+#pragma warning(disable:4820)
+
+
 #include <windows.h>
+#include <winnt.h>
+
+#pragma warning(pop) 
+
+//====================================================================================================================
+
+#pragma warning(push)                 
+#pragma warning(disable:4061)
+#pragma warning(disable:4263)
+#pragma warning(disable:4264)
+#pragma warning(disable:4265)
+#pragma warning(disable:4365)
+#pragma warning(disable:4514)
+#pragma warning(disable:4625)
+#pragma warning(disable:4626)
+#pragma warning(disable:4820)
+
 #include <gdiplus.h>
-#include <Istream>
-#include <vector>
-#include <cstdio>
-#include <iostream>
-#include <fstream>
+#include <gdipluspen.h>
+#include <gdiplusstringformat.h>
+#include <gdipluspath.h>
+#include <gdipluslinecaps.h>
+#include <gdiplusgraphics.h>
+#include <gdiplusheaders.h>
+
+
+#pragma warning(pop) 
+
+//====================================================================================================================
+
+#pragma warning(push)                 
+#pragma warning(disable:4820)
+
 #include <io.h>
-#include <algorithm>
-#include <iterator>
+
+#pragma warning(pop) 
+
+//====================================================================================================================
+
+#pragma warning(push)      
+#pragma warning(disable:4514)
+#pragma warning(disable:4820)
+
+#include <wchar.h>
+
+#pragma warning(pop) 
+
+//====================================================================================================================
+
+#pragma warning(push)      
+#pragma warning(disable:4514)
+
+#define _USE_MATH_DEFINES
+#include <limits>
+#include <cmath>
+
+#pragma warning(pop) 
+
+//====================================================================================================================
+
+#pragma warning(push)  
+#pragma warning(disable:4350)
+#pragma warning(disable:4710)
+
+#include <xmemory0>
+
+#pragma warning(pop) 
+
+//====================================================================================================================
+
+#pragma warning(push)      
+#pragma warning(disable:4350)
+#pragma warning(disable:4514)
+
 #include <string>
-#include <map>
-#include <list>
-#include <cstdlib>
+
+#pragma warning(pop) 
+
+//====================================================================================================================
+
+#include <fstream>
+#include <Istream>
+#include <iostream>
 #include <sstream>
+#include <vector>
+#include <map>
+
+#include <iterator>
 #include <locale>
 #include <codecvt>
-#include <process.h>
 #include <ctime>
+
+#include <WinSock.h>
+//#include <WS2tcpip.h>
 
 #include "resource.h"
 #include "UPOINT.hpp"
 #include "Uncopyable.hpp"
-
-//#include "boost_1_59_0/boost/asio/impl/src.hpp"
 
 using namespace std;
 

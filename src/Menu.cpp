@@ -27,7 +27,7 @@ Menu::~Menu()
 
 VOID Menu::draw(Graphics *graphics, Image &rImage, CONST UPOINT &rWindowSize, Pen &rPen, SolidBrush &rBrush, CONST Font &rFont) const
 {
-	graphics->DrawImage(&rImage, Rect(0, 0, rWindowSize.width, rWindowSize.height));
+	graphics->DrawImage(&rImage, Rect(0, 0, static_cast<INT>(rWindowSize.width), static_cast<INT>(rWindowSize.height)));
 
 	for(SIZE_T i = 0; i < NUMBER_OF_BUTTONS; i++) buttons_[i].draw(graphics, rPen, rBrush, rFont);
 }

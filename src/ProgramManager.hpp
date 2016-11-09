@@ -47,7 +47,7 @@ private:
 	inline string HWND2STRING() const { char text[32] = ""; ; return string(_itoa(reinterpret_cast<INT>(hWnd_), text, 10)); }
 	inline string HINSTANCE2STRING() const { char text[32] = ""; ; return string(_itoa(reinterpret_cast<INT>(hInstance_), text, 10)); }
 
-	inline CONST VOID loadBackgroundIntoCanvas(HDC canvas) const { pGraphics_->DrawImage(&pTextures_->getBackgroundTexture(), RectF(0, 0, static_cast<REAL>(window_.width), static_cast<REAL>(window_.height))); }
+	inline CONST VOID loadBackgroundIntoCanvas() const { pGraphics_->DrawImage(&pTextures_->getBackgroundTexture(), RectF(0, 0, static_cast<REAL>(window_.width), static_cast<REAL>(window_.height))); }
 	inline CONST VOID loadBufferIntoCanvas(HDC canvas)     const { BitBlt(canvas, 0, 0, window_.width, window_.height, memDC_, 0, 0, SRCCOPY); }
 
 	VOID initDubbleBuffering(HDC);
@@ -97,13 +97,13 @@ public:
 	inline VOID setMemDCWindow(RECT rect)           { window_ = rect; }
 	inline VOID setMouse(LPARAM lParam, INT16 button) { Mouse::update(lParam, button); }
 	//—Ú‡Ì‰‡ÚÌ˚Â ÙÛÌÍˆËË ‰Îˇ ¯ËÙÚ‡ 
-	inline VOID setPenColor(Color color = Color::Yellow)  { pPen_->SetColor(color); }
+	inline VOID setPenColor(Color color = static_cast<ARGB>(Color::Yellow))  { pPen_->SetColor(color); }
 	inline VOID setPenWidth(REAL width = 10)              { pPen_->SetWidth(width); }	
-	inline VOID setBrushColor(Color color = Color::Black) { pBrush_->SetColor(color); }
+	inline VOID setBrushColor(Color color = static_cast<ARGB>(Color::Black)) { pBrush_->SetColor(color); }
 	inline VOID setBallCoords(POINT coords, size_t index = 0) { Balls::setBallCoords(coords, index); }
 
     VOID onPAINT(); 
-	VOID work(CONST wstring&, CONST PointF& = PointF(0, 0), CONST Color& = Color::LightGreen, BOOL = TRUE);
+	VOID work(CONST wstring&, CONST PointF& = PointF(0, 0), CONST Color& = static_cast<ARGB>(Color::LightGreen), BOOL = TRUE);
 	VOID endGame(wstring winnerMsg){ MessageBoxW(NULL, winnerMsg.c_str(), L"»√–¿ Œ ŒÕ◊≈Õ¿", MB_OK | MB_ICONINFORMATION); Menu::activate(); }
 	inline virtual VOID nextMove() { Balls::nextMove(Cue::getForce(), Cue::getAngleInRadians()); }
 	inline VOID restart() { Balls::restart(); }

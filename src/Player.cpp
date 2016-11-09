@@ -114,7 +114,7 @@ VOID Player::turn(ProgramManager &rProgramManager, GameInfo &rGameInfo)
 		{ 
 			rProgramManager.setBallCoords(rProgramManager.getMousePos());
 
-			rProgramManager.work(textToDraw(), PointF(0, 0), Color::LightGreen, FALSE);
+			rProgramManager.work(textToDraw(), PointF(0, 0), static_cast<ARGB>(Color::LightGreen), FALSE);
 
 			if(Key(VK_END)) 
 			{
@@ -126,7 +126,7 @@ VOID Player::turn(ProgramManager &rProgramManager, GameInfo &rGameInfo)
 		else if(rGameInfo.turn == Turns::SetPos)
 		{
 			rProgramManager.setBallCoords(rProgramManager.getMousePos(), rGameInfo.wrongBall);
-			rProgramManager.work(textToDraw(), PointF(0, 0), Color::LightGreen, FALSE);
+			rProgramManager.work(textToDraw(), PointF(0, 0), static_cast<ARGB>(Color::LightGreen), FALSE);
 			
 			if(Key(VK_END)) 
 			{
@@ -159,7 +159,7 @@ VOID Player::turn(ProgramManager &rProgramManager, GameInfo &rGameInfo)
 			}		
 		}
 	}
-	else rProgramManager.work(textToDraw(), PointF(static_cast<REAL>(rProgramManager.getMemDCWindow().width - 6 * sizestenaRIGHT), 0), Color::Red, rGameInfo.drawCue);
+	else rProgramManager.work(textToDraw(), PointF(static_cast<REAL>(rProgramManager.getMemDCWindow().width - 6 * sizestenaRIGHT), 0), static_cast<ARGB>(Color::Red), rGameInfo.drawCue);
 }
 
 VOID Player::restart()

@@ -55,7 +55,7 @@ public:
 
 	inline REAL toDegrees() const { return static_cast<REAL>(k_ * 180 / M_PI); }
 
-    VOID draw(double, double, Graphics*, Pen&, CONST Color& = Color::Yellow) const;
+    VOID draw(double, double, Graphics*, Pen&, CONST Color& =  static_cast<ARGB>(Color::Yellow)) const;
 
     
     };

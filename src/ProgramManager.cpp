@@ -15,16 +15,16 @@ ProgramManager::ProgramManager(HWND hWnd, HINSTANCE hInstance) :
 	//title_(),
 	//wndClassName_(),
 	pGraphics_(nullptr),
-	pPen_(new Pen(Color::Yellow, 10)),
+	pPen_(new Pen(static_cast<ARGB>(Color::Yellow, 10))),
 	pFont_(new Font(L"Times New Roman", 25, 0, Unit::UnitPoint)),
-	pBrush_(new SolidBrush(Color::Black)),
+	pBrush_(new SolidBrush(static_cast<ARGB>(Color::Black))),
 	config_(),
 	pTextures_(new Textures()),
 	exit_(Rect(static_cast<INT>(sizeX), 0, 100, 100), TEXTS[Menu::ButtonTextsId::EXIT], TRUE),
 	window_(static_cast<SIZE_T>(sizeX), static_cast<SIZE_T>(sizeY)),
 	anotherPlayerText_(L" ŒÃœ” “≈–: 0"),
-	anotherPlayerPoint_(PointF(sizeX, 0)),
-	anotherPlayerColor_(Color::Red)
+	anotherPlayerPoint_(PointF(static_cast<REAL>(sizeX), 0)),
+	anotherPlayerColor_(static_cast<ARGB>(Color::Red))
 {
 	LoadStringW(hInstance_, IDS_APP_TITLE, title_, MAX_LOADSTRING);
 	LoadStringW(hInstance_, IDC_BILLIARDS, wndClassName_, MAX_LOADSTRING);
@@ -86,6 +86,7 @@ VOID ProgramManager::drawTable() const
 
 VOID ProgramManager::initDubbleBuffering(HDC hDC)
 {
+	hDC;
 	//setMemDC(CreateCompatibleDC(hDC));
 	//setMemHbm(CreateCompatibleBitmap(hDC, window_.width, window_.height));
 	//setOldHbm(static_cast<HBITMAP>(SelectObject(memDC_, memHbm_)));	
@@ -119,7 +120,7 @@ VOID ProgramManager::work(CONST wstring &rWext, CONST PointF &rPointf /* = Point
     HDC hDC = GetDC(hWnd_);
 
 	initDubbleBuffering(hDC); 
-	loadBackgroundIntoCanvas(hDC);
+	loadBackgroundIntoCanvas();
 
 	if(Menu::isActive())
 	{

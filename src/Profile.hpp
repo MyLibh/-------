@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Variables.hpp"
 
 class Profile : private Uncopyable

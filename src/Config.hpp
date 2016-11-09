@@ -28,7 +28,7 @@ public:
 	inline BOOL exist(string name) const { return properties_.find(name) != properties_.end(); }
 
 	inline BOOL    getBool(string name)    const { return (properties_[name] == "true")? TRUE : FALSE; }
-	inline INT     getInt(string name)     const { return stoul(properties_[name]); }
+	inline INT     getInt(string name)     const { return static_cast<INT>(stoul(properties_[name])); }
 	inline string  getString(string name)  const { return properties_[name]; }
 	inline wstring getWString(string name) const { wstring_convert<codecvt_utf8_utf16<WCHAR>> converter; return wstring(converter.from_bytes(properties_[name])); }
 };
