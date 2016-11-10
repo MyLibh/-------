@@ -26,7 +26,7 @@ Balls::Balls() :
 	points_[Ball::fourteenth] = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 3 * cor3 * RShari, sizestenaUP + sizeYpol / 2 + 3 * RShari);
 	points_[Ball::fifteenth]  = vec(sizestenaLEFT + sizeXpol * 3 / 4 + 2 * cor3 * RShari, sizestenaUP + sizeYpol / 2 - 2 * RShari);
 
-	memset(&speeds_,0, sizeof(speeds_));
+	memset(&speeds_, 0, sizeof(speeds_));
 	memset(&scored_, FALSE, sizeof(scored_));
 }
 

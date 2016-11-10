@@ -53,7 +53,9 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
 	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);
     
-	programManager = new ProgramManager(hWnd, hInstance);
+    ProgramManager TheMeowManeger(hWnd, hInstance);
+	programManager = &TheMeowManeger;
+
     //DialogBox(hInstance, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
 	Config config;
 
@@ -77,13 +79,10 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
 
 		if(Key(27)) 
         {
-            programManager->~ProgramManager(); 
-
             return EXITS::ESCAPE;
         }
     }
 
-    delete(programManager);
 	GdiplusShutdown(token);	
 	
 #ifdef __DEBUG 
@@ -98,8 +97,6 @@ ATOM MyRegisterClass(HINSTANCE hInstance, WCHAR wndClassName[])
     WNDCLASSEXW wcex = { sizeof(WNDCLASSEX) };
 	wcex.style          = CS_HREDRAW | CS_VREDRAW;
     wcex.lpfnWndProc    = WndProc;
-    wcex.cbClsExtra     = 0;
-    wcex.cbWndExtra     = 0;
     wcex.hInstance      = hInstance;
     wcex.hIcon          = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_BILLIARDS));
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
@@ -111,12 +108,12 @@ ATOM MyRegisterClass(HINSTANCE hInstance, WCHAR wndClassName[])
     return RegisterClassExW(&wcex);
 }
 
-HWND InitInstance(HINSTANCE hInstance, INT nCmdShow, WCHAR title[], WCHAR wndClassName[])
+HWND InitInstance(HINSTANCE hInstance, INT /*nCmdShow*/, WCHAR title[], WCHAR wndClassName[])
 {
-	nCmdShow;
+    //(void) nCmdShow;
 
 	HWND hWnd = CreateWindowW(wndClassName, title, WS_OVERLAPPEDWINDOW,
-      0, 0, static_cast<INT>(sizeX), static_cast<INT>(sizeY) + 100, nullptr, nullptr, hInstance, nullptr);
+                              0, 0, static_cast<INT>(sizeX), static_cast<INT>(sizeY) + 100, nullptr, nullptr, hInstance, nullptr);
 
     return hWnd;
 }

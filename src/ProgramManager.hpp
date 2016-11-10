@@ -44,11 +44,11 @@ private:
 	//ProgramManager(CONST ProgramManager&);
 	//ProgramManager& operator=(CONST ProgramManager&);
 
-	inline string HWND2STRING() const { char text[32] = ""; ; return string(_itoa(reinterpret_cast<INT>(hWnd_), text, 10)); }
-	inline string HINSTANCE2STRING() const { char text[32] = ""; ; return string(_itoa(reinterpret_cast<INT>(hInstance_), text, 10)); }
+	//inline string HWND2STRING() const { char text[32] = ""; ; return string(_itoa(reinterpret_cast<INT>(hWnd_), text, 10)); }
+	//inline string HINSTANCE2STRING() const { char text[32] = ""; ; return string(_itoa(reinterpret_cast<INT>(hInstance_), text, 10)); }
 
 	inline CONST VOID loadBackgroundIntoCanvas() const { pGraphics_->DrawImage(&pTextures_->getBackgroundTexture(), RectF(0, 0, static_cast<REAL>(window_.width), static_cast<REAL>(window_.height))); }
-	inline CONST VOID loadBufferIntoCanvas(HDC canvas)     const { BitBlt(canvas, 0, 0, window_.width, window_.height, memDC_, 0, 0, SRCCOPY); }
+	inline CONST VOID loadBufferIntoCanvas(HDC canvas) const { BitBlt(canvas, 0, 0, window_.width, window_.height, memDC_, 0, 0, SRCCOPY); }
 
 	VOID initDubbleBuffering(HDC);
 	VOID clearDubbleBuffering();
