@@ -39,7 +39,7 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
 	ULONG_PTR token = NULL;
 	Status st = GdiplusStartup(&token, &gfd, NULL);
 	if (st != NULL) return EXITS::GDIPINIT_FAILED;
-
+    
 	WCHAR title[MAX_LOADSTRING] = L"";
 	WCHAR wndClassName[MAX_LOADSTRING] = L"";
 
@@ -52,9 +52,9 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
 	if (!hWnd) return EXITS::WNDCREATE_FAILED;
 	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);
-
+    
 	programManager = new ProgramManager(hWnd, hInstance);
-
+    //DialogBox(hInstance, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
 	Config config;
 
 	HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_BILLIARDS));
@@ -75,14 +75,19 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
 		player1.turn(*programManager, gameInfo);
 		player2.turn(*programManager, gameInfo);
 
-		if(Key(27)) return EXITS::ESCAPE;
+		if(Key(27)) 
+        {
+            programManager->~ProgramManager(); 
+
+            return EXITS::ESCAPE;
+        }
     }
 
+    delete(programManager);
 	GdiplusShutdown(token);	
-	delete(programManager);
-
+	
 #ifdef __DEBUG 
-	PAUSE
+	$b PAUSE
 #endif
 
     return static_cast<INT>(msg.wParam);
@@ -130,7 +135,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             switch (wmId)
             {
             case IDM_ABOUT:
-				cout << DialogBox(programManager->getHINSTANCE(), MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About) << endl;
+				DialogBox(programManager->getHINSTANCE(), MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
                 break;
 			case IDM_RESTART:
 				gameInfo.restart();
@@ -142,7 +147,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				//programManager->save();
 				break;
             case IDM_EXIT:
-				//programManager->~ProgramManager();
                 DestroyWindow(hWnd);
                 break;
             default:
@@ -170,7 +174,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         break;
     case WM_DESTROY:
-		//programManager->~ProgramManager();
         PostQuitMessage(0);
         break;
     default:

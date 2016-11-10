@@ -34,6 +34,7 @@ private:
 
 	VOID repulsion();
 	VOID repulsionFrom();
+    BOOL changeIf(INT) const;
 
 public:
 	enum Ball

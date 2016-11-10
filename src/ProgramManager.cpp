@@ -41,6 +41,8 @@ ProgramManager::ProgramManager(HWND hWnd, HINSTANCE hInstance) :
 
 ProgramManager::~ProgramManager()
 {
+    $r cout << __FUNCTION__ << endl; 
+
 	delete(pGraphics_); 
 	delete(pPen_);
 	delete(pFont_);

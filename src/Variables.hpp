@@ -1,5 +1,6 @@
 #pragma once
 
+/*
 //====================================================================================================================
 
 #pragma warning(push)   
@@ -7,9 +8,7 @@
 #pragma warning(disable:4668)
 #pragma warning(disable:4820)
 
-
 #include <windows.h>
-#include <winnt.h>
 
 #pragma warning(pop) 
 
@@ -88,24 +87,39 @@
 #pragma warning(pop) 
 
 //====================================================================================================================
+*/
+
+#pragma warning(push, 4)
+#include <windows.h>
+
+#define _USE_MATH_DEFINES
+#include <limits>
+#include <cmath>
 
 #include <fstream>
 #include <Istream>
 #include <iostream>
 #include <sstream>
 #include <vector>
+#include <string>
 #include <map>
 
 #include <iterator>
 #include <locale>
 #include <codecvt>
 #include <ctime>
+#include <io.h>
+
+#include <gdiplus.h>
 
 #include <WinSock.h>
 //#include <WS2tcpip.h>
 
-#include "resource.h"
 #include "UPOINT.hpp"
+
+#pragma warning(pop)
+
+#include "resource.h"
 #include "Uncopyable.hpp"
 
 using namespace std;

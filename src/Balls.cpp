@@ -171,6 +171,11 @@ VOID Balls::restart()
 	memset(&scored_, FALSE, sizeof(scored_));
 }
 
+BOOL Balls::changeIf(INT) const
+{
+    return TRUE;
+}
+
 VOID Balls::move()
 {
 	int nat = 0;
