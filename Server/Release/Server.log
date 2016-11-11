@@ -1,4 +1,4 @@
-﻿Построение начато 08.11.2016 22:31:53.
+﻿Построение начато 11.11.2016 19:06:33.
      1>Проект "C:\Users\Alex Golden\Documents\GitHub\-------\Server\Server.vcxproj" в узле 2 (целевые объекты Build).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Server.cpp
@@ -12,4 +12,4 @@
 
 Построение успешно завершено.
 
-Затраченное время: 00:00:01.41
+Затраченное время: 00:00:02.42

@@ -32,7 +32,7 @@ CONST wstring WAYS[NUMBER_OF_TEXTURES] =
 	L"../src/Images/Menu.jpg"
 };
 
-class Textures final  : private Uncopyable
+class Textures : private Uncopyable
 {
 private:
 	Image *pBackground_;

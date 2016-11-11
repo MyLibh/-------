@@ -35,9 +35,9 @@ Balls::~Balls()
 
 BOOL Balls::stopped() const
 {
-	for (size_t i = 0; i < NUMBER_OF_BALLS; i++) if (speeds_[i].getL() != 0) return false;
+	for (size_t i = 0; i < NUMBER_OF_BALLS; i++) if (speeds_[i].getL() != 0) return FALSE;
 
-	return true;
+	return TRUE;
 }
 
 VOID Balls::repulsion()

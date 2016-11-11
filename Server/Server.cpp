@@ -57,6 +57,9 @@ int ClientCount = 0;
 #define		MAX_CONN	10
 #define		MSG_LEN		128
 
+//Сделать функции, украсить код
+//Сделать проверку(я два раза подключился - сервер крашнулся), отключение
+
 int main()
 {
 	cout << "Starting server..." << endl;	
@@ -97,13 +100,13 @@ int main()
 
 			if (FAILED(client1 = accept(server, (sockaddr*)&player1, &new_len)))
 			{
-				printf ("\n Accept failed on %d", i + 1);
+				cout << i + 1 << endl;
 				return E_FAIL;
 			}
 			else 
 			{
-				printf ("New Client... Number %d\n", i + 1);
-				printf ("Client IP %s, Client Port %d\n", inet_ntoa((in_addr)player1.sin_addr), ntohs(player1.sin_port));
+				cout << "New Client: " << i + 1 << endl;
+				cout << "Client IP: " << inet_ntoa((in_addr)player2.sin_addr) << ", Client Port: " << ntohs(player2.sin_port) << endl;
 
 				char buffer[512] = "";	
 				if (FAILED(recv(client1, buffer, 512, 0))) return E_FAIL;
@@ -121,13 +124,13 @@ int main()
 
 			if (FAILED(client2 = accept(server, (sockaddr*)&player2, &new_len)))
 			{
-				printf ("\n Accept failed on %d", i + 1);
+				cout << i + 1 << endl;
 				return E_FAIL;
 			}
 			else 
 			{
-				printf ("New Client... Number %d\n", i + 1);
-				printf ("Client IP %s, Client Port %d\n", inet_ntoa((in_addr)player2.sin_addr), ntohs(player2.sin_port));
+				cout << "New Client: " << i + 1 << endl;
+				cout << "Client IP: " << inet_ntoa((in_addr)player2.sin_addr) << ", Client Port: " << ntohs(player2.sin_port) << endl;
 
 				char buffer[512] = "";	
 				if (FAILED(recv(client2, buffer, 512, 0))) return E_FAIL;
@@ -158,7 +161,7 @@ int main()
 
 			closesocket(client1);
 			closesocket(client2);
-			cout << "closed" << endl;
+			cout << "Sockets closed" << endl << endl << endl;
 		}	
 	}
 

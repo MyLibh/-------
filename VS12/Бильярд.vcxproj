@@ -83,10 +83,13 @@
     <ClInclude Include="..\src\Config.hpp" />
     <ClInclude Include="..\src\Cue.hpp" />
     <ClInclude Include="..\src\Exceptions.hpp" />
+    <ClInclude Include="..\src\Graphics.hpp" />
     <ClInclude Include="..\src\Keyboard.hpp" />
     <ClInclude Include="..\src\Menu.hpp" />
+    <ClInclude Include="..\src\Models.hpp" />
     <ClInclude Include="..\src\Mouse.hpp" />
     <ClInclude Include="..\src\Network.hpp" />
+    <ClInclude Include="..\src\Physics.hpp" />
     <ClInclude Include="..\src\Player.hpp" />
     <ClInclude Include="..\src\Profile.hpp" />
     <ClInclude Include="..\src\ProgramManager.hpp" />
@@ -103,10 +106,13 @@
     <ClCompile Include="..\src\Config.cpp" />
     <ClCompile Include="..\src\Cue.cpp" />
     <ClCompile Include="..\src\Exceptions.cpp" />
+    <ClCompile Include="..\src\Graphics.cpp" />
     <ClCompile Include="..\src\Keyboard.cpp" />
     <ClCompile Include="..\src\Menu.cpp" />
+    <ClCompile Include="..\src\Models.cpp" />
     <ClCompile Include="..\src\Mouse.cpp" />
     <ClCompile Include="..\src\Network.cpp" />
+    <ClCompile Include="..\src\Physics.cpp" />
     <ClCompile Include="..\src\Player.cpp" />
     <ClCompile Include="..\src\ProgramManager.cpp" />
     <ClCompile Include="..\src\main.cpp" />

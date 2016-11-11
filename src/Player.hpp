@@ -106,5 +106,5 @@ public:
 	inline wstring textToDraw() const { return wstring(name_ + L": " + to_wstring(score_)); }
 };
 
-extern Player player1;
-extern Player player2;
+extern Player gPlayer1;
+extern Player gPlayer2;

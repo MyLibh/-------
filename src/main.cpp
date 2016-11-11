@@ -1,6 +1,8 @@
 #include "ProgramManager.hpp"
 #include "Player.hpp"
 
+#include "Models.hpp"
+
 #define __DEBUG
 
 #pragma comment(lib, "gdiplus.lib")
@@ -8,10 +10,10 @@
 
 using namespace Gdiplus;    
 
-ProgramManager *programManager = nullptr;
-Player player1(TRUE, L"Алексий");
-Player player2(FALSE);
-GameInfo gameInfo;
+ProgramManager *gpProgramManager = nullptr;
+Player gPlayer1(TRUE, L"Алексий");
+Player gPlayer2(FALSE);
+GameInfo gGameInfo;
 
 ATOM                MyRegisterClass(HINSTANCE, WCHAR[]);
 HWND                InitInstance(HINSTANCE, INT, WCHAR[], WCHAR[]);
@@ -53,18 +55,109 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
 	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);
     
-    ProgramManager TheMeowManeger(hWnd, hInstance);
-	programManager = &TheMeowManeger;
+	gpProgramManager = new ProgramManager(hWnd, hInstance);
 
     //DialogBox(hInstance, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
-	Config config;
+	//Config config;
+
+	//Billiards::models::Models *model = new Billiards::models::Models(hWnd, gpProgramManager->getMemDCWindow());
+	//POINT point = {100, 100};
+	//model->doModels(point); PAUSE
+
+	//=======================================================================================
+	
+	SOCKET server;
+	WSADATA wsData;
+
+	if (FAILED(WSAStartup(MAKEWORD(2, 2), &wsData))) return E_FAIL;
+	
+	if ((server = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP)) == INVALID_SOCKET) return E_FAIL;
+
+	sockaddr_in s_addrs;
+	ZeroMemory(&s_addrs, sizeof(s_addrs));
+
+	s_addrs.sin_family = AF_INET;
+	s_addrs.sin_addr.S_un.S_addr = inet_addr("127.0.0.9"); 
+	s_addrs.sin_port = htons(1234);
+
+	while (connect(server, reinterpret_cast<sockaddr*>(&s_addrs), sizeof(s_addrs)) == SOCKET_ERROR);
+   
+	char buff[512] = "HELLO WORLD";
+	if (send(server, buff, 512, 0) == SOCKET_ERROR)  return E_FAIL;
+	
+	if (FAILED(recv(server, buff, 512, 0))) return E_FAIL;
+
+	CONST WORD LENGTH = 128;
+	char ip[LENGTH] = "";
+	char port[LENGTH / 4] = "";
+	char num[16] = "";
+
+	if (FAILED(recv(server, ip, LENGTH, 0))) return E_FAIL;
+	if (FAILED(recv(server, port, LENGTH / 4, 0))) return E_FAIL;
+	if (FAILED(recv(server, num, 16, 0))) return E_FAIL;
+
+	closesocket(server);
+
+	//==================================
+	cout << ip << ":" << port;
+	char buff2[512] = "HELLO WORLD2";
+	if (atoi(num) == 1) 
+	{
+		cout << "AMA HEAR";
+		SOCKET player2socs;
+		if ((player2socs = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP)) == INVALID_SOCKET) return -1;
+
+		sockaddr_in s_addrp2s;
+		ZeroMemory(&s_addrp2s, sizeof(s_addrp2s));
+
+		s_addrp2s.sin_family = AF_INET;
+		s_addrp2s.sin_addr.S_un.S_addr = inet_addr(ip); 
+		s_addrp2s.sin_port = htons(static_cast<u_short>(atoi(port)));
+	
+		while (connect(player2socs, reinterpret_cast<sockaddr*>(&s_addrp2s), sizeof(s_addrp2s)) == SOCKET_ERROR);
+		cout <<"!";
+		if (send(player2socs, buff2, 512, 0) == SOCKET_ERROR)  return -3;
+		closesocket(player2socs);
+	}
+	else if(atoi(num) == 2) 
+	{
+		cout << "AMA NOT HEAR";
+		SOCKET player2socr;
+		if ((player2socr = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP)) == INVALID_SOCKET) return -4;
+
+		sockaddr_in s_addrp2r;
+		ZeroMemory(&s_addrp2r, sizeof(s_addrp2r));
+
+		s_addrp2r.sin_family			= PF_INET;
+		s_addrp2r.sin_addr.S_un.S_addr	= htonl(INADDR_ANY);																
+		s_addrp2r.sin_port				= htons(static_cast<u_short>(atoi(port)));
+
+		if (bind(player2socr, reinterpret_cast<sockaddr*>(&s_addrp2r), sizeof(s_addrp2r)) == SOCKET_ERROR) return -5;
+		if (FAILED(listen(player2socr, SOMAXCONN))) return -6;
+
+		SOCKET player2socs;
+		sockaddr_in player2socsaddr;
+
+		ZeroMemory(&player2socsaddr, sizeof(player2socsaddr));
+		int new_len = sizeof(player2socsaddr);
+
+		if (FAILED(player2socs = accept(player2socr, (sockaddr*)&player2socsaddr, &new_len))) return -7;
+		cout <<"!";
+		if (FAILED(recv(player2socs, buff2, 512, 0))) return -8;
+
+		closesocket(player2socs);
+		closesocket(player2socr);
+		cout << buff2;		
+	}
+	
+	//==============================================================================================
 
 	HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_BILLIARDS));
 	MSG msg = { };
 
 	srand(static_cast<unsigned>(time(NULL)));
 
-	gameInfo.turn = Turns::Blow;
+	gGameInfo.turn = Turns::Blow;
     while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) 
     {
 		
@@ -74,19 +167,17 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
             DispatchMessage(&msg);
         }		
 
-		player1.turn(*programManager, gameInfo);
-		player2.turn(*programManager, gameInfo);
+		gPlayer1.turn(*gpProgramManager, gGameInfo);
+		gPlayer2.turn(*gpProgramManager, gGameInfo);
 
-		if(Key(27)) 
-        {
-            return EXITS::ESCAPE;
-        }
+		if(Key(27)) break;
     }
-
+	//delete(model);
+	delete(gpProgramManager);
 	GdiplusShutdown(token);	
 	
 #ifdef __DEBUG 
-	$b PAUSE
+	//$b PAUSE
 #endif
 
     return static_cast<INT>(msg.wParam);
@@ -132,13 +223,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             switch (wmId)
             {
             case IDM_ABOUT:
-				DialogBox(programManager->getHINSTANCE(), MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
+				DialogBox(gpProgramManager->getHINSTANCE(), MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
                 break;
 			case IDM_RESTART:
-				gameInfo.restart();
-				programManager->restart();
-				player1.restart();
-				player2.restart();
+				gGameInfo.restart();
+				gpProgramManager->restart();
+				gPlayer1.restart();
+				gPlayer2.restart();
 				break;
 			case IDM_SAVE:
 				//programManager->save();
@@ -152,7 +243,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         break;
 	case WM_MOUSEMOVE:      
-		programManager->setMouse(lParam, static_cast<INT16>(wParam)); 
+		gpProgramManager->setMouse(lParam, static_cast<INT16>(wParam)); 
 		break;
 	case WM_SIZE:
 		{
@@ -166,9 +257,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		//InvalidateRect(hWnd, NULL, false);
 		break;
     case WM_PAINT:
-		{
-			programManager->onPAINT(); 
-        }
+			gpProgramManager->onPAINT();     
         break;
     case WM_DESTROY:
         PostQuitMessage(0);
