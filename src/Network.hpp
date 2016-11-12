@@ -1,9 +1,26 @@
+
 #pragma once 
 
 #include "Variables.hpp"
 
-class Network
+class Network : private Uncopyable
 {
+private:
+	SOCKET server_;
+	SOCKET client_;
+	SOCKET opponent_;
+	sockaddr_in serverAddr_;
+	BOOL isInit_;
+
+protected:
+	BOOL initServerConnection();
+	BOOL connectServer();
+	BOOL getOpponentInfo();
+	BOOL sentInfoToOpponent();
+
+public:
+	explicit Network();
+	~Network();
 };
 
 /*
