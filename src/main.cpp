@@ -2,6 +2,7 @@
 #include "Player.hpp"
 
 #include "Models.hpp"
+#include "Network.hpp"
 
 #define __DEBUG
 
@@ -151,6 +152,10 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
 	}
 	*/
 	//==============================================================================================
+
+	//Network net;
+	//net.initServerConnection();
+	//while(!net.connectServer());
 
 	HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_BILLIARDS));
 	MSG msg = { };

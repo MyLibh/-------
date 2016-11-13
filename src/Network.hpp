@@ -12,7 +12,7 @@ private:
 	sockaddr_in serverAddr_;
 	BOOL isInit_;
 
-protected:
+public:
 	BOOL initServerConnection();
 	BOOL connectServer();
 	BOOL getOpponentInfo();

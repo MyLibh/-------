@@ -15,12 +15,10 @@ Network::~Network()
 BOOL Network::initServerConnection()
 {
 	if ((server_ = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP)) == INVALID_SOCKET) return E_FAIL;
-
-	
 	ZeroMemory(&serverAddr_, sizeof(serverAddr_));
 
 	serverAddr_.sin_family = AF_INET;
-	serverAddr_.sin_addr.S_un.S_addr = inet_addr("127.0.0.0"); 
+	serverAddr_.sin_addr.S_un.S_addr = inet_addr("127.0.0.1"); 
 	serverAddr_.sin_port = htons(1234);
 
 	return TRUE;
@@ -43,6 +41,8 @@ BOOL Network::connectServer()
 	if (FAILED(recv(server_, ip, LENGTH, 0))) return E_FAIL;
 	if (FAILED(recv(server_, port, LENGTH / 4, 0))) return E_FAIL;
 	if (FAILED(recv(server_, num, 16, 0))) return E_FAIL;
+
+	cout << ip << ":" << port << endl;
 
 	closesocket(server_);
 	return TRUE;
