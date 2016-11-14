@@ -66,7 +66,7 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
 	//model->doModels(point); PAUSE
 
 	//=======================================================================================
-	/*
+	
 	SOCKET server;
 	WSADATA wsData;
 
@@ -150,7 +150,7 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
 		closesocket(player2socr);
 		cout << buff2;		
 	}
-	*/
+	
 	//==============================================================================================
 
 	//Network net;
