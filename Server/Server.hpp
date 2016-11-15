@@ -1,7 +1,7 @@
 #pragma once
 
-#pragma warning(push)
-//#pragma warning(Level.4)
+#pragma warning(push, 4)
+
 #include <WinSock2.h>
 #include <iostream>
 #include <WS2tcpip.h>
