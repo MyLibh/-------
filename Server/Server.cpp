@@ -7,7 +7,17 @@ Network::Server::Server() :
 	serverBind_(),
 	started_(FALSE),
 	closed_(FALSE)
-{}
+{
+	memset(client_, 0, sizeof(client_));
+	memset(sockaddr_, 0, sizeof(sockaddr_));
+
+	WSADATA wsaData = {};
+	if (FAILED(WSAStartup(MAKEWORD(2, 2), &wsaData))) 
+	{
+		std::cout << "Cannot start up the WSA\n";
+		PostQuitMessage(WSAGetLastError());
+	}
+}
 
 Network::Server::~Server() { if(!closed_) close(); }
 
@@ -16,41 +26,34 @@ BOOL Network::Server::start()
 	if(started_) 
 	{
 		throw std::string("Server has already started. Do not start it again\n");
-		return FALSE;
+		//return FALSE;
 	}
 
 	if(closed_) closed_ = !closed_;
-
-	WSADATA wsaData = {};
-	if (FAILED(WSAStartup(MAKEWORD(2, 2), &wsaData))) 
-	{
-		throw WSAGetLastError();
-		return FALSE;
-	}
 
 	std::cout << "Starting server...\n";
 
 	if ((server_ = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP)) == INVALID_SOCKET) 
 	{
 		throw WSAGetLastError();
-		return FALSE;
+		//return FALSE;
 	}
 
 	ZeroMemory(&serverBind_, sizeof(serverBind_));
 	serverBind_.sin_family			 = PF_INET;
 	serverBind_.sin_addr.S_un.S_addr = htonl(INADDR_ANY);																
-	serverBind_.sin_port			 = htons(1234);				
+	serverBind_.sin_port			 = htons(STD_PORT);				
 
 	if (bind(server_, reinterpret_cast<sockaddr*>(&serverBind_), sizeof(serverBind_)) == SOCKET_ERROR) 
 	{
 		throw WSAGetLastError();
-		return FALSE;
+		//return FALSE;
 	}
 
 	if (FAILED(listen(server_, SOMAXCONN))) 
 	{
 		throw WSAGetLastError();
-		return FALSE;
+		//return FALSE;
 	}
 
 	started_ = TRUE;
@@ -65,7 +68,7 @@ BOOL Network::Server::work()
 	if(!started_ || closed_)
 	{
 		throw std::string("You did not start the server\n");
-		return FALSE;
+		//return FALSE;
 	}
 
 	for(USHORT i = 0; !GetAsyncKeyState(VK_ESCAPE); i++)
@@ -93,21 +96,19 @@ BOOL Network::Server::close()
 	if(!started_)
 	{
 		throw std::string("Do not close server if you did not start it!\n");
-		return FALSE;
+		//return FALSE;
 	}
 
 	if(closed_) 
 	{
 		throw std::string("Server has already closed. Do not close it again\n");
-		return FALSE;
+		//return FALSE;
 	}
 
 	std::cout << "Closing server...\n";
 
 	closesocket(server_);
 
-	//for(WORD i = 0; i < PAIR; i++) closesocket(client_[i]);
-	
 	closed_  = TRUE;
 	started_ = FALSE;
 	
@@ -128,7 +129,7 @@ BOOL Network::Server::addNewClient(USHORT i)
 	if (FAILED(client_[tmp] = accept(server_, (sockaddr*)&sockaddr_[i], &newLen)))
 	{
 		throw std::string("Failed to connect " + std::to_string(i + 1) + std::to_string(WSAGetLastError()));
-		return FALSE;
+		//return FALSE;
 	}
 	else 
 	{
@@ -139,7 +140,7 @@ BOOL Network::Server::addNewClient(USHORT i)
 		if (FAILED(recv(client_[tmp], buffer, MAX_BUFFER_LENGTH, 0))) 
 		{
 			throw WSAGetLastError();
-			return FALSE;
+			//return FALSE;
 		}
 		
 		//cout << buffer << endl;
@@ -147,7 +148,7 @@ BOOL Network::Server::addNewClient(USHORT i)
 		if (send(client_[tmp], "CONNECTED, PLEASE WAIT", strlen("CONNECTED, PLEASE WAIT"), 0) == SOCKET_ERROR) 
 		{
 			throw WSAGetLastError();
-			return FALSE;
+			//return FALSE;
 		}
 	}
 	return TRUE;
@@ -157,13 +158,13 @@ BOOL Network::Server::createPair()
 {
 	std::cout << "Creating a pair...\n";
 
-
 	try
 	{
 		std::string buffer("");
 
-		sendPairInfo(buffer, 0, true);
-		sendPairInfo(buffer, 0, false);
+		BOOL first = rand() %1;
+		sendPairInfo(buffer, 0, first);
+		sendPairInfo(buffer, 0, !first);
 	}
 	catch(CONST std::string &error) { throw error; }
 
@@ -184,19 +185,19 @@ BOOL Network::Server::sendPairInfo(std::string &buffer, USHORT i, BOOL first)
 	if (FAILED(send(client_[i], const_cast<char*>(buffer.c_str()), buffer.length(), 0))) 
 	{
 		throw std::string("Failed to send 'ip': " + std::to_string(WSAGetLastError()) + "\n");
-		return FALSE;
+		//return FALSE;
 	}
 	buffer = std::to_string(ntohs(sockaddr_[tmp].sin_port));
 	if (FAILED(send(client_[i], const_cast<char*>(buffer.c_str()), buffer.length(), 0))) 
 	{
 		throw std::string("Failed to send 'port': " + std::to_string(WSAGetLastError()) + "\n");
-		return FALSE;
+		//return FALSE;
 	}
 	buffer = std::to_string((first)? 1 : 2);
 	if (FAILED(send(client_[i], const_cast<char*>(buffer.c_str()), buffer.length(), 0))) 
 	{
 		throw std::string("Failed to send 'first': " + std::to_string(WSAGetLastError()) + "\n");
-		return FALSE;
+		//return FALSE;
 	}
 
 	return TRUE;

@@ -10,10 +10,10 @@ private:
 	SOCKET client_;
 	SOCKET opponent_;
 	sockaddr_in serverAddr_;
-	BOOL isInit_;
 
-public:
 	BOOL initServerConnection();
+	
+public:
 	BOOL connectServer();
 	BOOL getOpponentInfo();
 	BOOL sentInfoToOpponent();

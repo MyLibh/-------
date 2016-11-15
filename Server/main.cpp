@@ -1,8 +1,12 @@
 #include "Server.hpp"
 
+typedef unsigned UNSIGNED;
+
 INT main()
 {
 	Network::Server server;
+
+	srand(static_cast<UNSIGNED>(time(NULL)));
 
 	try
 	{
@@ -12,7 +16,7 @@ INT main()
 
 		server.close();
 	}
-	catch(INT error) { std::cout << "Error: " << error << std::endl; }
+	catch(INT error) { std::cout << "WSAError: " << error << std::endl; }
 	catch(CONST std::string &error) { std::cout << error; }
 
 	system("pause");

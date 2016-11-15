@@ -1,13 +1,22 @@
+#pragma once
+
+#pragma warning(push)
+//#pragma warning(Level.4)
 #include <WinSock2.h>
 #include <iostream>
 #include <WS2tcpip.h>
 #include <string>
+#include <ctime>
+
+#pragma warning(pop)
 
 #ifndef __SERVER_HPP_INCLUDED__
 #define __SERVER_HPP_INCLUDED__
 
 namespace Network
 {
+	CONST USHORT STD_PORT = 1234;
+
 	class Server final
 	{
 	private:
@@ -24,7 +33,7 @@ namespace Network
 		BOOL        closed_;
 
 		Server(CONST Server&);
-		Server operator=(CONST Server&);
+		Server& operator=(CONST Server&);
 
 		BOOL addNewClient(USHORT);
 		BOOL createPair();
