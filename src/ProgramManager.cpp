@@ -24,7 +24,9 @@ ProgramManager::ProgramManager(HWND hWnd, HINSTANCE hInstance) :
 	window_(static_cast<SIZE_T>(sizeX), static_cast<SIZE_T>(sizeY)),
 	anotherPlayerText_(L"йнлосйреп: 0"),
 	anotherPlayerPoint_(PointF(static_cast<REAL>(sizeX), 0)),
-	anotherPlayerColor_(static_cast<ARGB>(Color::Red))
+	anotherPlayerColor_(static_cast<ARGB>(Color::Red)),
+	xx(1),
+	yy(1)
 {
 	LoadStringW(hInstance_, IDS_APP_TITLE, title_, MAX_LOADSTRING);
 	LoadStringW(hInstance_, IDC_BILLIARDS, wndClassName_, MAX_LOADSTRING);

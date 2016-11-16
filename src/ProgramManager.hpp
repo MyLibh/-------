@@ -48,7 +48,20 @@ private:
 	//inline string HINSTANCE2STRING() const { char text[32] = ""; ; return string(_itoa(reinterpret_cast<INT>(hInstance_), text, 10)); }
 
 	inline CONST VOID loadBackgroundIntoCanvas() const { pGraphics_->DrawImage(&pTextures_->getBackgroundTexture(), RectF(0, 0, static_cast<REAL>(window_.width), static_cast<REAL>(window_.height))); }
-	inline CONST VOID loadBufferIntoCanvas(HDC canvas) const { BitBlt(canvas, 0, 0, window_.width, window_.height, memDC_, 0, 0, SRCCOPY); }
+	inline CONST VOID loadBufferIntoCanvas(HDC canvas) const 
+	{ 
+		if(xx == 0) xx = 1;
+		if(yy == 0) yy = 1;
+		HDC hDC = CreateCompatibleDC(canvas);
+		HBITMAP tmp = CreateCompatibleBitmap(canvas, GetDeviceCaps(canvas, HORZRES) / xx, GetDeviceCaps(canvas, VERTRES) / yy);
+		SelectObject(hDC, tmp);
+
+		StretchBlt(hDC, 0, 0, window_.width / xx, window_.height / yy, memDC_, 0, 0, window_.width, window_.height, SRCCOPY); 
+		BitBlt(canvas, 0, 0, window_.width, window_.height, hDC, 0, 0, SRCCOPY); 
+
+		DeleteObject(hDC);
+		DeleteObject(tmp);
+	}
 
 	VOID initDubbleBuffering(HDC);
 	VOID clearDubbleBuffering();
@@ -65,6 +78,7 @@ private:
 	inline MenuActions menuProcedure(POINT mouse, INT16 button) { return Menu::procedure(mouse, button); }
 
 public:
+	mutable int xx, yy;
 	explicit ProgramManager(HWND, HINSTANCE);
 	~ProgramManager();
 	
@@ -78,7 +92,7 @@ public:
 	inline HINSTANCE getHINSTANCE()   const { return hInstance_; }
 	inline Color     getPenColor()    const { Color *retColor = NULL; pPen_->GetColor(retColor); return *retColor; }
 	inline REAL      getPenWidth()    const { return pPen_->GetWidth(); }
-	inline UPOINT    getMemDCWindow() const { return window_; }
+	inline CONST UPOINT &getMemDCWindow() const { return window_; }
 	inline POINT     getMousePos()    const { return Mouse::getCoords(); }
 	//Стандартные функции для шрифта
 	inline CONST WCHAR *getTitle()        const { return title_; }

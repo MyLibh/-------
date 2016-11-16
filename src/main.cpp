@@ -15,6 +15,7 @@ ProgramManager *gpProgramManager = nullptr;
 Player gPlayer1(TRUE, L"Алексий");
 Player gPlayer2(FALSE);
 GameInfo gGameInfo;
+BOOL init = FALSE;
 
 ATOM                MyRegisterClass(HINSTANCE, WCHAR[]);
 HWND                InitInstance(HINSTANCE, INT, WCHAR[], WCHAR[]);
@@ -57,7 +58,7 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
 	UpdateWindow(hWnd);
     
 	gpProgramManager = new ProgramManager(hWnd, hInstance);
-
+	init = TRUE;
     //DialogBox(hInstance, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
 	//Config config;
 
@@ -174,6 +175,9 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
 		gPlayer1.turn(*gpProgramManager, gGameInfo);
 		gPlayer2.turn(*gpProgramManager, gGameInfo);
 
+		if(Key('1')) gpProgramManager->xx++;
+		if(Key('2')) gpProgramManager->xx--;
+
 		if(Key(27)) break;
     }
 	//delete(model);
@@ -251,10 +255,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 	case WM_SIZE:
 		{
-			//RECT tmpRect = {};
-			//GetClientRect(hWnd, &tmpRect); 
+			RECT tmpRect = {};
+			GetClientRect(hWnd, &tmpRect); 
 
-			//programManager.setMemDCWindow(tmpRect);
+			if(init) 
+			{
+				gpProgramManager->xx = floor(gpProgramManager->getMemDCWindow().width / tmpRect.right);
+				gpProgramManager->yy = floor(gpProgramManager->getMemDCWindow().height / tmpRect.bottom);
+				//cout << floor(tmpRect.right / gpProgramManager->getMemDCWindow().width) << endl;
+			}
 		}
 		break;
 	case WM_TIMER:
