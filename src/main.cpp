@@ -4,11 +4,11 @@
 #include "Models.hpp"
 #include "Network.hpp"
 
-#define __DEBUG
+//#define __DEBUG
 
 #pragma comment(lib, "gdiplus.lib")
-#pragma comment(lib, "Wsock32.lib")
-
+//#pragma comment(lib, "Ws2_32.lib")
+                                             
 using namespace Gdiplus;    
 
 ProgramManager *gpProgramManager = nullptr;
@@ -22,6 +22,7 @@ HWND                InitInstance(HINSTANCE, INT, WCHAR[], WCHAR[]);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 HWND                EnableConsole();
+VOID                GetMetrics();               
 
 CONST SIZE_T MAX_LOADSTRING = 64;
 
@@ -177,6 +178,8 @@ INT APIENTRY wWinMain(_In_     HINSTANCE hInstance,
 
 		if(Key('1')) gpProgramManager->xx++;
 		if(Key('2')) gpProgramManager->xx--;
+        if(Key('3')) gpProgramManager->yy++;
+		if(Key('4')) gpProgramManager->yy--;
 
 		if(Key(27)) break;
     }

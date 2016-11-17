@@ -1,6 +1,6 @@
 #include "Network.hpp"
 
-#pragma comment(lib, "WS2_32.lib")
+#pragma comment(lib, "Ws2_32.lib")
 
 Network::Network()
 {
@@ -17,7 +17,7 @@ BOOL Network::initServerConnection()
 	if ((server_ = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP)) == INVALID_SOCKET) 
 	{
 		throw WSAGetLastError();
-		return FALSE;
+		//return FALSE;
 	}
 
 	ZeroMemory(&serverAddr_, sizeof(serverAddr_));
@@ -37,7 +37,7 @@ BOOL Network::connectServer()
 	if(connect(server_, reinterpret_cast<sockaddr*>(&serverAddr_), sizeof(serverAddr_)) == SOCKET_ERROR) 
 	{
 		throw std::string("Cannot connect to server: " + std::to_string(WSAGetLastError()));
-		return FALSE;
+		//return FALSE;
 	}
 
 	//char buff[512] = "HELLO WORLD";

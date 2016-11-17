@@ -6,7 +6,6 @@
 #pragma warning(disable:4820)
 
 #include <windows.h>
-#include <winnt.h>
 
 #pragma warning(pop)
 

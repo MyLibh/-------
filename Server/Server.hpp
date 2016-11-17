@@ -3,8 +3,8 @@
 #pragma warning(push, 4)
 
 #include <WinSock2.h>
+#include <WS2tcpip.h> 
 #include <iostream>
-#include <WS2tcpip.h>
 #include <string>
 #include <ctime>
 
