@@ -3,7 +3,6 @@
 #ifndef __GRAPHICS_HPP_INCLUDED__
 #define __GRAPHICS_HPP_INCLUDED__
 
-#include "Variables.hpp"
 #include "Vector.hpp"
 #include "Textures.hpp"
 
@@ -11,7 +10,9 @@ namespace Billiards
 {
 	namespace graphics
 	{
-		class Graphics : private Textures
+		CONST Gdiplus::Color COLOR_KEY(0, 197, 206, 5);
+
+		class Graphics
 		{
 		private:
 			HWND                 hWnd_;
@@ -19,6 +20,7 @@ namespace Billiards
 			HBITMAP              memBitmap_;
 
 			UPOINT               windowSize_;
+			Textures             textures_;
 
 			Gdiplus::Graphics   *pGraphics_;
 			Gdiplus::Pen        *pPen_;

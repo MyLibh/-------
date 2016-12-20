@@ -1,0 +1,4 @@
+﻿Программа "Бильярд", написанная на WINAPI с использованием GDI+.
+
+by A&A Corporation
+Copyright(C) 2016

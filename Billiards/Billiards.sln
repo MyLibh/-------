@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Billiards", "Billiards\Billiards.vcxproj", "{64A6CBE0-967A-4E7A-A94E-6DC6C4EEE8F6}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WinApiWrapper", "..\..\WinApiWrapper\WinApiWrapper\WinApiWrapper.vcxproj", "{44AF7A28-C87B-4A78-AA5C-E074FC0B78E2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{64A6CBE0-967A-4E7A-A94E-6DC6C4EEE8F6}.Debug|Win32.ActiveCfg = Debug|Win32
+		{64A6CBE0-967A-4E7A-A94E-6DC6C4EEE8F6}.Debug|Win32.Build.0 = Debug|Win32
+		{64A6CBE0-967A-4E7A-A94E-6DC6C4EEE8F6}.Release|Win32.ActiveCfg = Release|Win32
+		{64A6CBE0-967A-4E7A-A94E-6DC6C4EEE8F6}.Release|Win32.Build.0 = Release|Win32
+		{44AF7A28-C87B-4A78-AA5C-E074FC0B78E2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{44AF7A28-C87B-4A78-AA5C-E074FC0B78E2}.Debug|Win32.Build.0 = Debug|Win32
+		{44AF7A28-C87B-4A78-AA5C-E074FC0B78E2}.Release|Win32.ActiveCfg = Release|Win32
+		{44AF7A28-C87B-4A78-AA5C-E074FC0B78E2}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
