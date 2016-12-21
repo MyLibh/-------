@@ -10,26 +10,26 @@ using namespace Gdiplus;
 CONST WORD NUMBER_OF_TEXTURES = NUMBER_OF_BALLS + 1 + 1 + 1 + 1; // background, table, cue, menu
 CONST std::wstring WAYS[NUMBER_OF_TEXTURES] =
 { 
-	L"../src/Images/0.png",
-	L"../src/Images/1.png",
-	L"../src/Images/2.png",
-	L"../src/Images/3.png",
-	L"../src/Images/4.png",
-	L"../src/Images/5.png",
-	L"../src/Images/6.png",
-	L"../src/Images/7.png",
-	L"../src/Images/8.png",
-	L"../src/Images/9.png",
-	L"../src/Images/10.png",
-	L"../src/Images/11.png",
-	L"../src/Images/12.png",
-	L"../src/Images/13.png",
-	L"../src/Images/14.png",
-	L"../src/Images/15.png",
-	L"../src/Images/Background.jpg",
-	L"../src/Images/Table.jpg",
-	L"../src/Images/Cue.png",
-	L"../src/Images/Menu.jpg"
+	L"../../src/Images/0.png",
+	L"../../src/Images/1.png",
+	L"../../src/Images/2.png",
+	L"../../src/Images/3.png",
+	L"../../src/Images/4.png",
+	L"../../src/Images/5.png",
+	L"../../src/Images/6.png",
+	L"../../src/Images/7.png",
+	L"../../src/Images/8.png",
+	L"../../src/Images/9.png",
+	L"../../src/Images/10.png",
+	L"../../src/Images/11.png",
+	L"../../src/Images/12.png",
+	L"../../src/Images/13.png",
+	L"../../src/Images/14.png",
+	L"../../src/Images/15.png",
+	L"../../src/Images/Background.jpg",
+	L"../../src/Images/Table.jpg",
+	L"../../src/Images/Cue.png",
+	L"../../src/Images/Menu.jpg"
 };
 
 class Textures : private Uncopyable
