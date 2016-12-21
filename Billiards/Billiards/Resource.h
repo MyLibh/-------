@@ -31,4 +31,7 @@
 #define __AUTHORC__ "A&A Corporation"
 #define __AUTHORCC__  "A&A Corporation, Copyright (C) 2016"
 
-#define __VERSION__ ""
+#define __VERSION__ "2.3"
+
+#define __TITLE__ "Billiards 2.3"
+#define __ABOUTAPP__ "Ѕиль€рд, верси€ 2.3" 
