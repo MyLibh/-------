@@ -3,10 +3,10 @@
 
 #pragma comment(lib, "gdiplus.lib")
 
-using namespace Gdiplus;
+//using namespace Gdiplus;
 
-double atan_(double x, double y)
-{
+double atan(double x, double y)
+    {
     if (x == 0) x = 0.00001;
 
     double returned = atan(y / x);
@@ -14,243 +14,285 @@ double atan_(double x, double y)
     if (x < 0) returned += M_PI;
 
     return returned;
-} 
+    }
 
-//======================================   
+double tan2sin(double tan, BOOL arg /*= true*/)
+{
+    if (arg)
+    {
 
-vec::vec() :        
-    x_(0),
-    y_(0),
-    l_(0),
-	k_(0)
+    }
+    else
+    {
+
+    }
+    return 0;
+}
+
+double tan2cos(double tan, BOOL arg /*= true*/)
+{
+    if (arg)
+	{
+
+	}
+    else
+    {
+
+    }
+    return 0;
+}
+
+double sin2tan(double sin, BOOL arg /*= true*/)
+{
+    if (arg)
+    {
+    }
+	else
+    {
+
+    }
+    return 0;
+}
+
+double sin2cos(double sin, BOOL arg /*= true*/)
+{
+    if (arg)
+    {
+
+    }
+    else
+    {
+
+    }
+    return 0;
+}
+
+double cos2tan(double cos, BOOL arg /*= true*/)
+{
+    if (arg)
+    {
+
+    }
+    else
+    {
+
+    }
+    return 0;
+}
+
+double cos2sin (double cos, BOOL arg /*= true*/)
+{
+    if (arg) return sqrt (1 - cos * cos);
+    else
+    {
+	}
+    return 0;
+}
+
+//======================================
+
+vec::vec() :
+    x(0),
+    y(0),
+    l(0)
 {}
 
 vec::vec(CONST vec &rVec)
 {
-	x_ = rVec.getX();
-    y_ = rVec.getY();
-    l_ = rVec.getL();
-    k_ = rVec.getK();
+	x = rVec.getX();
+    y = rVec.getY();
+    l = rVec.getL();
 }
 
-vec::vec(double a, double b, BOOL xy /* = TRUE */) 
+vec::vec(vec &&rrVec)
+{
+	x = rrVec.getX();
+    y = rrVec.getY();
+    l = rrVec.getL();
+}
+
+vec::vec(double a, double b, BOOL xy /* = TRUE */)
 {
 	if(xy)
-	{
-		x_ = a;
-		y_ = b;
-		setLK();
-	}
+    {
+		x = a;
+		y = b;
+        l = hypot (a, b);
+    }
 	else
-	{
-		l_ = a;
-		k_ = b;
-		setXY();
-	}
+    {
+		x = a * cos(b);
+		y = a * sin(b);
+		l = a;
+    }
 }
 
-VOID vec::draw(double x0, double y0, Graphics *graphics, Pen &rPen, CONST Color &rColor /* = Color::Yellow */) const
-{
+/*VOID vec::draw(double x0, double y0, Graphics *graphics, Pen &rPen, CONST Color &rColor /* = Color::Yellow *//*) const
+    /*{
 	rPen.SetColor(rColor);
 	rPen.SetWidth(2);
 
-    graphics->DrawLine(&rPen, Point(static_cast<INT>(x0     ), static_cast<INT>(     y0)), Point(static_cast<INT>(x0 + x_), static_cast<INT>(y_ + y0)));
-    graphics->DrawLine(&rPen, Point(static_cast<INT>(x0 + x_), static_cast<INT>(y_ + y0)), Point(static_cast<INT>(x0 + x_ - ((l_ < 0)? -1 : 1) * 5 * cos(k_ + M_PI_4)), static_cast<INT>(y_ + y0 - ((l_ < 0)? -1 : 1) * 5 * sin(k_ + M_PI_4))));
-    graphics->DrawLine(&rPen, Point(static_cast<INT>(x0 + x_), static_cast<INT>(y_ + y0)), Point(static_cast<INT>(x0 + x_ - ((l_ < 0)? -1 : 1) * 5 * cos(k_ - M_PI_4)), static_cast<INT>(y_ + y0 - ((l_ < 0)? -1 : 1) * 5 * sin(k_ - M_PI_4))));
+    //graphics->DrawLine(&rPen, Point(static_cast<INT>(x0    ), static_cast<INT>(    y0)), Point(static_cast<INT>(x0 + x), static_cast<INT>(y + y0)));
+    //graphics->DrawLine(&rPen, Point(static_cast<INT>(x0 + x), static_cast<INT>(y + y0)), Point(static_cast<INT>(x0 + x - ((l < 0)? -1 : 1) * 5 * cos(k + M_PI_4)), static_cast<INT>(y + y0 - ((l < 0)? -1 : 1) * 5 * sin(k + M_PI_4))));
+    //graphics->DrawLine(&rPen, Point(static_cast<INT>(x0 + x), static_cast<INT>(y + y0)), Point(static_cast<INT>(x0 + x - ((l < 0)? -1 : 1) * 5 * cos(k - M_PI_4)), static_cast<INT>(y + y0 - ((l < 0)? -1 : 1) * 5 * sin(k - M_PI_4))));
 
-    l_ = sqrt(x_ * x_ + y_ * y_);
-    k_ = atan_(x_, y_);
-}
-
-VOID vec::setXY()
-{
-    x_ = l_ * cos(k_);
-    y_ = l_ * sin(k_);
-}
-
-VOID vec::setLK()
-{
-    l_ = sqrt(x_ * x_ + y_ * y_);
-    k_ = atan_(x_, y_);
-}
+    l = sqrt(x * x + y * y);
+    //k = atan_(x, y);
+    }                                                                            */
 
 vec& vec::operator=(CONST vec &rVec)
 {
 	if (this == &rVec) return *this;
 
-    x_ = rVec.getX();
-    y_ = rVec.getY();
-    l_ = rVec.getL();
-    k_ = rVec.getK();
+    x = rVec.getX();
+    y = rVec.getY();
+    l = rVec.getL();
 
     return *this;
 }
 
-vec vec::operator=(POINT xy)
+vec& vec::operator=(vec &&rrVec)
 {
-    x_ = xy.x;
-    y_ = xy.y;
-    l_ = sqrt(x_ * x_ + y_ * y_);
-    k_ = atan_(x_, y_);
+    x = rrVec.getX();
+    y = rrVec.getY();
+    l = rrVec.getL();
+    
+    return *this;
+}
+
+vec vec::operator=(CONST POINT &rPoint)
+{
+    x = rPoint.x;
+    y = rPoint.y;
+    l = hypot(x, y);
 
     return *this;
 }
 
 vec vec::operator+(CONST vec &rVec) const
 {
-    vec returned;
+    vec tmp;
 
-    returned.setX(x_ + rVec.getX());
-    returned.setY(y_ + rVec.getY());
-    returned.setL(sqrt(returned.getX() * returned.getX() + returned.getY() * returned.getY()));
-    returned.setK(atan_(returned.getX(), returned.getY()));
+    tmp.x = x + rVec.getX();
+    tmp.y = y + rVec.getY();
+    tmp.l = hypot(tmp.getX(), tmp.getY()); 
 
-    return returned;
+    return tmp;
 }
 
 vec& vec::operator+=(CONST vec &rVec)
 {
-    vec returned;
-
-    x_ += rVec.getX();
-    y_ += rVec.getY();
-    l_ = sqrt(x_ * x_ + y_ * y_);
-    k_ = atan_(x_, y_);
+    x += rVec.getX();
+    y += rVec.getY();
+    l = hypot(x, y);
 
     return *this;
 }
 
 vec vec::operator-(CONST vec &rVec) const
 {
-    vec returned;
+    vec tmp;
 
-    returned.setX(x_ - rVec.getX());
-    returned.setY(y_ - rVec.getY());
-    returned.setL(sqrt(returned.getX() * returned.getX() + returned.getY() * returned.getY()));
-    returned.setK(atan_(returned.getX(), returned.getY()));
-
-    return returned;
+    tmp.x = x - rVec.getX();
+    tmp.y = y - rVec.getY();
+    tmp.l = hypot(tmp.x, tmp.y);
+    
+    return tmp;
 }
 
 vec& vec::operator-=(CONST vec &rVec)
 {
-    vec returned;
+    x -= rVec.getX();
+    y -= rVec.getY();
+    l = hypot(x, y);
+    
+    return *this;
+}
 
-    x_ = x_ - rVec.getX();
-    y_ = y_ - rVec.getY();
-    l_ = sqrt(x_ * x_ + y_ * y_);
-    k_ = atan_(x_, y_);
+vec& vec::operator-=(double l1)
+{
+    if (l >= 0) l -= l1;
+    else        l += l1;
+
+    x = l * getCos();
+    y = l * getSin();
 
     return *this;
 }
 
-vec vec::operator-=(double l1)
+vec& vec::operator+=(double l1)
 {
-    /*if (l_ >= 0)*/ 
-    //else l_ += l1;
-	l_ -= l1;
-    x_ = l_ * cos(k_);
-    y_ = l_ * sin(k_);
+    if (l >= 0) l += l1;
+    else        l -= l1;
 
-    return *this;
-}
-
-vec vec::operator+=(double l1)
-{
-    if (l_ >= 0) l_ += l1;
-    else         l_ -= l1;
-
-    x_ = l_ * cos(k_);
-    y_ = l_ * sin(k_);
+    x = l * getCos();
+    y = l * getSin();
 
     return *this;
 }
 
 vec vec::operator/(double x1) const
 {
-    vec returned;
+    vec tmp;
 
-    returned.setL(l_ / x1);
-    returned.setK(k_);
-    returned.setX(returned.getL() * cos(returned.getK()));
-    returned.setY(returned.getL() * sin(returned.getK()));
+    tmp.l = l / x1;
+    tmp.x = x / x1;
+    tmp.y = y / x1;
 
-    return returned;
+    return tmp;
 }
 
-vec vec::operator/=(double x1)
+vec& vec::operator/=(double x1)
 {
-    l_ /= x1;
-    x_ = l_ * cos(k_);
-    y_ = l_ * sin(k_);
+    l /= x1;
+    x /= x1;
+    y /= x1;
 
     return *this;
 }
 
 vec vec::operator*(double x1) const
 {
-    vec returned;
+    vec tmp;
 
-    returned.setL(l_ * x1);
-    returned.setK(k_);
-    returned.setX(returned.getL() * cos(returned.getK()));
-    returned.setY(returned.getL() * sin(returned.getK()));
+    tmp.l = l * x1;
+    tmp.x = x * x1;
+    tmp.y = y * x1;
 
-    return returned;
+    return tmp;
 }
 
-vec vec::operator*=(double x1)
+vec& vec::operator*=(double x1)
 {
-    l_ *= x1;
-    x_ = l_ * cos(k_);
-    y_ = l_ * sin(k_);
+    l *= x1;
+    x *= x1;
+    y *= x1;
 
     return *this;
 }
 
 vec vec::operator^(double x1) const
 {
-    vec returned;
+    double alf = atan(x, y);
+    alf += x1;
 
-    returned.setL(l_);
-    returned.setL(k_ + x1);
-    returned.setX(returned.getL() * cos(returned.getK()));
-    returned.setY(returned.getL() * sin(returned.getK()));
+	vec tmp;
+    tmp.l = l;
+    tmp.setX(l * cos(alf));
+    tmp.setY(l * sin(alf));
 
-    return returned;
+    return tmp;
 }
 
-vec vec::operator^=(double x1)
+vec& vec::operator^=(double x1)
 {
-    k_ += x1;
-    x_ = l_ * cos(k_);
-    y_ = l_ * sin(k_);
+    double alf = atan(x, y);
+    alf += x1;
+
+    x = l * cos(alf);
+    y = l * sin(alf);
 
     return *this;
 }
 
-//==========================
 
-vec xy_vec(double x, double y)
-{
-    vec returned;
-
-    returned.setX(x);
-    returned.setY(y);
-    returned.setL(sqrt(returned.getX() * returned.getX() + returned.getY() * returned.getY()));
-    returned.setK(atan_(returned.getX(), returned.getY()));
-
-    return returned;
-}
-
-vec lk_vec(double l, double k)
-{
-    vec returned;
-
-    returned.setL(l);
-    returned.setK(k);
-    returned.setX(returned.getL() * cos(returned.getK()));
-    returned.setY(returned.getL() * sin(returned.getK()));
-
-    return returned;
-}

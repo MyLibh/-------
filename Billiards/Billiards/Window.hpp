@@ -11,7 +11,7 @@ using WinApiWrapper::WindowRect;
 
 namespace Billiards
 {
-	class Window : public BaseWindow
+	class Window : public BaseWindow, private UncopyableFull
 	{
 	private:
 		WindowRect window_;
@@ -47,6 +47,7 @@ namespace Billiards
 	
 	typedef void MLFUNC;
 	typedef MLFUNC (*LPMLFUNC)(CONST Window&);
+
 	INT MainLoop(LPMLFUNC = nullptr, MainLoopParameters* = nullptr);
 }
 

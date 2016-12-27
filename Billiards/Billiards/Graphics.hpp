@@ -10,6 +10,16 @@
 
 namespace Billiards
 {
+	struct ScalingOptions 
+	{ 
+		INT sx, 
+		    sy; 
+
+		ScalingOptions(INT x = 1, INT y = 1) : sx(x), sy(y) {}
+	};
+
+	static ScalingOptions scaleOptions;
+
 	namespace graphics
 	{
 		CONST Color COLOR_KEY(0, 197, 206, 5);
@@ -18,7 +28,7 @@ namespace Billiards
 		{
 		private:
 			HWND                 hWnd_;
-			mutable HDC          memDC_;
+			HDC                  memDC_;
 			HBITMAP              memBitmap_;
 
 			UPOINT               windowSize_;

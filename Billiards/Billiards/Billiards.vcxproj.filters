@@ -24,9 +24,6 @@
     <ClInclude Include="Resource.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
-    <ClInclude Include="Billiards.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
     <ClInclude Include="UPOINT.hpp">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
@@ -87,10 +84,10 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="small.ico">
+    <Image Include="..\..\src\Images\Icons\small256.ico">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="Billiards.ico">
+    <Image Include="..\..\src\Images\Icons\small16.ico">
       <Filter>Файлы ресурсов</Filter>
     </Image>
   </ItemGroup>

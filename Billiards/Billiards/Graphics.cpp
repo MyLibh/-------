@@ -111,10 +111,20 @@ namespace Billiards
 		VOID Graphics::drawBufferToCanvas() const 
 		{ 
 			HDC canvas = GetDC(hWnd_);
-			
-			BitBlt(canvas, 0, 0, windowSize_.width, windowSize_.height, memDC_, 0, 0, SRCCOPY); 
+
+			HDC hDC = CreateCompatibleDC(canvas);
+			HBITMAP tmp = CreateCompatibleBitmap(canvas, GetDeviceCaps(canvas, HORZRES) / scaleOptions.sx, GetDeviceCaps(canvas, VERTRES) / scaleOptions.sy);
+			SelectObject(hDC, tmp);
+
+			StretchBlt(hDC, 0, 0, windowSize_.width / scaleOptions.sx, windowSize_.height / scaleOptions.sy, memDC_, 0, 0, windowSize_.width, windowSize_.height, SRCCOPY); 
+			BitBlt(canvas, 0, 0, windowSize_.width, windowSize_.height, hDC, 0, 0, SRCCOPY); 
+
+			DeleteObject(hDC);
+			DeleteObject(tmp);
 
 			ReleaseDC(hWnd_, canvas);
+			
+			std::cout << " " << Billiards::scaleOptions.sx << std::endl;
 		}
 
 		VOID Graphics::doGraphics(CONST vec positions[], BOOL drawCue, double angle, double force, BOOL drawMenu) 
@@ -124,7 +134,7 @@ namespace Billiards
 			if(drawMenu) this->drawMenu();
 			else
 			{
-				//if(drawCue) this->drawCue(tmp[0], angle, force);
+				//if(drawCue) this->drawCue(vec(100, 100), angle, force);
 				drawTable();
 				drawBalls(positions);
 				//drawScoreboard();		

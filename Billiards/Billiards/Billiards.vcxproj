@@ -80,7 +80,6 @@
     <Text Include="About.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Billiards.h" />
     <ClInclude Include="Graphics.hpp" />
     <ClInclude Include="Model.hpp" />
     <ClInclude Include="Physics.hpp" />
@@ -111,8 +110,8 @@
     <ResourceCompile Include="Billiards.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Billiards.ico" />
-    <Image Include="small.ico" />
+    <Image Include="..\..\src\Images\Icons\small16.ico" />
+    <Image Include="..\..\src\Images\Icons\small256.ico" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\WinApiWrapper\WinApiWrapper\WinApiWrapper.vcxproj">

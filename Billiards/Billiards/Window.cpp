@@ -7,7 +7,7 @@ namespace Billiards
 	Window::Window(LPCTSTR className, DWORD style, DWORD exstyle, LPCTSTR title, HINSTANCE hInstance, CONST WindowRect &crRect) :
 		BaseWindow(className, style, exstyle, title, nullptr, nullptr, hInstance, crRect), 
 		window_(crRect)
-	{ WinApiWrapper::InitConsole(WinApiWrapper::ConsoleMode::CM_OUT_ERROR); }
+	{ }
 
 	LRESULT Window::onCommand(UINT msg, WPARAM wParam, LPARAM lParam)
 	{
@@ -97,12 +97,10 @@ namespace Billiards
 	#pragma warning(disable:4127) // Избежание warning'a в строке "while (TRUE)"
 		while (TRUE)
 		{
-			if(!PeekMessage(&msg, hWnd, 0, 0, PM_REMOVE))
+			if (PeekMessage(&msg, hWnd, 0, 0, PM_REMOVE))
 			{
-				if(msg.message == WM_QUIT) 
-				{  
-					std::cout << "exit\n\n\n";
-				}
+				if(msg.message == 18) break;
+				
 			} else if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
 			{
 				TranslateMessage(&msg);
